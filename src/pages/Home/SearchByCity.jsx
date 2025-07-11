@@ -1,115 +1,188 @@
-import React from 'react'
+// SearchByCity.jsx
+import React, { useState } from "react";
+import { RELIGIONS, LANGUAGES } from "../../constants/formData";
+import LetsBeginModal from "../../components/LetsBeginModal/LetsBeginModal";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import config from "../../config";
 
 const SearchByCity = () => {
-    const numbers = Array.from({ length: 54 }, (_, i) => i + 20);
-    return (
-        <section className="search-city">
-            <div className="container">
-                <div className="row g-0">
-                    <div className="col-md-4 content">
-                        <p className="">
-                            Search <br /> by <strong> City</strong>, Profession &amp; <br />{" "}
-                            <strong> Community </strong>
-                        </p>
-                    </div>
-                    <div className="col-md-8 form-blk">
-                        <form className="">
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <label className="form-label">I'm looking for a</label>
-                                    <div className="select-control">
-                                        <select className="form-control">
-                                            <option>Woman</option>
-                                            <option>Man</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <label className="form-label">aged</label>
-                                    <div className="d-flex align-items-center gap-2">
-                                        <div className="select-control">
-                                            <select className="form-control select-num">
-                                                {numbers.map((num) => (
-                                                    <option key={num} value={num}>
-                                                        {num}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                        <div className="">to</div>
-                                        <div className="select-control">
-                                            <select className="form-control select-num">
-                                                {numbers.map((num) => (
-                                                    <option key={num} value={num}>
-                                                        {num}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="row">
-                                    {/* Religion Dropdown */}
-                                    <div className="col-md-6">
-                                        <label className="form-label">of religion</label>
-                                        <div className="select-control">
-                                            <select className="form-control">
-                                                <option value="">Select</option>
-                                                <option value="Hindu">Hindu</option>
-                                                <option value="Muslim">Muslim</option>
-                                                <option value="Christian">Christian</option>
-                                                <option value="Sikh">Sikh</option>
-                                                <option value="Buddhist">Buddhist</option>
-                                                <option value="Jain">Jain</option>
-                                                <option value="Parsi">Parsi</option>
-                                                <option value="Jewish">Jewish</option>
-                                                <option value="Other">Other</option>
-                                                <option value="No Religion">No Religion</option>
-                                            </select>
-                                        </div>
-                                    </div>
+  const [showModal, setShowModal] = useState(false);
+  const [searchData, setSearchData] = useState({
+    lookingFor: "Woman",
+    minAge: 20,
+    maxAge: 27,
+    religion: "",
+    motherTongue: "",
+  });
+  const [isLoading, setIsLoading]= useState(false)
+  const [error, setError]= useState(false)
+  const navigate = useNavigate();
 
-                                    {/* Mother Tongue Dropdown */}
-                                    <div className="col-md-6">
-                                        <label className="form-label">and mother tongue</label>
-                                        <div className="select-control">
-                                            <select className="form-control">
-                                                <option value="">Select</option>
-                                                <option value="Hindi">Hindi</option>
-                                                <option value="English">English</option>
-                                                <option value="Bengali">Bengali</option>
-                                                <option value="Telugu">Telugu</option>
-                                                <option value="Marathi">Marathi</option>
-                                                <option value="Tamil">Tamil</option>
-                                                <option value="Gujarati">Gujarati</option>
-                                                <option value="Urdu">Urdu</option>
-                                                <option value="Punjabi">Punjabi</option>
-                                                <option value="Kannada">Kannada</option>
-                                                <option value="Malayalam">Malayalam</option>
-                                                <option value="Oriya">Oriya</option>
-                                                <option value="Assamese">Assamese</option>
-                                                <option value="Konkani">Konkani</option>
-                                                <option value="Sindhi">Sindhi</option>
-                                                <option value="Tulu">Tulu</option>
-                                                <option value="Other">Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+  const numbers = Array.from({ length: 54 }, (_, i) => i + 20);
 
-                            </div>
-                            <button className="btn btn-filled2" type="button">
-                                Let's Begin
-                            </button>
-                        </form>
-                    </div>
-                </div>
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSearchData({ ...searchData, [name]: value });
+  };
+
+  // const handleFormSubmit = (formData) => {
+  //   // Handle form submission (API call, etc.)
+  //   console.log("Form submitted:", formData);
+  // };
+
+  const handleFormSubmit = async (formData) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      // Make API call to your backend endpoint
+      const response = await axios.post(`${config.baseURL}/api/profile/register`, formData);
+
+      console.log("Registration successful:", response.data);
+      
+      // Handle successful registration
+      if (response.data.success) {
+        // Store token in localStorage or context
+        localStorage.setItem('authToken', response.data.token);
+        
+        // Redirect to dashboard or profile page
+        navigate('/');
+      }
+    } catch (err) {
+      console.error("Registration error:", err);
+      setError(err.response?.data?.message || "Registration failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+  return (
+    <>
+      <section className="search-city">
+        <div className="container">
+          <div className="row g-0">
+            <div className="col-md-4 content">
+              <p className="">
+                Search <br /> by <strong> City</strong>, Profession &amp; <br />{" "}
+                <strong> Community </strong>
+              </p>
             </div>
-        </section>
+            <div className="col-md-8 form-blk">
+              <form className="">
+                <div className="row">
+                  <div className="col-md-6">
+                    <label className="form-label">I'm looking for a</label>
+                    <div className="select-control">
+                      <select
+                        className="form-control"
+                        name="lookingFor"
+                        value={searchData.lookingFor}
+                        onChange={handleInputChange}
+                      >
+                        <option value="Woman">Woman</option>
+                        <option value="Man">Man</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">aged</label>
+                    <div className="d-flex align-items-center gap-2">
+                      <div className="select-control">
+                        <select
+                          className="form-control select-num"
+                          name="minAge"
+                          value={searchData.minAge}
+                          onChange={handleInputChange}
+                        >
+                          {numbers.map((num) => (
+                            <option key={num} value={num}>
+                              {num}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="">to</div>
+                      <div className="select-control">
+                        <select
+                          className="form-control select-num"
+                          name="maxAge"
+                          value={searchData.maxAge}
+                          onChange={handleInputChange}
+                        >
+                          {numbers.map((num) => (
+                            <option key={num} value={num}>
+                              {num}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <label className="form-label">of religion</label>
+                      <div className="select-control">
+                        <select
+                          className="form-control"
+                          name="religion"
+                          value={searchData.religion}
+                          onChange={handleInputChange}
+                        >
+                          <option value="">Select</option>
+                          {RELIGIONS.map((opt) => (
+                            <option key={opt.value} value={opt.value}>
+                              {opt.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">and mother tongue</label>
+                      <div className="select-control">
+                        <select
+                          className="form-control"
+                          name="motherTongue"
+                          value={searchData.motherTongue}
+                          onChange={handleInputChange}
+                        >
+                          <option value="">Select</option>
+                          {LANGUAGES.map((opt) => (
+                            <option key={opt.value} value={opt.value}>
+                              {opt.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  className="btn btn-filled2"
+                  type="button"
+                  onClick={() => {
+                    console.log("Set modal", true)
+                    setShowModal(true)}}
+                >
+                  Let's Begin
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    )
-}
+      <LetsBeginModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        onSubmit={handleFormSubmit}
+      />
+    </>
+  );
+};
 
-export default SearchByCity
+export default SearchByCity;
