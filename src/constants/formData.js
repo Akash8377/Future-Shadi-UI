@@ -393,14 +393,14 @@ export const OCCUPATIONS = [
   { value: "Not Working", label: "Not Working" },
 ];
 
-export const PROFESSIONS = [
-  { group: "Accounting, Banking & Finance", options: [
-    { value: "Banking Professional", label: "Banking Professional" },
-    { value: "Chartered Accountant", label: "Chartered Accountant" },
-    { value: "Accounting, Banking & Finance", label: "Accounting, Banking & Finance" },
-    { value: "Company Secretary", label: "Company Secretary" },
-  ]},
-];
+// export const PROFESSIONS = [
+//   { group: "Accounting, Banking & Finance", options: [
+//     { value: "Banking Professional", label: "Banking Professional" },
+//     { value: "Chartered Accountant", label: "Chartered Accountant" },
+//     { value: "Accounting, Banking & Finance", label: "Accounting, Banking & Finance" },
+//     { value: "Company Secretary", label: "Company Secretary" },
+//   ]},
+// ];
 
 export const SUBCOMMUNITIES = {
   "FREQUENTLY USED": [
@@ -885,8 +885,7 @@ export const SUBCOMMUNITIES = {
     { value: "Other", label: "Other" }
   ]
 };
-
-export const OCCUPATIONS_2 = {
+export const PROFESSIONS = {
   "Accounting, Banking & Finance": [
     { value: "Banking Professional", label: "Banking Professional" },
     { value: "Chartered Accountant", label: "Chartered Accountant" },

@@ -37,7 +37,7 @@ const Step3 = ({ formData, setFormData, nextStep, prevStep }) => {
         <img src="images/profile-icon.svg" alt="Profile" />
       </div>
       <div className="form-basic">
-        <h5 className="modal-title">Her religion</h5>
+        <h5 className="modal-title">Your religion</h5>
         <div className="mb-3">
           <div className="select-control">
             <select

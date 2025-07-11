@@ -6,6 +6,7 @@ import { setUser } from '../../features/user/userSlice';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import { toast } from '../../components/Common/Toast';
+import config from '../../config';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const Login = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${config.baseURL}/api/auth/login`, {
         email: formData.email,
         password: formData.password
       });

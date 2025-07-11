@@ -5,8 +5,12 @@ import LetsBeginModal from "../../components/LetsBeginModal/LetsBeginModal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import config from "../../config";
+import { toast } from "../../components/Common/Toast";
+import { setUser } from "../../features/user/userSlice";
+import { useDispatch } from "react-redux";
 
 const SearchByCity = () => {
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [searchData, setSearchData] = useState({
     lookingFor: "Woman",
@@ -15,8 +19,8 @@ const SearchByCity = () => {
     religion: "",
     motherTongue: "",
   });
-  const [isLoading, setIsLoading]= useState(false)
-  const [error, setError]= useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const numbers = Array.from({ length: 54 }, (_, i) => i + 20);
@@ -26,37 +30,40 @@ const SearchByCity = () => {
     setSearchData({ ...searchData, [name]: value });
   };
 
-  // const handleFormSubmit = (formData) => {
-  //   // Handle form submission (API call, etc.)
-  //   console.log("Form submitted:", formData);
-  // };
-
   const handleFormSubmit = async (formData) => {
     try {
       setIsLoading(true);
       setError(null);
-
-      // Make API call to your backend endpoint
-      const response = await axios.post(`${config.baseURL}/api/profile/register`, formData);
-
+      const completeData = {
+        ...searchData,
+        ...formData,
+      } 
+      console.log("Form submitted:", completeData);
+      const response = await axios.post(
+        `${config.baseURL}/api/profile/register`,
+        completeData
+      );
       console.log("Registration successful:", response.data);
-      
-      // Handle successful registration
       if (response.data.success) {
-        // Store token in localStorage or context
-        localStorage.setItem('authToken', response.data.token);
-        
-        // Redirect to dashboard or profile page
-        navigate('/');
+        dispatch(
+          setUser({
+            user: response.data.user,
+            token: response.data.token,
+          })
+        );
+        localStorage.setItem("authToken", response.data.token);
+        toast.success("Registration successful!");
+        navigate("/");
       }
     } catch (err) {
       console.error("Registration error:", err);
-      setError(err.response?.data?.message || "Registration failed. Please try again.");
+      setError(
+        err.response?.data?.message || "Registration failed. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
   };
-
 
   return (
     <>
@@ -165,8 +172,8 @@ const SearchByCity = () => {
                   className="btn btn-filled2"
                   type="button"
                   onClick={() => {
-                    console.log("Set modal", true)
-                    setShowModal(true)}}
+                    setShowModal(true);
+                  }}
                 >
                   Let's Begin
                 </button>

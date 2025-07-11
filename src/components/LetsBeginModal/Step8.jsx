@@ -12,6 +12,10 @@ const Step8 = ({ formData, setFormData, nextStep, prevStep }) => {
   const handleBillingChange = (type) => {
     setBillingType(type);
   };
+  const professionGroups = Object.entries(PROFESSIONS).map(([group, options]) => ({
+    group,
+    options
+  }));
 
   return (
     <div className="step8">
@@ -91,9 +95,10 @@ const Step8 = ({ formData, setFormData, nextStep, prevStep }) => {
             value={formData.profession}
             onChange={handleChange}
           >
-            {PROFESSIONS.map((group) => (
-              <optgroup key={group.group} label={group.group}>
-                {group.options.map((option) => (
+            <option value="">Select Profession</option>
+            {Object.entries(PROFESSIONS).map(([category, options]) => (
+              <optgroup key={category} label={category}>
+                {options.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>

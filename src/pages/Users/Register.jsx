@@ -92,7 +92,7 @@ const Register = () => {
   const renderRadio = () => (
     <div className="form-group">
       <label>I am looking for*</label>
-      <div className="radio-group">
+      <div className="radio-group d-flex gap-2">
         {['Bride', 'Groom'].map(opt => (
           <label key={opt}>
             <input type="radio" name="lookingFor" value={opt}
@@ -145,7 +145,7 @@ const Register = () => {
                     <label>
                       <input type="checkbox" name="notRobot" checked={formData.notRobot}
                         onChange={handleChange} className={errors.notRobot ? 'is-invalid' : ''} />
-                      I'm not a robot
+                      {" "}I'm not a robot
                     </label>
                     {errors.notRobot && <div className="invalid-feedback d-block">{errors.notRobot}</div>}
                   </div>

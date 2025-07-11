@@ -17,7 +17,7 @@ const Step2 = ({ formData, setFormData, nextStep, prevStep }) => {
         <img src="images/profile-icon.svg" alt="Profile" />
       </div>
       <div className="form-basic">
-        <h5 className="modal-title">Her Name</h5>
+        <h5 className="modal-title">Your Name</h5>
         <div className="mb-3">
           <input
             type="text"

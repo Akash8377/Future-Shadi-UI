@@ -28,14 +28,14 @@ const LetsBeginModal = ({ show, onClose, onSubmit }) => {
     city: "",
     livesWithFamily: "yes",
     familyCity: "",
-    subCommunity: "",
-    maritalStatus: "",
-    height: "",
+    subCommunity: "Agarwal",
+    maritalStatus: "Never Married",
+    height: "4ft 0in",
     diet: "",
     qualification: "",
     college: "",
     income: "",
-    workType: "",
+    workType: "Private Company",
     profession: "",
   });
 

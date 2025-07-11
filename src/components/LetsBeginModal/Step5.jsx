@@ -24,7 +24,7 @@ const Step5 = ({ formData, setFormData, nextStep, prevStep }) => {
         <img src="images/location.png" alt="Location" />
       </div>
       <div className="form-basic">
-        <p className="text-center">Now let's build her Profile</p>
+        <p className="text-center">Now let's build your Profile</p>
 
         <h5 className="modal-title">City</h5>
         <div className="mb-3">
@@ -37,7 +37,7 @@ const Step5 = ({ formData, setFormData, nextStep, prevStep }) => {
             placeholder="City"
           />
         </div>
-        <h5 className="modal-title">She lives with her family?</h5>
+        <h5 className="modal-title">You lives with her family?</h5>
         <div className="toggle-group">
           <label className="custom-radio">
             <input
