@@ -1,5 +1,6 @@
 // Step2.jsx
 import React from "react";
+import { MONTHS, DAYS, YEARS } from '../../constants/formData';
 
 const Step2 = ({ formData, setFormData, nextStep, prevStep }) => {
   const handleChange = (e) => {
@@ -40,36 +41,51 @@ const Step2 = ({ formData, setFormData, nextStep, prevStep }) => {
         </div>
         <h5 className="modal-title">Date of birth</h5>
         <div className="mb-3">
-          <div className="row">
+          <div className="row select-control">
             <div className="col-md-4">
-              <input
-                type="text"
+              <select
                 className="form-control"
                 name="birthDay"
                 value={formData.birthDay}
                 onChange={handleChange}
-                placeholder="Date"
-              />
+              >
+                <option value="">Day</option>
+                {DAYS.map((day) => (
+                  <option key={day.value} value={day.value}>
+                    {day.label}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="col-md-4">
-              <input
-                type="text"
+              <select
                 className="form-control"
                 name="birthMonth"
                 value={formData.birthMonth}
                 onChange={handleChange}
-                placeholder="Month"
-              />
+              >
+                <option value="">Month</option>
+                {MONTHS.map((month) => (
+                  <option key={month.value} value={month.value}>
+                    {month.label}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="col-md-4">
-              <input
-                type="text"
+              <select
                 className="form-control"
                 name="birthYear"
                 value={formData.birthYear}
                 onChange={handleChange}
-                placeholder="Year"
-              />
+              >
+                <option value="">Year</option>
+                {YEARS.map((year) => (
+                  <option key={year.value} value={year.value}>
+                    {year.label}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
@@ -78,7 +94,7 @@ const Step2 = ({ formData, setFormData, nextStep, prevStep }) => {
             type="button"
             className="btn w-100 py-2 btn-filled"
             onClick={nextStep}
-            disabled={!formData.firstName || !formData.lastName}
+            disabled={!formData.firstName || !formData.lastName || !formData.birthDay|| !formData.birthMonth|| !formData.birthYear}
           >
             Continue
           </button>

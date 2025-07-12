@@ -981,6 +981,9 @@ input#yearly:checked + label[for="yearly"], input#monthly:checked + label[for="m
 .form-basic input[type="text"] {
     padding: 15px;
 }
+.form-basic select {
+    padding: 15px;
+}
 .form-basic input[type="email"] {
     padding: 15px;
 }
@@ -995,4 +998,167 @@ input#yearly:checked + label[for="yearly"], input#monthly:checked + label[for="m
 }
 .form-terms a {
     color: rgb(224, 122, 13);
+}
+
+/* upload profile */
+.upload-box {
+    text-align: center;
+    position: relative;
+}
+
+.upload-btn {
+    padding: 0px;
+    background-color: #ffffff00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    bottom: 14px;
+    left: 9px;
+}
+.upload-btn i {
+    color: #d61962;
+}
+
+#preview {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    margin-top: 15px;
+}
+
+.preview-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fbb884;
+}
+
+.photo-box {
+    border-right: 1px solid #ddd;
+}
+
+.privacy-control{
+  margin-top: -13px;
+}
+
+.upload-buttons .btn.btn-primary {
+    background: #DF8525;
+    border: 1px solid #DF8525;
+}
+
+.upload-buttons .btn {
+    width: 245px;
+    margin-bottom: 10px;
+    padding: 13px 0px;
+}
+
+.upload-buttons .btn-outline-primary {
+    color: #d61962;
+    border: 1px solid #d61962;
+}
+
+.upload-buttons .btn {
+    width: 245px;
+    margin-bottom: 10px;
+    padding: 13px 0px;
+}
+.upload-buttons .btn-outline-primary:hover {
+    color: #fff;
+    background-color: #d61962;
+    border: 1px solid #d61962;
+}
+
+.guideline {
+    margin-top: 55px;
+}
+
+.photo-guideline img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+.tick {
+    color: #df8525;
+    font-weight: 600;
+}
+.cross {
+    color: #d61962;
+    font-weight: 600;
+}
+
+.guidelines ul {
+    padding-left: 20px;
+}
+
+.guidelines li {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.note-box {
+    background: #fff3cd;
+    color: #856404;
+    padding: 10px;
+    font-size: 13px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+/* Verify Profile */
+.verfiy-profile {
+    background: #fff5f9;
+    padding: 60px 0px;
+}
+
+.verfiy-profile-new {
+    max-width: 650px;
+    margin: 0 auto;
+    background: #ffff;
+    padding: 30px;
+    box-shadow: 0px 0px 9px 0px #c0bcbc4f;
+}
+
+.profile-verication-part {
+    margin-top: 30px;
+}
+
+.profile-verication-part .toggle-group {
+    justify-content: center;
+}
+
+.toggle-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.profile-verication-part input[type="text"] {
+    max-width: 80%;
+    margin: 0 auto;
+    font-size: 14px;
+    padding: 11px 12px;
+}
+
+.verify-part {
+    max-width: 80%;
+    margin: 22px auto 0 auto;
+}
+
+.verify-part button {
+  border: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.verify-part button:hover {
+    background: #DF8525;
+    color: #fff;
 }

@@ -34,9 +34,10 @@ const Step8 = ({ formData, setFormData, nextStep, prevStep }) => {
           <input
             type="radio"
             id="yearly"
-            name="billing"
-            checked={billingType === "yearly"}
-            onChange={() => handleBillingChange("yearly")}
+            value="yearly"
+            name="incomePer"
+            checked={formData.incomePer === "yearly"}
+            onChange={handleChange}
           />
           <label htmlFor="yearly" className="toggle-option">
             Yearly
@@ -45,9 +46,10 @@ const Step8 = ({ formData, setFormData, nextStep, prevStep }) => {
           <input
             type="radio"
             id="monthly"
-            name="billing"
-            checked={billingType === "monthly"}
-            onChange={() => handleBillingChange("monthly")}
+            value="monthly"
+            name="incomePer"
+            checked={formData.incomePer === "monthly"}
+            onChange={handleChange}
           />
           <label htmlFor="monthly" className="toggle-option">
             Monthly

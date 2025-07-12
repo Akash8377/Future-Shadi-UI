@@ -34,6 +34,7 @@ const LetsBeginModal = ({ show, onClose, onSubmit }) => {
     diet: "",
     qualification: "",
     college: "",
+    incomePer:"yearly",
     income: "",
     workType: "Private Company",
     profession: "",

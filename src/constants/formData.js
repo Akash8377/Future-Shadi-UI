@@ -277,20 +277,6 @@ export const YEARS = Array.from({ length: 100 }, (_, i) => ({
   label: new Date().getFullYear() - i 
 }));
 
-// export const COMMUNITIES = {
-  // Hindu: [
-  //   { value: "Brahmin", label: "Brahmin" },
-  //   { value: "Rajput", label: "Rajput" },
-  //   // ... other Hindu communities
-  // ],
-  // Muslim: [
-  //   { value: "Sunni", label: "Sunni" },
-  //   { value: "Shia", label: "Shia" },
-  //   // ... other Muslim communities
-  // ],
-  // // ... other religions
-// };
-
 export const COMMUNITIES = [
   { value: "Hindi", label: "Hindi" },
   { value: "Punjabi", label: "Punjabi" },
@@ -392,15 +378,6 @@ export const OCCUPATIONS = [
   { value: "Business / Self Employed", label: "Business / Self Employed" },
   { value: "Not Working", label: "Not Working" },
 ];
-
-// export const PROFESSIONS = [
-//   { group: "Accounting, Banking & Finance", options: [
-//     { value: "Banking Professional", label: "Banking Professional" },
-//     { value: "Chartered Accountant", label: "Chartered Accountant" },
-//     { value: "Accounting, Banking & Finance", label: "Accounting, Banking & Finance" },
-//     { value: "Company Secretary", label: "Company Secretary" },
-//   ]},
-// ];
 
 export const SUBCOMMUNITIES = {
   "FREQUENTLY USED": [

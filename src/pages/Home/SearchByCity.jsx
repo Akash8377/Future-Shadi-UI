@@ -53,13 +53,14 @@ const SearchByCity = () => {
         );
         localStorage.setItem("authToken", response.data.token);
         toast.success("Registration successful!");
-        navigate("/");
+        navigate("/profile-upload");
       }
     } catch (err) {
-      console.error("Registration error:", err);
+      console.error("Registration error:", err.response.data.message);
       setError(
         err.response?.data?.message || "Registration failed. Please try again."
       );
+      toast.error(err.response.data.message)
     } finally {
       setIsLoading(false);
     }
@@ -174,6 +175,7 @@ const SearchByCity = () => {
                   onClick={() => {
                     setShowModal(true);
                   }}
+                  disabled={!searchData.religion || !searchData.motherTongue}
                 >
                   Let's Begin
                 </button>
