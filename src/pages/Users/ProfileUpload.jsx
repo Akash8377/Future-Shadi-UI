@@ -13,7 +13,7 @@ const ProfileUpload = () => {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const fileInputRef = useRef(null);
   const formRef = useRef(null);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -70,7 +70,7 @@ const ProfileUpload = () => {
       setUploadSuccess(true);
       toast.success("Upload successful")
       console.log('Upload successful:', response.data);
-      navigate("/profile-upload");
+      navigate("/hobbies");
     } catch (error) {
       console.error('Upload error:', error);
       setUploadError(

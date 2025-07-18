@@ -950,17 +950,6 @@ input#yearly:checked + label[for="yearly"], input#monthly:checked + label[for="m
   position: relative;
 }
 
-.select-control select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  appearance: none;
-  background-image: url(/public/images/select-icon.svg);
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 11px;
-}
 .form-basic {
     padding: 0px 35px;
 }

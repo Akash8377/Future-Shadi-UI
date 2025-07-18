@@ -8,6 +8,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isNavCollapsed, setIsNavCollapsed] = useState(true); // New state for navbar collapse
   
   // Get user info directly from Redux store
   const { userInfo } = useSelector(state => state.user);
@@ -24,6 +25,10 @@ const Header = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const handleNavToggle = () => {
+    setIsNavCollapsed(!isNavCollapsed);
+  };
+
   return (
     <section className="header">
       <nav className="navbar navbar-expand-lg">
@@ -35,16 +40,17 @@ const Header = () => {
           <button
             className="navbar-toggler"
             type="button"
+            onClick={handleNavToggle}
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent"
-            aria-expanded="false"
+            aria-expanded={!isNavCollapsed}
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon" />
           </button>
           
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <div className={`collapse navbar-collapse ${!isNavCollapsed ? 'show' : ''}`} id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" to="#">

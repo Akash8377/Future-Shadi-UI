@@ -1,3 +1,18 @@
+export const INITIAL_PREFS = {
+  basic: { ageRange: "20 – 23", heightRange: "4′ 11″ – 5′ 7″", maritalStatus: "Never Married" },
+  community: { religion: "Hindu", community: "Open to all", motherTongue: "Hindi" },
+  location: { country: "India", state: "Punjab" },
+  education: { qualification: "Open to all", workingWith: "Open to all", profession: "Open to all", annualIncome: "INR 1 lakh to 5 lakhs" },
+  otherDetails: { profileManagedBy: "Open to all", diet: "Open to all" }
+};
+
+export const PREFERENCE_SECTIONS = [
+  { section: "basic", title: "Basic Details", iconClass: "fa fa-calendar", fields: ["ageRange", "heightRange", "maritalStatus"] },
+  { section: "community", title: "Community", iconClass: "fa fa-book", fields: ["religion", "community", "motherTongue"] },
+  { section: "location", title: "Location", iconClass: "fa fa-map-marker", fields: ["country", "state"] },
+  { section: "education", title: "Education", iconClass: "fa fa-graduation-cap", fields: ["qualification", "workingWith", "profession", "annualIncome"] },
+  { section: "otherDetails", title: "Other Details", iconClass: "fa fa-ellipsis-h", fields: ["profileManagedBy", "diet"] }
+];
 
 export const COUNTRIES = [
   { value: 'India', label: 'India' },
@@ -223,8 +238,6 @@ export const COUNTRIES = [
   { value: "Zambia", label: "Zambia" },
   { value: "Zimbabwe", label: "Zimbabwe" }
 ];
-
-
 export const EDUCATION_LEVELS = [
   { value: 'High School', label: 'High School' },
   { value: 'Bachelor\'s Degree', label: 'Bachelor\'s Degree' },
@@ -232,7 +245,6 @@ export const EDUCATION_LEVELS = [
   { value: 'PhD', label: 'PhD' },
   { value: 'Other', label: 'Other' }
 ];
-
 export const RELIGIONS = [
   { value: 'Hindu', label: 'Hindu' },
   { value: 'Muslim', label: 'Muslim' },
@@ -261,22 +273,18 @@ export const LANGUAGES = [
   { value: 'Marwari', label: 'Marwari' },
   { value: 'Other', label: 'Other' }
 ];
-
 export const MONTHS = Array.from({ length: 12 }, (_, i) => ({ 
   value: String(i + 1).padStart(2, '0'), 
   label: new Date(0, i).toLocaleString('default', { month: 'long' }) 
 }));
-
 export const DAYS = Array.from({ length: 31 }, (_, i) => ({ 
   value: String(i + 1).padStart(2, '0'), 
   label: i + 1 
 }));
-
 export const YEARS = Array.from({ length: 100 }, (_, i) => ({ 
   value: new Date().getFullYear() - i, 
   label: new Date().getFullYear() - i 
 }));
-
 export const COMMUNITIES = [
   { value: "Hindi", label: "Hindi" },
   { value: "Punjabi", label: "Punjabi" },
@@ -347,21 +355,17 @@ export const COMMUNITIES = [
   { value: "Tulu", label: "Tulu" },
   { value: "Urdu", label: "Urdu" }
 ];
-
 export const MARITAL_STATUS = [
   { value: "Never Married", label: "Never Married" },
   { value: "Divorced", label: "Divorced" },
   { value: "Widowed", label: "Widowed" },
   { value: "Awaiting Divorce", label: "Awaiting Divorced" },
   { value: "Annulled", label: "Annulled" },
-
 ];
-
 export const HEIGHTS = Array.from({ length: 60 }, (_, i) => ({
   value: `${4 + Math.floor(i / 12)}ft ${i % 12}in`,
   label: `${4 + Math.floor(i / 12)}ft ${i % 12}in - ${Math.round((4 * 30.48) + (i * 2.54))}cm`,
 }));
-
 export const DIETS = [
   { value: "Veg", label: "Veg" },
   { value: "Non Veg", label: "Non Veg" },
@@ -370,15 +374,17 @@ export const DIETS = [
   { value: "Jain", label: "Jain" },
   { value: "Vegan", label: "Vegan" },
 ];
-
+// Work with
 export const OCCUPATIONS = [
+{ value: "Government", label: "Government" },
+  { value: "Public Sector Undertaking", label: "PSU" },
+  { value: "Multinational Company (MNC)", label: "MNC" },
   { value: "Private Company", label: "Private Company" },
-  { value: "Government", label: "Government / Public Sector" },
-  { value: "Defense / Civil Services", label: "Defense / Civil Services" },
-  { value: "Business / Self Employed", label: "Business / Self Employed" },
-  { value: "Not Working", label: "Not Working" },
+  { value: "Self-Employed / Business Owner", label: "Self-Employed" },
+  { value: "Startup", label: "Startup" },
+  { value: "NGO / Non-profit", label: "NGO" },
+  { value: "Other", label: "Other" },
 ];
-
 export const SUBCOMMUNITIES = {
   "FREQUENTLY USED": [
     { value: "Agarwal", label: "Agarwal" },
@@ -998,5 +1004,138 @@ export const PROFESSIONS = {
     { value: "Sportsman", label: "Sportsman" },
     { value: "Travel & Transport Professional", label: "Travel & Transport Professional" },
     { value: "Writer", label: "Writer" }
+  ]
+};
+export const DIET =  [
+  { value: "Veg", label: "Veg" },
+  { value: "Non-Veg", label: "Non-Veg" },
+  { value: "Jain", label: "Jain" },
+  { value: "Vegan", label: "Vegan" },
+  { value: "Eggetarian", label: "Eggetarian" },
+];
+
+export const PROFILEMANAGEDBY = [
+  { value: "Self", label: "Self" },
+  { value: "Parent", label: "Parent" },
+  { value: "Sibling", label: "Sibling" },
+  { value: "Friend", label: "Friend" },
+  { value: "Relative", label: "Relative" },
+  { value: "Other", label: "Other" }
+];
+
+export const QUALIFICATIONS = [
+  { value: "High School", label: "High School" },
+  { value: "Intermediate", label: "Intermediate" },
+  { value: "Diploma", label: "Diploma" },
+  { value: "Bachelor's Degree", label: "Bachelor" },
+  { value: "Master's Degree", label: "Master" },
+  { value: "Doctorate", label: "PhD" },
+]
+
+export const STATE = {
+  "India": [
+  { value: "Andhra Pradesh", label: "Andhra Pradesh" },
+  { value: "Arunachal Pradesh", label: "Arunachal Pradesh" },
+  { value: "Assam", label: "Assam" },
+  { value: "Bihar", label: "Bihar" },
+  { value: "Chhattisgarh", label: "Chhattisgarh" },
+  { value: "Goa", label: "Goa" },
+  { value: "Gujarat", label: "Gujarat" },
+  { value: "Haryana", label: "Haryana" },
+  { value: "Himachal Pradesh", label: "Himachal Pradesh" },
+  { value: "Jharkhand", label: "Jharkhand" },
+  { value: "Karnataka", label: "Karnataka" },
+  { value: "Kerala", label: "Kerala" },
+  { value: "Madhya Pradesh", label: "Madhya Pradesh" },
+  { value: "Maharashtra", label: "Maharashtra" },
+  { value: "Manipur", label: "Manipur" },
+  { value: "Meghalaya", label: "Meghalaya" },
+  { value: "Mizoram", label: "Mizoram" },
+  { value: "Nagaland", label: "Nagaland" },
+  { value: "Odisha", label: "Odisha" },
+  { value: "Punjab", label: "Punjab" },
+  { value: "Rajasthan", label: "Rajasthan" },
+  { value: "Sikkim", label: "Sikkim" },
+  { value: "Tamil Nadu", label: "Tamil Nadu" },
+  { value: "Telangana", label: "Telangana" },
+  { value: "Tripura", label: "Tripura" },
+  { value: "Uttar Pradesh", label: "Uttar Pradesh" },
+  { value: "Uttarakhand", label: "Uttarakhand" },
+  { value: "West Bengal", label: "West Bengal" },
+
+  // Union Territories
+  { value: "Andaman and Nicobar Islands", label: "Andaman and Nicobar Islands" },
+  { value: "Chandigarh", label: "Chandigarh" },
+  { value: "Dadra and Nagar Haveli and Daman and Diu", label: "Dadra and Nagar Haveli and Daman and Diu" },
+  { value: "Delhi", label: "Delhi NCR" },
+  { value: "Jammu and Kashmir", label: "Jammu and Kashmir" },
+  { value: "Ladakh", label: "Ladakh" },
+  { value: "Lakshadweep", label: "Lakshadweep" },
+  { value: "Puducherry", label: "Puducherry" }
+]
+,
+  "United States": [
+    { value: "California", label: "California" },
+    { value: "Texas", label: "Texas" },
+    { value: "New Jersey", label: "New Jersey" },
+    { value: "Illinois", label: "Illinois" },
+    { value: "New York", label: "New York" },
+    { value: "Washington", label: "Washington" },
+    { value: "Massachusetts", label: "Massachusetts" }
+  ],
+  "United Arab Emirates": [
+    { value: "Dubai", label: "Dubai" },
+    { value: "Abu Dhabi", label: "Abu Dhabi" },
+    { value: "Sharjah", label: "Sharjah" },
+    { value: "Ajman", label: "Ajman" },
+    { value: "Ras Al Khaimah", label: "Ras Al Khaimah" }
+  ],
+  "Saudi Arabia": [
+    { value: "Riyadh Province", label: "Riyadh" },
+    { value: "Eastern Province", label: "Eastern Province" },
+    { value: "Mecca Province", label: "Mecca" },
+    { value: "Medina Province", label: "Medina" }
+  ],
+  "Canada": [
+    { value: "Ontario", label: "Ontario" },
+    { value: "British Columbia", label: "British Columbia" },
+    { value: "Alberta", label: "Alberta" },
+    { value: "Quebec", label: "Quebec" },
+    { value: "Manitoba", label: "Manitoba" }
+  ],
+  "Australia": [
+    { value: "New South Wales", label: "New South Wales" },
+    { value: "Victoria", label: "Victoria" },
+    { value: "Western Australia", label: "Western Australia" },
+    { value: "Queensland", label: "Queensland" },
+    { value: "South Australia", label: "South Australia" }
+  ],
+  "United Kingdom": [
+    { value: "England", label: "England" },
+    { value: "Scotland", label: "Scotland" },
+    { value: "Wales", label: "Wales" },
+    { value: "Northern Ireland", label: "Northern Ireland" },
+    { value: "Greater London", label: "Greater London" }
+  ],
+  "Singapore": [
+    { value: "Central Region", label: "Central Singapore" },
+    { value: "West Region", label: "West Singapore" },
+    { value: "East Region", label: "East Singapore" },
+    { value: "North Region", label: "North Singapore" },
+    { value: "North-East Region", label: "North-East Singapore" }
+  ],
+  "Germany": [
+    { value: "Bavaria", label: "Bavaria" },
+    { value: "Baden-Württemberg", label: "Baden-Württemberg" },
+    { value: "Hesse", label: "Hesse" },
+    { value: "North Rhine-Westphalia", label: "NRW" },
+    { value: "Berlin", label: "Berlin" }
+  ],
+  "Malaysia": [
+    { value: "Kuala Lumpur", label: "Kuala Lumpur" },
+    { value: "Selangor", label: "Selangor" },
+    { value: "Penang", label: "Penang" },
+    { value: "Johor", label: "Johor" },
+    { value: "Sarawak", label: "Sarawak" }
   ]
 };
