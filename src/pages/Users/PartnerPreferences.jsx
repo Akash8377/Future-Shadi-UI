@@ -3,12 +3,14 @@ import { Modal } from "react-bootstrap";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { camelCaseToNormalText } from "../../utils/helpers";
-import { MARITAL_STATUS, RELIGIONS, COMMUNITIES, LANGUAGES, COUNTRIES,STATE, PROFESSIONS, DIET, PROFILEMANAGEDBY,QUALIFICATIONS, OCCUPATIONS } from "../../constants/formData";
+import { MARITAL_STATUS, RELIGIONS, COMMUNITIES, LANGUAGES, COUNTRIES, STATE, PROFESSIONS, DIET, PROFILEMANAGEDBY, QUALIFICATIONS, OCCUPATIONS } from "../../constants/formData";
 import PreferenceCard from "../../components/PartnerPreferences/PreferenceCard";
 import SliderModal from "../../components/PartnerPreferences/SliderModal";
 import CheckboxModal from "../../components/PartnerPreferences/CheckboxModal";
 import InputModal from "../../components/PartnerPreferences/InputModal";
 import { PREFERENCE_SECTIONS, INITIAL_PREFS } from "../../constants/formData";
+import { useNavigate } from "react-router-dom";
+
 
 // Map field names to their corresponding data arrays
 const FIELD_OPTIONS_MAP = {
@@ -18,8 +20,8 @@ const FIELD_OPTIONS_MAP = {
   motherTongue: LANGUAGES,
   country: COUNTRIES,
   profession: Object.values(PROFESSIONS).flat(), // Flatten the grouped professions into a single array
-  diet:DIET,
-  profileManagedBy:PROFILEMANAGEDBY,
+  diet: DIET,
+  profileManagedBy: PROFILEMANAGEDBY,
   workingWith: OCCUPATIONS,
   qualification: QUALIFICATIONS,
   state: Object.values(STATE).flat(),
@@ -34,6 +36,8 @@ const PartnerPreferences = () => {
   const [ranges, setRanges] = useState({ age: [20, 23], height: [59, 67], income: [1, 5] });
   const [selectedOptions, setSelectedOptions] = useState({});
   const [preferences, setPreferences] = useState(INITIAL_PREFS);
+  const navigate = useNavigate();
+
 
   const convertToFeet = useCallback((inches) => {
     const feet = Math.floor(inches / 12);
@@ -43,25 +47,25 @@ const PartnerPreferences = () => {
 
   const handleItemClick = useCallback((section, field) => {
     setCurrentField({ section, field });
-    setModalTitle(field === "title" 
-      ? `${section.charAt(0).toUpperCase() + section.slice(1)} Preferences` 
+    setModalTitle(field === "title"
+      ? `${section.charAt(0).toUpperCase() + section.slice(1)} Preferences`
       : camelCaseToNormalText(field)
     );
 
     // Handle checkbox fields
     if (FIELD_OPTIONS_MAP[field]) {
-    const currentValue = preferences[section][field];
-    setSelectedOptions(prev => ({
-      ...prev,
-      [field]: currentValue === "Open to All" ? ["Open to All"] :
-              currentValue.includes(",") ? currentValue.split(",").map(s => s.trim()) :
-              currentValue ? [currentValue] : []
-    }));
-  }else {
+      const currentValue = preferences[section][field];
+      setSelectedOptions(prev => ({
+        ...prev,
+        [field]: currentValue === "Open to All" ? ["Open to All"] :
+          currentValue.includes(",") ? currentValue.split(",").map(s => s.trim()) :
+            currentValue ? [currentValue] : []
+      }));
+    } else {
       setInputValue(
         field === "ageRange" ? ranges.age.join("-") :
-        field === "heightRange" ? ranges.height.join("-") :
-        preferences[section][field]
+          field === "heightRange" ? ranges.height.join("-") :
+            preferences[section][field]
       );
     }
     setShowModal(true);
@@ -73,10 +77,10 @@ const PartnerPreferences = () => {
 
     const isCheckboxField = FIELD_OPTIONS_MAP[field];
     const newValue = isCheckboxField
-      ? selectedOptions[field].includes("Open to All") || 
+      ? selectedOptions[field].includes("Open to All") ||
         selectedOptions[field].length === FIELD_OPTIONS_MAP[field].length
-          ? "Open to All"
-          : selectedOptions[field].join(", ")
+        ? "Open to All"
+        : selectedOptions[field].join(", ")
       : inputValue;
 
     setPreferences(prev => ({
@@ -86,14 +90,18 @@ const PartnerPreferences = () => {
         [field]: newValue
       }
     }));
+
     setShowModal(false);
-  }, [currentField, inputValue, selectedOptions]);
+
+
+  }, [currentField, inputValue, selectedOptions, navigate]);
+
 
   const handleRangeChange = useCallback((type, value) => {
     setRanges(prev => ({ ...prev, [type]: value }));
-    const formatValue = type === "height" 
+    const formatValue = type === "height"
       ? `${convertToFeet(value[0])} – ${convertToFeet(value[1])}`
-      : type === "income" 
+      : type === "income"
         ? `INR ${value[0]} lakh to ${value[1]} lakhs`
         : `${value[0]} – ${value[1]}`;
 
@@ -109,29 +117,33 @@ const PartnerPreferences = () => {
   const handleCheckboxChange = useCallback((field, value) => {
     setSelectedOptions(prev => {
       const currentSelections = prev[field] || [];
-      
+
       if (value === "Open to All") {
         return {
           ...prev,
           [field]: currentSelections.includes("Open to All") ? [] : ["Open to All"]
         };
       }
-      
+
       let newSelected = currentSelections.filter(v => v !== "Open to All");
       const index = newSelected.indexOf(value);
-      
+
       index > -1 ? newSelected.splice(index, 1) : newSelected.push(value);
-      
+
       if (newSelected.length === FIELD_OPTIONS_MAP[field].length) {
         newSelected = ["Open to All"];
       }
-      
+
       return {
         ...prev,
         [field]: newSelected
       };
     });
   }, []);
+  const handleNext=()=>{
+    navigate("/dashboard")
+  }
+
 
   const renderModalContent = useCallback(() => {
     if (!currentField) return null;
@@ -147,8 +159,8 @@ const PartnerPreferences = () => {
           min={type === "age" ? 20 : type === "height" ? 48 : 1}
           max={type === "age" ? 73 : type === "height" ? 84 : 20}
           onChange={(v) => handleRangeChange(type, v)}
-          formatValue={type === "height" ? 
-            (val) => `${convertToFeet(val[0])} - ${convertToFeet(val[1])}` : 
+          formatValue={type === "height" ?
+            (val) => `${convertToFeet(val[0])} - ${convertToFeet(val[1])}` :
             undefined}
         />
       );
@@ -170,9 +182,10 @@ const PartnerPreferences = () => {
     return <InputModal value={inputValue} onChange={setInputValue} />;
   }, [currentField, ranges, inputValue, selectedOptions, handleRangeChange, handleCheckboxChange, convertToFeet]);
 
-  const visibleSections = showExtraCards 
-    ? PREFERENCE_SECTIONS 
+  const visibleSections = showExtraCards
+    ? PREFERENCE_SECTIONS
     : PREFERENCE_SECTIONS.slice(0, 2);
+
 
   return (
     <>
@@ -205,12 +218,21 @@ const PartnerPreferences = () => {
               <Modal.Body>{renderModalContent()}</Modal.Body>
               <Modal.Footer>
                 <button className="btn btn-primary" onClick={handleSave}>
-                  {currentField?.field === "ageRange" ||
+                  {/* {currentField?.field === "ageRange" ||
                   currentField?.field === "heightRange" ||
-                  currentField?.field === "annualIncome" ? "Close" : "Save"}
+                  currentField?.field === "annualIncome" ? "Close" : "Save"} */}
+                  Save
+
                 </button>
               </Modal.Footer>
             </Modal>
+             <button
+              className="btn btn-primary"
+              style={{ background: "var(--color-primary)", color: "white" }}
+              onClick={handleNext}
+            >
+              Save
+            </button>
           </div>
         </div>
       </div>

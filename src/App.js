@@ -9,6 +9,7 @@ import VerifyProfile from './pages/Users/VerifyProfile.jsx';
 import HobbiesInterests from './pages/Users/HobbiesInterests.jsx';
 import FamilyDetailsForm from './pages/Users/FamilyDetailsForm.jsx';
 import PartnerPreferences from './pages/Users/PartnerPreferences.jsx';
+import DashboardPage from './components/Dashboard/Dashboard/DashboardPage.jsx';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/verify-profile" element={<VerifyProfile />} />
         <Route path="/family-details" element={<FamilyDetailsForm />} />
         <Route path="/partner-preferences" element={<PartnerPreferences />} />
+             <Route path="/dashboard" element={<DashboardPage />} />
       </Routes>
     </Suspense>
   );

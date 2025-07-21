@@ -27,10 +27,10 @@ const IDVerificationForm = ({ type, onSuccess, onBack }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!idNumber.match(typeConfig.pattern)) {
-      setError(`Please enter a valid ${typeConfig.label}`);
-      return;
-    }
+    // if (!idNumber.match(typeConfig.pattern)) {
+    //   setError(`Please enter a valid ${typeConfig.label}`);
+    //   return;
+    // }
 
     setLoading(true);
     setError('');

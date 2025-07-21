@@ -1,5 +1,7 @@
-// Step9.jsx
 import React, { useState } from "react";
+import config from "../../config";
+import swal from 'sweetalert';
+
 
 const Step9 = ({ formData, setFormData, prevStep, onSubmit }) => {
   const [profileDescription, setProfileDescription] = useState(
@@ -8,13 +10,51 @@ He is currently living in ${formData.city}. With hard work and determination in 
   );
   const [excludeFromAffiliates, setExcludeFromAffiliates] = useState(false);
 
-  const handleSubmit = () => {
-    onSubmit({
-      ...formData,
-      profileDescription,
-      excludeFromAffiliates,
+// Step9.jsx
+const handleSubmit = async () => {
+  try {
+    const response = await fetch(`${config.baseURL}/api/profile/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...formData,
+        profileDescription,
+        excludeFromAffiliates,
+      }),
     });
-  };
+
+    // First check if the response is JSON
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      throw new Error(`Expected JSON but got: ${text.substring(0, 100)}`);
+    }
+
+    const result = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(result.message || 'Profile creation failed');
+    }
+
+     await swal({
+        title: "Success!",
+        text: "Profile created successfully! Check your email for login credentials.",
+        icon: "success",
+        button: "OK",
+      });
+    window.location.href = '/login';
+  } catch (error) {
+    console.error('Error:', error);
+     swal({
+        title: "Error",
+        text: error.message,
+        icon: "error",
+        button: "OK",
+      });
+  }
+};
 
   return (
     <div className="step9">
@@ -34,7 +74,7 @@ He is currently living in ${formData.city}. With hard work and determination in 
           onChange={(e) => setProfileDescription(e.target.value)}
           style={{ width: "100%", height: "150px", padding: "10px", fontSize: "14px" }}
         />
-        <input
+        {/* <input
           type="checkbox"
           id="Profile"
           name="Profile"
@@ -44,7 +84,7 @@ He is currently living in ${formData.city}. With hard work and determination in 
         <label htmlFor="Profile" style={{ fontSize: "10px" }} className="px-1">
           {" "}
           Do not add my Profile to Future Shadi affiliated Matchmaking services
-        </label>
+        </label> */}
         <br />
         <div className="modal-footer border-0 justify-content-center p-0 footer-modal mt-4">
           <button

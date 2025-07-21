@@ -65,7 +65,7 @@ const Step8 = ({ formData, setFormData, nextStep, prevStep }) => {
             onChange={handleChange}
           >
             <option value="">Select Income</option>
-            {Array.from({ length: 20 }, (_, i) => (
+            {Array.from({ length: 99 }, (_, i) => (
               <option key={i} value={`${i + 1} Lakh`}>
                 {i + 1} Lakh
               </option>

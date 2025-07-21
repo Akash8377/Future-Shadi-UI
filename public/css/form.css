@@ -209,13 +209,13 @@ input#monthly:checked+label[for="monthly"] {
   margin-bottom: 10px;
 }
 
-.upload-box {
+.upload-box1 {
   text-align: center;
   position: relative;
 }
 
 
-.upload-box input[type="file"] {
+.upload-box1 input[type="file"] {
   display: none;
 }
 

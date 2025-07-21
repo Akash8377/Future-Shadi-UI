@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import swal from 'sweetalert';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../features/user/userSlice';
 import Header from '../../components/Header/Header';
@@ -30,60 +31,75 @@ const Login = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
-    
+
     setIsSubmitting(true);
-    
+
     try {
       const response = await axios.post(`${config.baseURL}/api/auth/login`, {
         email: formData.email,
-        password: formData.password
+        password: formData.password,
       });
-      
+
       if (response.data.success) {
-        // Dispatch to Redux store
         dispatch(setUser({
           user: response.data.user,
           token: response.data.token,
           rememberMe: formData.rememberMe
         }));
-        
-        // Redirect to dashboard or home page
-        toast.success("Logged In successfully!");
-        navigate('/');
+
+        await swal({
+          title: "Success",
+          text: "Logged in successfully!",
+          icon: "success",
+          button: "Continue",
+        });
+
+        navigate('/profile-upload');
       }
     } catch (error) {
       console.error('Login error:', error.response?.data || error.message);
-      
+
       if (error.response?.status === 401) {
-        setErrors({ form: 'Invalid email or password' });
+        await swal({
+          title: "Unauthorized",
+          text: "Invalid email or password.",
+          icon: "error",
+          button: "Try Again",
+        });
       } else {
-        setErrors({ form: 'Login failed. Please try again.' });
+        await swal({
+          title: "Login Failed",
+          text: "Something went wrong. Please try again.",
+          icon: "error",
+          button: "OK",
+        });
       }
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
