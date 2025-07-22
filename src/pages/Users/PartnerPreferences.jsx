@@ -10,6 +10,11 @@ import CheckboxModal from "../../components/PartnerPreferences/CheckboxModal";
 import InputModal from "../../components/PartnerPreferences/InputModal";
 import { PREFERENCE_SECTIONS, INITIAL_PREFS } from "../../constants/formData";
 import { useNavigate } from "react-router-dom";
+import { toast } from "../../components/Common/Toast";
+import axios from "axios";
+import config from "../../config";
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from "../../features/user/userSlice";
 
 
 // Map field names to their corresponding data arrays
@@ -37,6 +42,10 @@ const PartnerPreferences = () => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [preferences, setPreferences] = useState(INITIAL_PREFS);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const { userInfo, token } = useSelector(state => state.user);
+  const dispatch = useDispatch()
 
 
   const convertToFeet = useCallback((inches) => {
@@ -70,32 +79,6 @@ const PartnerPreferences = () => {
     }
     setShowModal(true);
   }, [preferences, ranges]);
-
-  const handleSave = useCallback(() => {
-    if (!currentField) return;
-    const { section, field } = currentField;
-
-    const isCheckboxField = FIELD_OPTIONS_MAP[field];
-    const newValue = isCheckboxField
-      ? selectedOptions[field].includes("Open to All") ||
-        selectedOptions[field].length === FIELD_OPTIONS_MAP[field].length
-        ? "Open to All"
-        : selectedOptions[field].join(", ")
-      : inputValue;
-
-    setPreferences(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: newValue
-      }
-    }));
-
-    setShowModal(false);
-
-
-  }, [currentField, inputValue, selectedOptions, navigate]);
-
 
   const handleRangeChange = useCallback((type, value) => {
     setRanges(prev => ({ ...prev, [type]: value }));
@@ -140,9 +123,89 @@ const PartnerPreferences = () => {
       };
     });
   }, []);
-  const handleNext=()=>{
-    navigate("/dashboard")
+
+const handleSave = useCallback(() => {
+  if (!currentField) return;
+  const { section, field } = currentField;
+
+  const isCheckboxField = FIELD_OPTIONS_MAP[field];
+  const newValue = isCheckboxField
+    ? selectedOptions[field].includes("Open to All") ||
+      selectedOptions[field].length === FIELD_OPTIONS_MAP[field].length
+      ? "Open to All"
+      : selectedOptions[field].join(", ")
+    : inputValue;
+
+  const updatedPreferences = {
+    ...preferences,
+    [section]: {
+      ...preferences[section],
+      [field]: newValue
+    }
+  };
+
+  setPreferences(updatedPreferences);
+  setShowModal(false);
+}, [currentField, inputValue, selectedOptions, navigate, preferences]);
+
+const handleClose = ()=>{
+  setShowModal(false);
+}
+
+const handleFormSubmit = async (formData) => {
+  try {
+    setIsLoading(true);
+    setError(null);
+    
+    // Get data from sessionStorage
+    const otherData = JSON.parse(sessionStorage.getItem("otherData") || '{}');
+    
+    // Combine form data with preferences
+    const completeData = {
+      ...otherData,
+      ...preferences
+    };
+    // Make API call
+    const response = await axios.post(
+      `${config.baseURL}/api/profile/partner-preference`,
+      completeData,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    // console.log("Partner preferences saved successfully:", response.data);
+    
+    if (response.data.success) {
+      toast.success("Partner preferences saved successfully!");
+       const updatedUser = {
+      ...userInfo,
+      verificationData:  otherData.verificationData,
+      hobbies:  otherData.hobbies,
+      financial_status:  otherData.financialStatus,
+      family_details:  otherData.familyDetails,
+      partner_preference: preferences,
+    };
+     dispatch(setUser({
+      userInfo: updatedUser,
+      token: token, // ← do NOT change token
+    }));
+      navigate("/dashboard");
+    } else {
+      throw new Error(response.data.message || "Failed to save preferences");
+    }
+  } catch (err) {
+    console.error("Submission error:", err);
+    const errorMessage = err.response?.data?.message || err.message || "Failed to save partner preferences. Please try again.";
+    setError(errorMessage);
+    toast.error(errorMessage);
+  } finally {
+    setIsLoading(false);
   }
+};
 
 
   const renderModalContent = useCallback(() => {
@@ -217,22 +280,22 @@ const PartnerPreferences = () => {
               </Modal.Header>
               <Modal.Body>{renderModalContent()}</Modal.Body>
               <Modal.Footer>
-                <button className="btn btn-primary" onClick={handleSave}>
-                  {/* {currentField?.field === "ageRange" ||
-                  currentField?.field === "heightRange" ||
-                  currentField?.field === "annualIncome" ? "Close" : "Save"} */}
-                  Save
-
+                <button className="btn btn-primary" onClick={currentField?.field === "ageRange" ||
+                  currentField?.field === "heightRange" || currentField?.field === "annualIncome" ?handleClose : handleSave}>
+                  {currentField?.field === "ageRange" || currentField?.field === "heightRange" ||
+                  currentField?.field === "annualIncome" ? "Close" : "Save"}
                 </button>
               </Modal.Footer>
             </Modal>
+            <div className="d-flex justify-content-end">
              <button
-              className="btn btn-primary"
+              className="btn"
               style={{ background: "var(--color-primary)", color: "white" }}
-              onClick={handleNext}
+              onClick={handleFormSubmit}
             >
               Save
             </button>
+            </div>
           </div>
         </div>
       </div>

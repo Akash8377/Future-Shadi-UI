@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const IDVerificationForm = ({ type, onSuccess, onBack }) => {
   const [idNumber, setIdNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+    useEffect(() => {
+      const otherData = JSON.parse(sessionStorage.getItem("otherData"));
+      if (otherData?.verificationData) {
+        console.log(otherData?.verificationData)
+        setIdNumber(otherData?.verificationData?.idNumber)
+      }
+    }, []);
 
   const typeConfig = {
     pan: {

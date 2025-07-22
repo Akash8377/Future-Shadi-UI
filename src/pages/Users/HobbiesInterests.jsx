@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
 import { useNavigate } from 'react-router-dom';
@@ -46,6 +46,14 @@ const HobbiesInterests = () => {
     }
   ];
 
+useEffect(() => {
+  const otherData = JSON.parse(sessionStorage.getItem("otherData"));
+  if (otherData?.hobbies) {
+    setSelectedHobbies(otherData.hobbies);
+  }
+}, []);
+
+
   // Toggle hobby selection
   const toggleHobby = (hobby) => {
     setSelectedHobbies(prev => {
@@ -62,8 +70,11 @@ const HobbiesInterests = () => {
 
   // Handle continue button click
   const handleContinue = () => {
-    console.log('Selected hobbies:', selectedHobbies);
-    navigate("/verify-profile",{ state: { hobbies: selectedHobbies } });
+    const otherData = {
+    hobbies: selectedHobbies
+    };
+    sessionStorage.setItem("otherData", JSON.stringify(otherData))
+    navigate("/verify-profile");
   };
 
   return (

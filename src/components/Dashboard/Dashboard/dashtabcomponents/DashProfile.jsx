@@ -1,7 +1,18 @@
 import React, { useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import config from '../../../../config';
+import ProfileTab from '../ProfileTab';
+import { Link } from 'react-router-dom';
 
-const DashProfile = () => {
+const DashProfile = ({onEditClick}) => {
+
+    const tabComponents = {
+    profile: ProfileTab,
+    };
+
     const fileInputRef = useRef(null);
+    const { userInfo } = useSelector(state => state.user);
+    console.log("User Info", userInfo)
 
     const handleUploadClick  =() =>{
         if(fileInputRef.current){
@@ -21,24 +32,24 @@ const DashProfile = () => {
               ref={fileInputRef}
               className="d-none" />
               <div className="avatar-wrap">
-                <img id="avatarPreview" src="images/userprofile.png" className="avatar-img" alt="avatar" />
+                <img id="avatarPreview" src={userInfo?.profile_image ?`${config.baseURL}/uploads/profiles/${userInfo.profile_image}`:"images/userprofile.png"} className="avatar-img" alt="avatar" />
                 <span className="avatar-plus" id="uploadTrigger" onClick={handleUploadClick}>
                   <i className="fa fa-plus" aria-hidden="true"></i>
                 </span>
               </div>
               <div className="section d-flex justify-content-between align-items-center">
                 <div>
-                  <div className="title">Akash Choudhary</div>
+                  <div className="title">{userInfo.first_name} {userInfo.last_name}</div>
                   <div className="small text-muted">SH19430033</div>
                 </div>
-                <a href="#" className="small fw-semibold text-decoration-none" style={{ color: '#d61962' }}>Edit</a>
+                <Link href="#" onClick={onEditClick} className="small fw-semibold text-decoration-none" style={{ color: '#d61962' }}>Edit</Link>
               </div>
               <div className="section d-flex justify-content-between align-items-center">
                 <div>
                   <div className="small text-muted mb-1">Account Type</div>
                   <div className="fw-semibold" style={{ fontSize: '14px' }}>Free Membership</div>
                 </div>
-                <a href="#" className="small fw-semibold text-decoration-none" style={{ color: '#d61962' }}>Upgrade</a>
+                <Link href="#" className="small fw-semibold text-decoration-none" style={{ color: '#d61962' }}>Upgrade</Link>
               </div>
               <div className="section d-flex justify-content-between">
                 <div>

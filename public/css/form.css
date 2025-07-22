@@ -764,13 +764,12 @@ ul.pref-body li span button {
     margin-bottom: 40px;
 }
 .pref-head i {
-    background: var(--color-secondary);
     border-radius: 50%;
     height: 30px;
     width: 30px;
     line-height: 30px;
     text-align: center;
-    color: #D61962 !important;
+    color: var(--color-secondary) !important;
 }
 ul.pref-body li span i {
     padding-left: 10px;
@@ -788,3 +787,6 @@ ul.pref-body li span i {
     padding-bottom: 5px;
 }
 /*partner prefrence css end*/
+.cursor-pointer{
+  cursor: pointer;
+}

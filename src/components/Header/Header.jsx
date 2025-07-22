@@ -73,7 +73,7 @@ const Header = () => {
                     data-bs-toggle="dropdown"
                   >
                     <span className="user-greeting">
-                      Hi, {userInfo.firstName || "User"}{" "}
+                      Hi, {userInfo.first_name || "User"}{" "}
                       <span className="dropdown-arrow">
                         {isDropdownOpen ? "▲" : "▼"}
                       </span>
@@ -84,7 +84,9 @@ const Header = () => {
                     className={`dropdown-menu ${isDropdownOpen ? "show" : ""}`}
                     aria-labelledby="userDropdown"
                   >
-                    <button className="dropdown-item" onClick={handleLogout}>
+                    <button type="button" className="dropdown-item" onClick={()=>navigate("/dashboard")}>Dashboard</button>
+                    <hr className="dropdown-divider" />
+                    <button type="button" className="dropdown-item" onClick={handleLogout}>
                       Logout
                     </button>
                   </div>

@@ -3,19 +3,18 @@ import { createSlice } from '@reduxjs/toolkit';
 // Helper function to load initial state
 const loadInitialState = () => {
   // Check localStorage first (for "remember me" users)
-  const localStorageUser = localStorage.getItem('user');
+  const localStorageUser = localStorage.getItem('userInfo');
   if (localStorageUser) {
-    return { userInfo: JSON.parse(localStorageUser) };
+    return { userInfo: JSON.parse(localStorageUser), token: localStorage.getItem('token') };
   }
   
-  // Fall back to sessionStorage for non-remembered users
-  const sessionStorageUser = sessionStorage.getItem('user');
+  const sessionStorageUser = sessionStorage.getItem('userInfo');
   if (sessionStorageUser) {
-    return { userInfo: JSON.parse(sessionStorageUser) };
+    return { userInfo: JSON.parse(sessionStorageUser), token: sessionStorage.getItem('token') };
   }
   
   // Default initial state
-  return { userInfo: null };
+  return { userInfo: null, token: null };
 };
 
 const initialState = loadInitialState();
@@ -25,24 +24,24 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action) {
-      state.userInfo = action.payload.user;
-      
+      state.userInfo = action.payload.userInfo;
+      state.token = action.payload.token;
       // Store based on rememberMe flag
       if (action.payload.rememberMe) {
-        localStorage.setItem('user', JSON.stringify(action.payload.user));
+        localStorage.setItem('userInfo', JSON.stringify(action.payload.userInfo));
         localStorage.setItem('token', action.payload.token);
-        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('userInfo');
         sessionStorage.removeItem('token');
       } else {
-        sessionStorage.setItem('user', JSON.stringify(action.payload.user));
+        sessionStorage.setItem('userInfo', JSON.stringify(action.payload.userInfo));
         sessionStorage.setItem('token', action.payload.token);
-        localStorage.removeItem('user');
+        localStorage.removeItem('userInfo');
         localStorage.removeItem('token');
       }
     },
     clearUser(state) {
       state.userInfo = null;
-      // Clear all storage
+      state.token = null;
       localStorage.removeItem('user');
       localStorage.removeItem('token');
       sessionStorage.removeItem('user');

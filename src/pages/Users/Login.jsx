@@ -63,7 +63,7 @@ const Login = () => {
 
       if (response.data.success) {
         dispatch(setUser({
-          user: response.data.user,
+          userInfo: response.data.user,
           token: response.data.token,
           rememberMe: formData.rememberMe
         }));
@@ -75,7 +75,7 @@ const Login = () => {
           button: "Continue",
         });
 
-        navigate('/profile-upload');
+        navigate('/dashboard');
       }
     } catch (error) {
       console.error('Login error:', error.response?.data || error.message);
@@ -178,8 +178,8 @@ const Login = () => {
                   <div className="helper-links">
                     Trouble logging in?
                     <br />
-                    <Link to="/sign-up">Sign Up</Link> |{' '}
-                    <Link to="/forgot-password" className="forget-password">
+                    <Link to="/">Sign Up</Link> |{' '}
+                    <Link to="/forget-password" className="forget-password">
                       Forgot password?
                     </Link>
                   </div>

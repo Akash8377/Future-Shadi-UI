@@ -1,19 +1,29 @@
 import React from 'react'
+import config from '../../../../config';
+import { useDispatch, useSelector } from 'react-redux';
+import { calculateAge } from '../../../../utils/helpers';
 
 const Profile = () => {
+  const { userInfo, token } = useSelector(state => state.user);
+
   return (
     <div>
       <div className="profile-name">
         <h4>
-          Akash Choudhary <small className="text-muted">(SH19430033)</small>
+          {userInfo.first_name} {userInfo.last_name} <small className="text-muted">(SH19430033)</small>
         </h4>
       </div>
       <div className="border p-4 bg-white mt-3">
         <div className="row g-4">
           <div className="col-md-3 col-lg-2">
             <div className="upload-box text-center d-flex flex-column justify-content-center align-items-center rounded">
-              <label
-                for="fileUpload"
+              {userInfo?.profile_image ? (<label
+                htmlFor="fileUpload"
+                className="w-100 h-100 d-flex flex-column justify-content-center align-items-center"
+              >
+                <img className="w-100 h-100 object-fit-cover" src={userInfo?.profile_image ?`${config.baseURL}/uploads/profiles/${userInfo.profile_image}`:"images/camera.png"}  />
+              </label>):(<label
+                htmlFor="fileUpload"
                 className="w-100 h-100 d-flex flex-column justify-content-center align-items-center"
               >
                 <p>
@@ -21,9 +31,9 @@ const Profile = () => {
                   <br />
                   to upload
                 </p>
-                <img src="images/camera.png" />
+                <img src={"images/camera.png"}  />
                 <strong className="d-block mt-2">Photo</strong>
-              </label>
+              </label>)}
               <input type="file" id="fileUpload" className="d-none" />
             </div>
           </div>
@@ -34,15 +44,15 @@ const Profile = () => {
                   <tbody>
                     <tr>
                       <td>Age/Height</td>
-                      <td>: 25/5'11</td>
+                      <td>: {calculateAge(userInfo.birth_year, userInfo.birth_month, userInfo.birth_day)}/{userInfo.height}</td>
                     </tr>
                     <tr>
                       <td>Marital Status</td>
-                      <td>: Never Married</td>
+                      <td>: {userInfo.marital_status}</td>
                     </tr>
                     <tr>
                       <td>Posted By</td>
-                      <td>: Self</td>
+                      <td>: {userInfo.person}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -53,15 +63,15 @@ const Profile = () => {
                   <tbody>
                     <tr>
                       <td>Religion Community</td>
-                      <td>: Hindu/Jat</td>
+                      <td>: {userInfo.religion}</td>
                     </tr>
                     <tr>
                       <td>Location</td>
-                      <td>: Faridabad</td>
+                      <td>: {userInfo.city}</td>
                     </tr>
                     <tr>
                       <td>Mother Tongue</td>
-                      <td>: Hindi </td>
+                      <td>: ------ </td>
                     </tr>
                   </tbody>
                 </table>

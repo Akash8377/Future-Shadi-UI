@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
@@ -19,11 +19,25 @@ const VerifyProfile = () => {
     setStep('verify');
   };
 
+  useEffect(() => {
+    const otherData = JSON.parse(sessionStorage.getItem("otherData"));
+    if (otherData?.verificationData) {
+      console.log(otherData?.verificationData)
+      setVerificationType(otherData?.verificationData?.type)
+      setStep('verify')
+    }
+  }, []);
+
   const handleVerificationSuccess = (verificationData) => {
     setStep('success');
+    let otherData = JSON.parse(sessionStorage.getItem('otherData'));
+    otherData={
+      ...otherData,
+      verificationData
+    }
     setTimeout(()=>{
-      console.log({ verificationData, ...location.state })
-      navigate("/family-details", {state: { verificationData, ...location.state }} )
+      sessionStorage.setItem("otherData", JSON.stringify(otherData))
+      navigate("/family-details")
     }, 1000)
   };
 

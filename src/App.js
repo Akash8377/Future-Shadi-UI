@@ -10,6 +10,7 @@ import HobbiesInterests from './pages/Users/HobbiesInterests.jsx';
 import FamilyDetailsForm from './pages/Users/FamilyDetailsForm.jsx';
 import PartnerPreferences from './pages/Users/PartnerPreferences.jsx';
 import DashboardPage from './components/Dashboard/Dashboard/DashboardPage.jsx';
+import ForgotPasswordOTP from './pages/Users/forget-password/ForgotPasswordOTP.jsx';
 
 function App() {
   return (
@@ -18,13 +19,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/sign-up" element={<Register />} />
+        {/* <Route path="/sign-up" element={<Register />} /> */}
         <Route path="/profile-upload" element={<ProfileUpload />} />
         <Route path="/hobbies" element={<HobbiesInterests />} />
         <Route path="/verify-profile" element={<VerifyProfile />} />
         <Route path="/family-details" element={<FamilyDetailsForm />} />
         <Route path="/partner-preferences" element={<PartnerPreferences />} />
-             <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/forget-password" element={<ForgotPasswordOTP />} />
       </Routes>
     </Suspense>
   );

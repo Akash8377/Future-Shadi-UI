@@ -1,10 +1,12 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
 import config from '../../config';
 import { toast } from '../../components/Common/Toast';
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser} from "../../features/user/userSlice";
 
 const ProfileUpload = () => {
   const [previewImage, setPreviewImage] = useState(null);
@@ -14,6 +16,18 @@ const ProfileUpload = () => {
   const fileInputRef = useRef(null);
   const formRef = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  // Get user info directly from Redux store
+  const { userInfo, token  } = useSelector(state => state.user);
+  const isLoggedIn = !!userInfo; // Simplified login check
+
+  useEffect(()=>{
+  if(isLoggedIn && userInfo?.profile_image){
+    setPreviewImage(`${config.baseURL}/uploads/profiles/${userInfo?.profile_image}`)
+  }
+  },[setPreviewImage])
+
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -49,10 +63,7 @@ const ProfileUpload = () => {
 
     try {
       setUploadProgress(0);
-      setUploadSuccess(false);
-
-      const token = sessionStorage.getItem('token') || localStorage.getItem('token')  // Assuming you store JWT token here
-      console.log("token", token)
+      setUploadSuccess(false)
 
       const response = await axios.post(`${config.baseURL}/api/profile/upload-image`, formData, {
         headers: {
@@ -70,7 +81,15 @@ const ProfileUpload = () => {
       setUploadSuccess(true);
       toast.success("Upload successful")
       console.log('Upload successful:', response.data);
+       const updatedUser = {
+      ...userInfo,
+      profile_image: response.data.imageUrl,
+    };
 
+    dispatch(setUser({
+      userInfo: updatedUser,
+      token: token, // ← do NOT change token
+    }));
     } catch (error) {
       console.error('Upload error:', error);
       setUploadError(

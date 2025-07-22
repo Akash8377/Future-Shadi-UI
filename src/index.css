@@ -1003,8 +1003,8 @@ input#yearly:checked + label[for="yearly"], input#monthly:checked + label[for="m
     border-radius: 5px;
     cursor: pointer;
     position: relative;
-    bottom: 14px;
-    left: 9px;
+    bottom: 25px;
+    left: 20px;
 }
 .upload-btn i {
     color: #d61962;

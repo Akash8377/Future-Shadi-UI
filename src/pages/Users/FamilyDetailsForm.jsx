@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FamilyForm from "../../components/UserProfile/FamilyForm";
 import FinancialForm from "../../components/UserProfile/FinancialForm";
 import { toast } from "../../components/Common/Toast";
@@ -13,7 +13,16 @@ const FamilyDetailsForm = () => {
   const [financialStatus, setFinancialStatus] = useState("");
   const [showFinancialForm, setShowFinancialForm] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
+
+    useEffect(() => {
+    const otherData = JSON.parse(sessionStorage.getItem("otherData"));
+    if (otherData?.familyDetails) {
+      setFamilyDetails(otherData?.familyDetails)
+    }
+    if (otherData?.financialStatus) {
+      setFinancialStatus(otherData?.financialStatus)
+    }
+  }, []);
 
   const handleFamilyChange = (e) => {
     const { name, value } = e.target;
@@ -29,9 +38,14 @@ const FamilyDetailsForm = () => {
 
   const handleFinancialSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", { ...location.state, familyDetails, financialStatus });
     toast.success("Data saved successfully!");
-    navigate("/partner-preferences", {state: { ...location.state, familyDetails, financialStatus }})
+    let otherData = JSON.parse(sessionStorage.getItem('otherData'));
+    otherData={
+      ...otherData,
+      familyDetails, financialStatus
+    }
+    sessionStorage.setItem("otherData", JSON.stringify(otherData))
+    navigate("/partner-preferences")
   };
 
   return (
