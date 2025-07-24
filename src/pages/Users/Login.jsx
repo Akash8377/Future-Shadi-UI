@@ -72,7 +72,8 @@ const Login = () => {
           title: "Success",
           text: "Logged in successfully!",
           icon: "success",
-          button: "Continue",
+          buttons: false, // This hides all buttons
+          timer: 2000,     // Optional: closes alert automatically after 2 seconds
         });
 
         navigate('/dashboard');

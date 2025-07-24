@@ -1,11 +1,10 @@
 export const INITIAL_PREFS = {
   basic: { ageRange: "20 – 23", heightRange: "4′ 11″ – 5′ 7″", maritalStatus: "Never Married" },
-  community: { religion: "Hindu", community: "Open to all", motherTongue: "Hindi" },
+  community: { religion: "Hindu", community: "Open to All", motherTongue: "Hindi" },
   location: { country: "India", state: "Punjab" },
-  education: { qualification: "Open to all", workingWith: "Open to all", profession: "Open to all", annualIncome: "INR 1 lakh to 5 lakhs" },
-  otherDetails: { profileManagedBy: "Open to all", diet: "Open to all" }
+  education: { qualification: "Open to All", workingWith: "Open to All", profession: "Open to All", annualIncome: "INR 1 lakh to 5 lakhs" },
+  otherDetails: { profileManagedBy: "Open to All", diet: "Open to All" }
 };
-
 export const PREFERENCE_SECTIONS = [
   { section: "basic", title: "Basic Details", iconClass: "fa fa-calendar", fields: ["ageRange", "heightRange", "maritalStatus"] },
   { section: "community", title: "Community", iconClass: "fa fa-book", fields: ["religion", "community", "motherTongue"] },
@@ -13,7 +12,6 @@ export const PREFERENCE_SECTIONS = [
   { section: "education", title: "Education", iconClass: "fa fa-graduation-cap", fields: ["qualification", "workingWith", "profession", "annualIncome"] },
   { section: "otherDetails", title: "Other Details", iconClass: "fa fa-ellipsis-h", fields: ["profileManagedBy", "diet"] }
 ];
-
 export const COUNTRIES = [
   { value: 'India', label: 'India' },
   { value: 'USA', label: 'United States' },
@@ -1013,7 +1011,6 @@ export const DIET =  [
   { value: "Vegan", label: "Vegan" },
   { value: "Eggetarian", label: "Eggetarian" },
 ];
-
 export const PROFILEMANAGEDBY = [
   { value: "Self", label: "Self" },
   { value: "Parent", label: "Parent" },
@@ -1022,7 +1019,6 @@ export const PROFILEMANAGEDBY = [
   { value: "Relative", label: "Relative" },
   { value: "Other", label: "Other" }
 ];
-
 export const QUALIFICATIONS = [
   { value: "High School", label: "High School" },
   { value: "Intermediate", label: "Intermediate" },
@@ -1031,7 +1027,6 @@ export const QUALIFICATIONS = [
   { value: "Master's Degree", label: "Master" },
   { value: "Doctorate", label: "PhD" },
 ]
-
 export const STATE = {
   "India": [
   { value: "Andhra Pradesh", label: "Andhra Pradesh" },
@@ -1139,3 +1134,88 @@ export const STATE = {
     { value: "Sarawak", label: "Sarawak" }
   ]
 };
+export const BLOODGROUP = [
+  { value: "A+", label: "A+" },
+  { value: "A-", label: "A-" },
+  { value: "B+", label: "B+" },
+  { value: "B-", label: "B-" },
+  { value: "AB+", label: "AB+" },
+  { value: "AB-", label: "AB-" },
+  { value: "O+", label: "O+" },
+  { value: "O-", label: "O-" }
+];
+export const MOTHERDETAILS = [
+  { value: 'Homemaker', label: 'Homemaker' },
+  { value: 'Teacher', label: 'Teacher' },
+  { value: 'Doctor', label: 'Doctor' },
+  { value: 'Engineer', label: 'Engineer' },
+  { value: 'Businesswoman', label: 'Businesswoman' }
+];
+export const FATHERDETAILS = [
+  { value: 'Businessman', label: 'Businessman' },
+  { value: 'Government employee', label: 'Government employee' },
+  { value: 'Teacher', label: 'Teacher' },
+  { value: 'Doctor', label: 'Doctor' },
+  { value: 'Engineer', label: 'Engineer' }
+];
+export const NUMOFSIBLINGS = [
+  { value: '0', label: 'None' },
+  { value: '1', label: '1' },
+  { value: '2', label: '2' },
+  { value: '3', label: '3' },
+  { value: '4+', label: '4+' }
+];
+export const FINANCIALSTATUS = [
+  { value: 'Elite', label: 'Elite' },
+  { value: 'High', label: 'High' },
+  { value: 'Middle', label: 'Middle' },
+  { value: 'Aspiring', label: 'Aspiring' }
+];
+export const HOBBIES = [
+  { value: 'Writing', label: 'Writing' },
+  { value: 'Cooking', label: 'Cooking' },
+  { value: 'Singing', label: 'Singing' },
+  { value: 'Photography', label: 'Photography' },
+  { value: 'Playing instruments', label: 'Playing instruments' },
+  { value: 'Painting', label: 'Painting' },
+  { value: 'DIY crafts', label: 'DIY crafts' },
+  { value: 'Dancing', label: 'Dancing' },
+  { value: 'Acting', label: 'Acting' },
+  { value: 'Poetry', label: 'Poetry' },
+  { value: 'Gardening', label: 'Gardening' },
+  { value: 'Blogging', label: 'Blogging' },
+  { value: 'Content creation', label: 'Content creation' },
+  { value: 'Designing', label: 'Designing' },
+  { value: 'Doodling', label: 'Doodling' },
+  { value: 'Movies', label: 'Movies' },
+  { value: 'Music', label: 'Music' },
+  { value: 'Travelling', label: 'Travelling' },
+  { value: 'Reading', label: 'Reading' },
+  { value: 'Sports', label: 'Sports' },
+  { value: 'Social media', label: 'Social media' },
+  { value: 'Gaming', label: 'Gaming' },
+  { value: 'Binge-watching', label: 'Binge-watching' },
+  { value: 'Biking', label: 'Biking' },
+  { value: 'Clubbing', label: 'Clubbing' },
+  { value: 'Shopping', label: 'Shopping' },
+  { value: 'Theater & Events', label: 'Theater & Events' },
+  { value: 'Anime', label: 'Anime' },
+  { value: 'Stand ups', label: 'Stand ups' },
+  { value: 'Running', label: 'Running' },
+  { value: 'Cycling', label: 'Cycling' },
+  { value: 'Yoga & Meditation', label: 'Yoga & Meditation' },
+  { value: 'Walking', label: 'Walking' },
+  { value: 'Working Out', label: 'Working Out' },
+  { value: 'Trekking', label: 'Trekking' },
+  { value: 'Areobics/Zumba', label: 'Areobics/Zumba' },
+  { value: 'Swimming', label: 'Swimming' },
+  { value: 'Pets', label: 'Pets' },
+  { value: 'Foodie', label: 'Foodie' },
+  { value: 'Vegan', label: 'Vegan' },
+  { value: 'News & Politics', label: 'News & Politics' },
+  { value: 'Social Service', label: 'Social Service' },
+  { value: 'Entrepreneurship', label: 'Entrepreneurship' },
+  { value: 'Home Decore', label: 'Home Decore' },
+  { value: 'Investment', label: 'Investment' },
+  { value: 'Fashion & Beauty', label: 'Fashion & Beauty' }
+];

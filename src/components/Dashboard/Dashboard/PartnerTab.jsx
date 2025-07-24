@@ -1,10 +1,9 @@
 import React from 'react'
+import PartnerPreferences from '../../../pages/Users/PartnerPreferences'
 
 const PartnerTab = () => {
   return (
-    <div>
-      Partner gfgbdsbg
-    </div>
+    <PartnerPreferences onlyPartnerPrefrence={true} />
   )
 }
 

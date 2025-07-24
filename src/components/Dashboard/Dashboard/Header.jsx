@@ -1,11 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
 import './styles.css'
+import { toast } from "../../Common/Toast";
+import { useDispatch } from "react-redux";
+import { clearUser } from "../../../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [showHelp, setShowHelp] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const helpRef = useRef(null);
   const profileRef = useRef(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+  dispatch(clearUser());
+  navigate("/login");
+  toast.success("Logged out successfully!");
+  };
 
   // Close dropdown when clicked outside
   useEffect(() => {
@@ -105,7 +117,7 @@ const Header = () => {
                   <li><a className="dropdown-item" href="#">Profile</a></li>
                   <li><a className="dropdown-item" href="#">Settings</a></li>
                   <li><hr className="dropdown-divider" /></li>
-                  <li><a className="dropdown-item" href="#">Logout</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={handleLogout}>Logout</a></li>
                 </ul>
               )}
             </div>

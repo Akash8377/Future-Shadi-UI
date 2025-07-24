@@ -3,15 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../../config';
 import ProfileTab from '../ProfileTab';
 import { Link } from 'react-router-dom';
+import { setUser } from '../../../../features/user/userSlice';
+import { toast } from '../../../Common/Toast';
+import axios from 'axios';
 
 const DashProfile = ({onEditClick}) => {
-
+  const { userInfo, token } = useSelector(state => state.user);
+  const dispatch =useDispatch()
     const tabComponents = {
     profile: ProfileTab,
     };
 
     const fileInputRef = useRef(null);
-    const { userInfo } = useSelector(state => state.user);
     console.log("User Info", userInfo)
 
     const handleUploadClick  =() =>{
@@ -19,6 +22,76 @@ const DashProfile = ({onEditClick}) => {
             fileInputRef.current.click();
         }
     }
+
+        const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Validate file size (15MB)
+      if (file.size > 15 * 1024 * 1024) {
+        toast.error('File size should be less than 15MB');
+        return;
+      }
+
+      // Validate file type
+      const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      if (!validTypes.includes(file.type)) {
+        toast.error('Only JPG, PNG, or GIF files are allowed');
+        return;
+      }
+
+      toast.error(null);
+      const reader = new FileReader();
+      // reader.onloadend = () => {
+      //   setPreviewImage(reader.result);
+      // };
+      reader.readAsDataURL(file);
+
+      // Upload the file immediately after selection
+      uploadProfileImage(file);
+    }
+  };
+
+  const uploadProfileImage = async (file) => {
+    const formData = new FormData();
+    formData.append('profile', file);
+
+    try {
+      // setUploadProgress(0);
+      // setUploadSuccess(false)
+
+      const response = await axios.post(`${config.baseURL}/api/profile/upload-image`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          // setUploadProgress(percentCompleted);
+        }
+      });
+
+      // setUploadSuccess(true);
+      toast.success("Upload successful")
+      console.log('Upload successful:', response.data);
+       const updatedUser = {
+      ...userInfo,
+      profile_image: response.data.imageUrl,
+    };
+
+    dispatch(setUser({
+      userInfo: updatedUser,
+      token: token, // ← do NOT change token
+    }));
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast.error(
+        error.response?.data?.message ||
+        'Failed to upload image. Please try again.'
+      );
+    }
+  };
 
   return (
     <div>
@@ -28,18 +101,19 @@ const DashProfile = ({onEditClick}) => {
             <div className="prof-card">
               <input type="file" 
               accept="image/*" 
-              id="photoInput" 
+              id="photoInput"
+              onChange={handleImageChange} 
               ref={fileInputRef}
               className="d-none" />
               <div className="avatar-wrap">
-                <img id="avatarPreview" src={userInfo?.profile_image ?`${config.baseURL}/uploads/profiles/${userInfo.profile_image}`:"images/userprofile.png"} className="avatar-img" alt="avatar" />
+                <img id="avatarPreview" src={userInfo?.profile_image ?`${config.baseURL}/uploads/profiles/${userInfo.profile_image}`:"images/userprofile.png"} className="avatar-img img-fluid object-fit-cover" style={{objectPosition: "top" /* This ensures the top of the image is shown */}} alt="avatar" />
                 <span className="avatar-plus" id="uploadTrigger" onClick={handleUploadClick}>
                   <i className="fa fa-plus" aria-hidden="true"></i>
                 </span>
               </div>
               <div className="section d-flex justify-content-between align-items-center">
                 <div>
-                  <div className="title">{userInfo.first_name} {userInfo.last_name}</div>
+                  <div className="title">{userInfo?.first_name} {userInfo?.last_name}</div>
                   <div className="small text-muted">SH19430033</div>
                 </div>
                 <Link href="#" onClick={onEditClick} className="small fw-semibold text-decoration-none" style={{ color: '#d61962' }}>Edit</Link>
@@ -105,7 +179,7 @@ const DashProfile = ({onEditClick}) => {
               </table>
 
               <hr />
-              <p className="small mb-0"><strong>Improve your Profile</strong></p>
+              <p className="small mb-0 cursor-pointer" onClick={onEditClick}><strong>Improve your Profile</strong></p>
             </div>
           </div>
 

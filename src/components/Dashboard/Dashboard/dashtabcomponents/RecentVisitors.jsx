@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useSelector } from "react-redux";
+import config from "../../../../config";
+import axios from "axios";
+import calculateAge from "../../../Common/commonfunctions";
+import { useGetUsersByLookingForQuery } from "./slice/matchSlice";
 
 // Custom Arrow Components
 function SampleNextArrow(props) {
@@ -46,56 +51,6 @@ function SamplePrevArrow(props) {
   );
 }
 
-const visitors = [
-  {
-    name: "Saloni B.",
-    age: "24yrs",
-    height: "5'3",
-    language: "Hindi",
-    city: "Gwalior",
-    image: "images/womenpic.jpg",
-  },
-  {
-    name: "Saloni B.",
-    age: "24yrs",
-    height: "5'3",
-    language: "Hindi",
-    city: "Gwalior",
-    image: "images/womenpic.jpg",
-  },
-  {
-    name: "Saloni B.",
-    age: "24yrs",
-    height: "5'3",
-    language: "Hindi",
-    city: "Gwalior",
-    image: "images/womenpic.jpg",
-  },
-  {
-    name: "Saloni B.",
-    age: "24yrs",
-    height: "5'3",
-    language: "Hindi",
-    city: "Gwalior",
-    image: "images/womenpic.jpg",
-  },
-  {
-    name: "Saloni B.",
-    age: "24yrs",
-    height: "5'3",
-    language: "Hindi",
-    city: "Gwalior",
-    image: "images/womenpic.jpg",
-  },
-  {
-    name: "Saloni B.",
-    age: "24yrs",
-    height: "5'3",
-    language: "Hindi",
-    city: "Gwalior",
-    image: "images/womenpic.jpg",
-  },
-];
 
 const settings = {
   dots: false,
@@ -123,21 +78,42 @@ const settings = {
 };
 
 const RecentVisitors = () => {
+    const [visitor, setVisitors] = useState([]);  
+    const user = useSelector((state) => state.user.userInfo)
+    
+    const lookingFor = user?.looking_for;
+    const searchFor = lookingFor === "Bride" ? "Groom" : "Bride";
+
+    const { data, isLoading, isError } = useGetUsersByLookingForQuery(searchFor);
+
+
+     useEffect(() => {
+    if (data?.success && Array.isArray(data.users)) {
+      setVisitors(data.users);
+    }
+  }, [data]);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error loading visitors</p>;
+
+    
+    console.log(visitor, "vusutorsss")
+
   return (
     <div className="recent-visitor mt-5 px-3 position-relative">
       <h6 className="mb-3">
         Recent Visitors{" "}
-        <span className="badge bg-danger ms-2">{visitors.length}</span>
+        <span className="badge bg-danger ms-2">{visitor.length}</span>
       </h6>
 
       <Slider {...settings}>
-        {visitors.map((visitor, index) => (
+        {visitor.map((visitor, index) => (
           <div key={index}>
             <div className="profile-blk text-center px-2">
               <div className="img-profile mb-2">
                 <img
-                  src={visitor.image}
-                  alt={visitor.name}
+                  src={visitor.profile_image ? `${config.baseURL}/uploads/profiles/${visitor.profile_image}` : "images/womenpic.jpg"}
+                   alt={`${visitor.first_name} ${visitor.last_name}`}
                   className="rounded-circle"
                   style={{
                     width: "150px",
@@ -147,9 +123,9 @@ const RecentVisitors = () => {
                   }}
                 />
               </div>
-              <h6>{visitor.name}</h6>
+              <h6>{visitor.first_name}{" "}{visitor.last_name}</h6>
               <p className="text-muted" style={{ fontSize: "14px" }}>
-                {visitor.age}, {visitor.height}, {visitor.language},{" "}
+              {calculateAge(visitor.birth_day, visitor.birth_month, visitor.birth_year)} years, {visitor.height}, {visitor.language},{" "}
                 {visitor.city}
               </p>
               <div className="connect-btn mt-2">

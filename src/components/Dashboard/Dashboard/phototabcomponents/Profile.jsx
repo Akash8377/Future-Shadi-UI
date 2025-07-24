@@ -2,9 +2,82 @@ import React from 'react'
 import config from '../../../../config';
 import { useDispatch, useSelector } from 'react-redux';
 import { calculateAge } from '../../../../utils/helpers';
+import { setUser } from '../../../../features/user/userSlice';
+import { toast } from '../../../Common/Toast';
+import axios from 'axios';
 
-const Profile = () => {
+const Profile = ({onChangeTab}) => {
   const { userInfo, token } = useSelector(state => state.user);
+  const dispatch =useDispatch()
+    const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Validate file size (15MB)
+      if (file.size > 15 * 1024 * 1024) {
+        toast.error('File size should be less than 15MB');
+        return;
+      }
+
+      // Validate file type
+      const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      if (!validTypes.includes(file.type)) {
+        toast.error('Only JPG, PNG, or GIF files are allowed');
+        return;
+      }
+
+      toast.error(null);
+      const reader = new FileReader();
+      // reader.onloadend = () => {
+      //   setPreviewImage(reader.result);
+      // };
+      reader.readAsDataURL(file);
+
+      // Upload the file immediately after selection
+      uploadProfileImage(file);
+    }
+  };
+
+  const uploadProfileImage = async (file) => {
+    const formData = new FormData();
+    formData.append('profile', file);
+
+    try {
+      // setUploadProgress(0);
+      // setUploadSuccess(false)
+
+      const response = await axios.post(`${config.baseURL}/api/profile/upload-image`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          // setUploadProgress(percentCompleted);
+        }
+      });
+
+      // setUploadSuccess(true);
+      toast.success("Upload successful")
+      console.log('Upload successful:', response.data);
+       const updatedUser = {
+      ...userInfo,
+      profile_image: response.data.imageUrl,
+    };
+
+    dispatch(setUser({
+      userInfo: updatedUser,
+      token: token, // ← do NOT change token
+    }));
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast.error(
+        error.response?.data?.message ||
+        'Failed to upload image. Please try again.'
+      );
+    }
+  };
 
   return (
     <div>
@@ -24,7 +97,7 @@ const Profile = () => {
                 <img className="w-100 h-100 object-fit-cover" src={userInfo?.profile_image ?`${config.baseURL}/uploads/profiles/${userInfo.profile_image}`:"images/camera.png"}  />
               </label>):(<label
                 htmlFor="fileUpload"
-                className="w-100 h-100 d-flex flex-column justify-content-center align-items-center"
+                className="d-flex flex-column justify-content-center align-items-center overflow-hidden"
               >
                 <p>
                   <span className="click-here">Click here</span>
@@ -34,7 +107,7 @@ const Profile = () => {
                 <img src={"images/camera.png"}  />
                 <strong className="d-block mt-2">Photo</strong>
               </label>)}
-              <input type="file" id="fileUpload" className="d-none" />
+              <input type="file" id="fileUpload" className="d-none" onChange={handleImageChange} accept="image/*"/>
             </div>
           </div>
           <div className="col-md-9 col-lg-10">
@@ -71,7 +144,7 @@ const Profile = () => {
                     </tr>
                     <tr>
                       <td>Mother Tongue</td>
-                      <td>: ------ </td>
+                      <td>: {userInfo.mother_tongue} </td>
                     </tr>
                   </tbody>
                 </table>
@@ -95,13 +168,13 @@ const Profile = () => {
                       <a href="#">Set Contact Filters</a>
                     </div>
                     <div className="col-6 col-md-4">
-                      <a href="#">Edit Partner Profile</a>
+                      <a href="#" onClick={()=>onChangeTab("partner")}>Edit Partner Profile</a>
                     </div>
                     <div className="col-6 col-md-4">
-                      <a href="#">Add Photos</a>
+                      <a href="#" onClick={()=>onChangeTab("photos")}>Add Photos</a>
                     </div>
                     <div className="col-6 col-md-4">
-                      <a href="#">Hide / Delete Profile</a>
+                      <a href="#" onClick={()=>onChangeTab("settings")}>Hide / Delete Profile</a>
                     </div>
                     <div className="col-6 col-md-4">
                       <a href="#">Edit Contact Details</a>

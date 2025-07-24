@@ -32,7 +32,7 @@ const FIELD_OPTIONS_MAP = {
   state: Object.values(STATE).flat(),
 };
 
-const PartnerPreferences = () => {
+const PartnerPreferences = ({onlyPartnerPrefrence = false}) => {
   const [showExtraCards, setShowExtraCards] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("Edit");
@@ -40,11 +40,11 @@ const PartnerPreferences = () => {
   const [currentField, setCurrentField] = useState(null);
   const [ranges, setRanges] = useState({ age: [20, 23], height: [59, 67], income: [1, 5] });
   const [selectedOptions, setSelectedOptions] = useState({});
-  const [preferences, setPreferences] = useState(INITIAL_PREFS);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
   const { userInfo, token } = useSelector(state => state.user);
+  const [preferences, setPreferences] = useState(typeof userInfo?.partner_preference === 'object'? userInfo?.partner_preference : JSON.parse(userInfo?.partner_preference) || INITIAL_PREFS);
   const dispatch = useDispatch()
 
 
@@ -163,6 +163,7 @@ const handleFormSubmit = async (formData) => {
     // Combine form data with preferences
     const completeData = {
       ...otherData,
+      onlyPartnerPrefrence:onlyPartnerPrefrence,
       ...preferences
     };
     // Make API call
@@ -181,14 +182,22 @@ const handleFormSubmit = async (formData) => {
     
     if (response.data.success) {
       toast.success("Partner preferences saved successfully!");
-       const updatedUser = {
-      ...userInfo,
-      verificationData:  otherData.verificationData,
-      hobbies:  otherData.hobbies,
-      financial_status:  otherData.financialStatus,
-      family_details:  otherData.familyDetails,
-      partner_preference: preferences,
-    };
+      let updatedUser = {}
+      if(!onlyPartnerPrefrence){
+        updatedUser = {
+          ...userInfo,
+          verificationData:  otherData.verificationData,
+          hobbies:  otherData.hobbies,
+          financial_status:  otherData.financialStatus,
+          family_details:  otherData.familyDetails,
+          partner_preference: preferences,
+        };
+      }else{
+        updatedUser = {
+          ...userInfo,
+          partner_preference: preferences,
+        };
+      }
      dispatch(setUser({
       userInfo: updatedUser,
       token: token, // ← do NOT change token
@@ -252,8 +261,8 @@ const handleFormSubmit = async (formData) => {
 
   return (
     <>
-      <Header />
-      <div className="verfiy-profile">
+      {!onlyPartnerPrefrence && <Header />}
+      <div className={`verfiy-profile ${onlyPartnerPrefrence && "bg-transparent" }`}>
         <div className="partner-perfrence">
           <div className="container">
             <h2>Recommended Partner Preferences</h2>
@@ -299,7 +308,7 @@ const handleFormSubmit = async (formData) => {
           </div>
         </div>
       </div>
-      <Footer />
+      {!onlyPartnerPrefrence && <Footer />}
     </>
   );
 };
