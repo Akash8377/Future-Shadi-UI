@@ -776,9 +776,13 @@ ul.pref-body li span i {
 }
 
 .modal-body {
-    max-height: 60vh;
+    /* max-height: 60vh; */
     height: fit-content;
     overflow: hidden;
+    overflow-y: overlay;
+}
+.partner-prefrence {
+    max-height: 57vh;
     overflow-y: overlay;
 }
 
@@ -791,3 +795,4 @@ ul.pref-body li span i {
 .cursor-pointer{
   cursor: pointer;
 }
+

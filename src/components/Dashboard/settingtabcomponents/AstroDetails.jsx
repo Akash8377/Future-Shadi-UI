@@ -1,10 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
+import axios from 'axios';
+import config from '../../../config';
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from '../../../features/user/userSlice';
+
 const AstroDetails = ({userInfo, token}) => {
+    const [isOpen, setIsOpen] = useState(false);
   const [isMainOpen, setIsMainOpen] = useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isAstroOpen, setIsAstroOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
+   const [contactStatus, setContactStatus] = useState("premiumMembers");
+  
+     useEffect(() => {
+      const loadContactSettings = async () => {
+        try {
+          const response = await axios.get(
+            `${config.baseURL}/api/profile/profile-settings`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          );
+          console.log("response.data.settings?.display_contact_status",response.data.settings)
+          if (response.data.settings?.display_contact_status) {
+            setContactStatus(response.data.settings.display_contact_status);
+          }
+        } catch (error) {
+          console.error('Failed to load contact settings:', error);
+        }
+      };
+  
+      if (isOpen) {
+        loadContactSettings();
+      }
+    }, [isOpen]);
 
   return (
     <>

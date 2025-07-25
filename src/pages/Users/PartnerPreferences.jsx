@@ -288,7 +288,7 @@ const handleFormSubmit = async (formData) => {
               <Modal.Header closeButton>
                 <Modal.Title>{modalTitle}</Modal.Title>
               </Modal.Header>
-              <Modal.Body>{renderModalContent()}</Modal.Body>
+              <Modal.Body><div className="partner-prefrence">{renderModalContent()}</div></Modal.Body>
               <Modal.Footer>
                 <button className="btn btn-primary" onClick={currentField?.field === "ageRange" ||
                   currentField?.field === "heightRange" || currentField?.field === "annualIncome" ?handleClose : handleSave}>
