@@ -9,8 +9,8 @@ const PreferenceCard = ({
   fields, 
   onItemClick 
 }) => {
-  console.log("field", preferences)
-  console.log("field", section)
+  // console.log("field", preferences)
+  // console.log("field", section)
   return (
     <section className="pref-card">
       {/* <div className="pref-head" onClick={() => onItemClick(section, "title")}> */}

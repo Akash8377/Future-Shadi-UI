@@ -776,7 +776,8 @@ ul.pref-body li span i {
 }
 
 .modal-body {
-    /* max-height: 200px; */
+    max-height: 60vh;
+    height: fit-content;
     overflow: hidden;
     overflow-y: overlay;
 }

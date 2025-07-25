@@ -38,12 +38,12 @@ const SearchByCity = () => {
         ...searchData,
         ...formData,
       } 
-      console.log("Form submitted:", completeData);
+      // console.log("Form submitted:", completeData);
       const response = await axios.post(
         `${config.baseURL}/api/profile/register`,
         completeData
       );
-      console.log("Registration successful:", response.data);
+      // console.log("Registration successful:", response.data);
       if (response.data.success) {
         dispatch(
           setUser({

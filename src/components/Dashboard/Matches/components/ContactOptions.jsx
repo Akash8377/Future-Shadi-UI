@@ -1,0 +1,19 @@
+const ContactOptions = () => (
+  <div className="text-center">
+    <p className="upgrade-text mb-2">
+      <span className="text-primary">Upgrade</span> to<br />
+      Contact her directly
+    </p>
+    <button className="btn btn-outline-info contact-btn mb-2 w-100">
+      <i className="fa fa-phone me-1" aria-hidden="true"></i> Call
+    </button>
+    <button className="btn btn-outline-success contact-btn mb-2 w-100">
+      <i className="fa fa-whatsapp me-1" aria-hidden="true"></i> WhatsApp
+    </button>
+    <button className="btn btn-outline-primary contact-btn w-100">
+      <i className="fa fa-commenting-o me-1" aria-hidden="true"></i> Shaadi Chat
+    </button>
+  </div>
+);
+
+export default ContactOptions;

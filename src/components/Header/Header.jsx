@@ -73,7 +73,7 @@ const Header = () => {
                     data-bs-toggle="dropdown"
                   >
                     <span className="user-greeting">
-                      Hi, {userInfo.first_name || "User"}{" "}
+                      Hi, {userInfo?.first_name || "User"}{" "}
                       <span className="dropdown-arrow">
                         {isDropdownOpen ? "▲" : "▼"}
                       </span>

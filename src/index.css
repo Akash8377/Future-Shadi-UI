@@ -818,8 +818,9 @@ section.login-part {
 .dropdown-item {
   display: block;
   padding: 8px 15px;
-  color: #333;
-  text-decoration: none;
+  color: #333 !important;
+  text-decoration: none !important;
+  background: transparent !important;
 }
 
 .dropdown-divider {
@@ -836,7 +837,7 @@ section.login-part {
 
 .modal.letsbeginmodal .modal-dialog {
   max-width: 645px;
-  width: auto;
+  width: fit-content;
 }
 
 .modal.letsbeginmodal .modal-content {

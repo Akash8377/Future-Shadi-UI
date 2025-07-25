@@ -80,7 +80,7 @@ const ProfileUpload = () => {
 
       setUploadSuccess(true);
       toast.success("Upload successful")
-      console.log('Upload successful:', response.data);
+      // console.log('Upload successful:', response.data);
        const updatedUser = {
       ...userInfo,
       profile_image: response.data.imageUrl,

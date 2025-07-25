@@ -85,7 +85,7 @@ const PartnerPreferences = ({onlyPartnerPrefrence = false}) => {
     const formatValue = type === "height"
       ? `${convertToFeet(value[0])} – ${convertToFeet(value[1])}`
       : type === "income"
-        ? `INR ${value[0]} lakh to ${value[1]} lakhs`
+        ? `INR ${value[0]} ${value[0] > 1 ? 'lakhs' : 'lakh'} to ${value[1]} lakhs`
         : `${value[0]} – ${value[1]}`;
 
     setPreferences(prev => ({
@@ -232,7 +232,8 @@ const handleFormSubmit = async (formData) => {
           max={type === "age" ? 73 : type === "height" ? 84 : 20}
           onChange={(v) => handleRangeChange(type, v)}
           formatValue={type === "height" ?
-            (val) => `${convertToFeet(val[0])} - ${convertToFeet(val[1])}` :
+            (val) => `${convertToFeet(val[0])} - ${convertToFeet(val[1])}` : type === "income" ?
+            (val) => `INR ${val[0]} ${val[0] > 1 ? 'lakhs' : 'lakh'} - ${val[1]} lakhs` :
             undefined}
         />
       );

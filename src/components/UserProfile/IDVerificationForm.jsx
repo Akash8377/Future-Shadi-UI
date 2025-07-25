@@ -9,7 +9,7 @@ const IDVerificationForm = ({ type, onSuccess, onBack }) => {
     useEffect(() => {
       const otherData = JSON.parse(sessionStorage.getItem("otherData"));
       if (otherData?.verificationData) {
-        console.log(otherData?.verificationData)
+        // console.log(otherData?.verificationData)
         setIdNumber(otherData?.verificationData?.idNumber)
       }
     }, []);

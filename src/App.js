@@ -9,8 +9,11 @@ import VerifyProfile from './pages/Users/VerifyProfile.jsx';
 import HobbiesInterests from './pages/Users/HobbiesInterests.jsx';
 import FamilyDetailsForm from './pages/Users/FamilyDetailsForm.jsx';
 import PartnerPreferences from './pages/Users/PartnerPreferences.jsx';
-import DashboardPage from './components/Dashboard/Dashboard/DashboardPage.jsx';
+import DashboardPage from './components/Dashboard/DashboardPage.jsx';
 import ForgotPasswordOTP from './pages/Users/forget-password/ForgotPasswordOTP.jsx';
+import Matches from './components/Dashboard/Matches/Matches.jsx';
+import Search from './components/Dashboard/search/Search.jsx';
+import MessageInbox from './components/Dashboard/imboxmessage/MessageInbox.jsx';
 
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
         <Route path="/partner-preferences" element={<PartnerPreferences />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/forget-password" element={<ForgotPasswordOTP />} />
+        <Route path="/message-inbox" element={<MessageInbox />} />
+        <Route path="/matches" element={<Matches />} />
+        <Route path="/search-profile" element={<Search />} />
       </Routes>
     </Suspense>
   );

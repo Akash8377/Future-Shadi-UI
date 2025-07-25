@@ -22,7 +22,7 @@ const VerifyProfile = () => {
   useEffect(() => {
     const otherData = JSON.parse(sessionStorage.getItem("otherData"));
     if (otherData?.verificationData) {
-      console.log(otherData?.verificationData)
+      // console.log(otherData?.verificationData)
       setVerificationType(otherData?.verificationData?.type)
       setStep('verify')
     }
