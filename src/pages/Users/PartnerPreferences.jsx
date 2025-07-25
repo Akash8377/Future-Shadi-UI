@@ -44,7 +44,7 @@ const PartnerPreferences = ({onlyPartnerPrefrence = false}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
   const { userInfo, token } = useSelector(state => state.user);
-  const [preferences, setPreferences] = useState(typeof userInfo?.partner_preference === 'object'? userInfo?.partner_preference : JSON.parse(userInfo?.partner_preference) || INITIAL_PREFS);
+  const [preferences, setPreferences] = useState(onlyPartnerPrefrence ? typeof userInfo?.partner_preference === 'object'? userInfo?.partner_preference : JSON.parse(userInfo?.partner_preference) || INITIAL_PREFS :INITIAL_PREFS );
   const dispatch = useDispatch()
 
 

@@ -566,7 +566,7 @@ form#idForm {
 }
 
 
-.added-family-detail .box {
+.added-family-detail .family-box {
   border: 1px solid #d2d2d2;
   border-radius: var(--radius);
   overflow: hidden;
@@ -627,26 +627,26 @@ form#idForm {
 }
 
 
-.added-family-detail .status-card input:checked~.box {
+.added-family-detail .status-card input:checked~.family-box {
   border-color: var(--color-primary);
 }
 
-.added-family-detail .status-card input:checked~.box .header {
+.added-family-detail .status-card input:checked~.family-box .header {
   background: var(--color-primary);
   color: #fff;
 }
 
-.added-family-detail .status-card input:checked~.box .header .radio-dot {
+.added-family-detail .status-card input:checked~.family-box .header .radio-dot {
   background: #DF8525;
   border-color: #fff;
   border: 4px solid #fff;
 }
 
-.added-family-detail .status-card input:checked~.box .details {
+.added-family-detail .status-card input:checked~.family-box .details {
   max-height: 200px;
 }
 
-.added-family-detail .status-card input:checked~.box .header .title {
+.added-family-detail .status-card input:checked~.family-box .header .title {
   color: #fff;
 }
 

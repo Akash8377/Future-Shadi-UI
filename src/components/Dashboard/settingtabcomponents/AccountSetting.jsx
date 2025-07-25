@@ -49,7 +49,7 @@ const AccountSetting = ({ userInfo,token }) => {
       // If OTP is verified, update the email
       const res = await axios.put(`${config.baseURL}/api/profile/update-email`, {
         newEmail,
-        userId: userInfo.id
+        userId: userInfo?.id
       }, {
         headers: {
           Authorization: `Bearer ${token}` // or however you handle auth
@@ -127,7 +127,7 @@ const AccountSetting = ({ userInfo,token }) => {
                     type="button" 
                     className="btn btn-cancel"
                     onClick={() => {
-                      setNewEmail(userInfo.email);
+                      setNewEmail(userInfo?.email);
                       setError("");
                       setSuccess("");
                     }}

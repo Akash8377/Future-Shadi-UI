@@ -8,7 +8,7 @@ import config from "../../config";
 import { toast } from "../../components/Common/Toast";
 import { setUser } from "../../features/user/userSlice";
 import { useDispatch } from "react-redux";
-
+import swal from 'sweetalert';
 const SearchByCity = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
@@ -43,16 +43,22 @@ const SearchByCity = () => {
         `${config.baseURL}/api/profile/register`,
         completeData
       );
-      // console.log("Registration successful:", response.data);
+      console.log("Registration successful:", response.data);
       if (response.data.success) {
         dispatch(
           setUser({
-            user: response.data.user,
+            userInfo: response.data.user,
             token: response.data.token,
           })
         );
         localStorage.setItem("authToken", response.data.token);
-        toast.success("Registration successful!");
+         await swal({
+          title: "Success",
+          text: "Registration successful! Your login details have been sent to your email.",
+          icon: "success",
+          buttons: false, // This hides all buttons
+          timer: 2000,     // Optional: closes alert automatically after 2 seconds
+        });
         navigate("/profile-upload");
       }
     } catch (err) {

@@ -29,6 +29,8 @@ const ProfileTab = ({onChangeTab}) => {
       Object.keys(updatedData).forEach(key => {
         if (section === 'about' || section === 'contact' || section === 'description') {
           // For simple fields (AboutMyself, ContactDetails and description)
+          console.log("updatedUserInfo[key]",updatedUserInfo[key])
+          console.log("updatedData[key]",updatedData[key])
           updatedUserInfo[key] = updatedData[key];
         } else if (section === 'partner') {
           // For partner preferences which is stored as JSON string
@@ -53,7 +55,7 @@ const ProfileTab = ({onChangeTab}) => {
           JSON.parse(updatedUserInfo.verificationData) : null
       };
 
-      // console.log("dataToSend", dataToSend)
+      console.log("dataToSend", dataToSend)
 
       // Make API call to update profile using Axios
       const response = await axios.put(`${config.baseURL}/api/profile/update`, dataToSend, {
@@ -66,7 +68,7 @@ const ProfileTab = ({onChangeTab}) => {
       const result = response.data;
 
       // Handle successful update
-      // console.log('Profile updated successfully:', result);
+      console.log('updated user successfully:', updatedUserInfo);
       dispatch(setUser({
         userInfo: updatedUserInfo,
         token: token, // ← do NOT change token

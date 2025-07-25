@@ -10,7 +10,7 @@ import Step7 from "./Step7";
 import Step8 from "./Step8";
 import Step9 from "./Step9";
 
-const LetsBeginModal = ({ show, onClose, onSubmit }) => {
+const LetsBeginModal = ({ searchData,show, onClose, onSubmit }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     person: "myself",

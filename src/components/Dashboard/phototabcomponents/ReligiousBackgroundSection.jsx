@@ -1,7 +1,7 @@
 import React from 'react';
 import { RELIGIONS, COMMUNITIES, SUBCOMMUNITIES, LANGUAGES } from "../../../constants/formData";
 
-const ReligiousBackgroundSection = ({ setEditingFields,isEditing, getValue, onDataChange, editingFields, onEditClick, onSaveClick, onCancelClick }) => {
+const ReligiousBackgroundSection = ({ setEditingFields, isEditing, getValue, onDataChange, editingFields, onEditClick, onSaveClick, onCancelClick }) => {
   return (
     <div className="row py-3 border-top">
       <div className="col-md-6 pe-md-4">
@@ -104,8 +104,8 @@ const ReligiousBackgroundSection = ({ setEditingFields,isEditing, getValue, onDa
               <td>Mother Tongue</td>
               <td>: {isEditing && editingFields === "religious" ? (
                 <select 
-                  value={getValue('community') || ''} 
-                  onChange={(e) => onDataChange('community', e.target.value)}
+                  value={getValue('mother_tongue') || ''} 
+                  onChange={(e) => onDataChange('mother_tongue', e.target.value)}
                   className="form-select form-select-sm d-inline-block w-75"
                 >
                   <option value="">Select</option>

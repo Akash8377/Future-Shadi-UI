@@ -56,7 +56,7 @@ const FinancialForm = ({ financialStatus, handleFinancialChange, handleFinancial
               onChange={handleFinancialChange}
               required={financialStatus === "" && option.value === "Elite"}
             />
-            <div className="box">
+            <div className="family-box">
               <div className="header">
                 <span className="radio-dot"></span>
                 <span className="title">{option.title}</span>

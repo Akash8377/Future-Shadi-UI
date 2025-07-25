@@ -20,6 +20,7 @@ const ProfileUpload = () => {
 
   // Get user info directly from Redux store
   const { userInfo, token  } = useSelector(state => state.user);
+  console.log(userInfo)
   const isLoggedIn = !!userInfo; // Simplified login check
 
   useEffect(()=>{

@@ -4,13 +4,15 @@ import { createSlice } from '@reduxjs/toolkit';
 const loadInitialState = () => {
   // Check localStorage first (for "remember me" users)
   const localStorageUser = localStorage.getItem('userInfo');
+  // console.log("localStorageUser", localStorageUser)
   if (localStorageUser) {
-    return { userInfo: JSON.parse(localStorageUser), token: localStorage.getItem('token') };
+    return { userInfo: typeof localStorageUser === 'string' ? JSON.parse(localStorageUser) : localStorageUser, token: localStorage.getItem('token') };
   }
   
   const sessionStorageUser = sessionStorage.getItem('userInfo');
+  // console.log("sessionStorageUser", sessionStorage.getItem('userInfo'))
   if (sessionStorageUser) {
-    return { userInfo: JSON.parse(sessionStorageUser), token: sessionStorage.getItem('token') };
+    return { userInfo: typeof sessionStorageUser === 'string' ? JSON.parse(sessionStorageUser) : sessionStorageUser, token: sessionStorage.getItem('token') };
   }
   
   // Default initial state

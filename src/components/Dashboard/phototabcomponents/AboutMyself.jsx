@@ -9,7 +9,8 @@ import HobbiesSection from './HobbiesSection';
 
 const AboutMyself = ({ isEditing, onEditClick, onSaveClick, onCancelClick, onDataChange, updatedData }) => {
   const { userInfo } = useSelector(state => state.user);
-  const familyDetails = JSON.parse(userInfo?.family_details || '{}');
+  console.log("user Info", userInfo)
+  const familyDetails = JSON.parse(userInfo?.family_details);
   const hobbies = userInfo?.hobbies ? JSON.parse(userInfo?.hobbies) : [];
   const [selectedHobbies, setSelectedHobbies] = useState(hobbies || []);
   const [editingFields, setEditingFields] = useState("");
@@ -34,7 +35,7 @@ const AboutMyself = ({ isEditing, onEditClick, onSaveClick, onCancelClick, onDat
     return updatedData[field] !== undefined ? updatedData[field] : userInfo[field];
   };
 
-  const getFamilyValue = (field) => {
+  const getFamilyValue = (field) => {  
     return updatedData[field] !== undefined ? updatedData[field] : familyDetails[field];
   };
 
