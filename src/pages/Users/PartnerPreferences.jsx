@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { Modal } from "react-bootstrap";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import { camelCaseToNormalText } from "../../utils/helpers";
+import { camelCaseToNormalText, convertAgeRange,convertHeightRange,convertIncomeRange } from "../../utils/helpers";
 import { MARITAL_STATUS, RELIGIONS, COMMUNITIES, LANGUAGES, COUNTRIES, STATE, PROFESSIONS, DIET, PROFILEMANAGEDBY, QUALIFICATIONS, OCCUPATIONS } from "../../constants/formData";
 import PreferenceCard from "../../components/PartnerPreferences/PreferenceCard";
 import SliderModal from "../../components/PartnerPreferences/SliderModal";
@@ -38,16 +38,24 @@ const PartnerPreferences = ({onlyPartnerPrefrence = false}) => {
   const [modalTitle, setModalTitle] = useState("Edit");
   const [inputValue, setInputValue] = useState("");
   const [currentField, setCurrentField] = useState(null);
-  const [ranges, setRanges] = useState({ age: [20, 23], height: [59, 67], income: [1, 5] });
   const [selectedOptions, setSelectedOptions] = useState({});
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
   const { userInfo, token } = useSelector(state => state.user);
-  const [preferences, setPreferences] = useState(onlyPartnerPrefrence ? typeof userInfo?.partner_preference === 'object'? userInfo?.partner_preference : JSON.parse(userInfo?.partner_preference) || INITIAL_PREFS :INITIAL_PREFS );
+  const [preferences, setPreferences] = useState(onlyPartnerPrefrence ? userInfo?.partner_preference && typeof userInfo?.partner_preference === 'object'? userInfo?.partner_preference : JSON.parse(userInfo?.partner_preference) || INITIAL_PREFS : INITIAL_PREFS );
+ const [ranges, setRanges] = useState(
+  onlyPartnerPrefrence ? {
+    age: convertAgeRange(preferences?.basic?.ageRange),
+    height: convertHeightRange(preferences?.basic?.heightRange),
+    income: convertIncomeRange(preferences?.education?.annualIncome)
+  } : {
+    age: [20, 23],
+    height: [59, 67],
+    income: [1, 5]
+  }
+);
   const dispatch = useDispatch()
-
-
   const convertToFeet = useCallback((inches) => {
     const feet = Math.floor(inches / 12);
     const remainingInches = inches % 12;
@@ -64,6 +72,7 @@ const PartnerPreferences = ({onlyPartnerPrefrence = false}) => {
     // Handle checkbox fields
     if (FIELD_OPTIONS_MAP[field]) {
       const currentValue = preferences[section][field];
+      console.log("currentValue",currentValue)
       setSelectedOptions(prev => ({
         ...prev,
         [field]: currentValue === "Open to All" ? ["Open to All"] :
@@ -166,6 +175,7 @@ const handleFormSubmit = async (formData) => {
       onlyPartnerPrefrence:onlyPartnerPrefrence,
       ...preferences
     };
+    console.log("completeData",completeData);
     // Make API call
     const response = await axios.post(
       `${config.baseURL}/api/profile/partner-preference`,
@@ -178,7 +188,7 @@ const handleFormSubmit = async (formData) => {
       }
     );
 
-    // console.log("Partner preferences saved successfully:", response.data);
+    console.log("Partner preferences saved successfully:", response.data);
     
     if (response.data.success) {
       toast.success("Partner preferences saved successfully!");
@@ -203,6 +213,7 @@ const handleFormSubmit = async (formData) => {
       token: token, // ← do NOT change token
     }));
       navigate("/dashboard");
+      sessionStorage.removeItem("otherData")
     } else {
       throw new Error(response.data.message || "Failed to save preferences");
     }
@@ -224,6 +235,7 @@ const handleFormSubmit = async (formData) => {
     // Check if it's a slider field
     if (field === "ageRange" || field === "heightRange" || field === "annualIncome") {
       const type = field === "annualIncome" ? "income" : field.replace("Range", "");
+      console.log("ranges[type]",type,ranges[type])
       return (
         <SliderModal
           title={camelCaseToNormalText(field)}

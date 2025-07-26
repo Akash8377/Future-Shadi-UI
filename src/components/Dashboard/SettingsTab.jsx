@@ -99,7 +99,6 @@ const SettingsTab = () => {
   return (
     <div id="settings" role="tabpanel" aria-labelledby="settings-tab">
       <div className="setting-part">
-        <h4>Settings</h4>
         <div className="accordian-setting">
           <div className="mt-4">
             <div className="accordion" id="settingsAccordion">

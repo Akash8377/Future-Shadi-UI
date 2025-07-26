@@ -51,7 +51,7 @@ const LetsBeginModal = ({ searchData,show, onClose, onSubmit }) => {
 
   const handleSubmit = (finalData) => {
     onSubmit(finalData);
-    onClose();
+    // onClose();
   };
 
   return (

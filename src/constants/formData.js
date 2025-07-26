@@ -1219,3 +1219,30 @@ export const HOBBIES = [
   { value: 'Investment', label: 'Investment' },
   { value: 'Fashion & Beauty', label: 'Fashion & Beauty' }
 ];
+
+// src/data/astroData.js
+export const RASHI_OPTIONS = [
+  { key: "Capricorn (Makar)", label: "Capricorn (Makar)" },
+  { key: "Aquarius (Kumbh)", label: "Aquarius (Kumbh)" },
+  { key: "Pisces (Meen)", label: "Pisces (Meen)" }
+];
+
+export const NAKSHATRA_OPTIONS = [
+  { key: "Uttra Ashadha", label: "Uttra Ashadha" },
+  { key: "Shravana", label: "Shravana" },
+  { key: "Dhanistha", label: "Dhanistha" }
+];
+
+export const MANGLIK_OPTIONS = [
+  { key: "Manglik", label: "Manglik" },
+  { key: "Non-Manglik", label: "Non-Manglik" },
+  { key: "Partial Manglik", label: "Partial Manglik" },
+  { key: "Not Sure", label: "Not Sure" }
+];
+
+export const CITY_OPTIONS = [
+  "Faridabad, Haryana, India",
+  "Delhi, India",
+  "Mumbai, India",
+  "Bangalore, India"
+];

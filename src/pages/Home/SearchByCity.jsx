@@ -38,7 +38,7 @@ const SearchByCity = () => {
         ...searchData,
         ...formData,
       } 
-      // console.log("Form submitted:", completeData);
+      console.log("Form submitted:", completeData);
       const response = await axios.post(
         `${config.baseURL}/api/profile/register`,
         completeData
@@ -59,6 +59,7 @@ const SearchByCity = () => {
           buttons: false, // This hides all buttons
           timer: 2000,     // Optional: closes alert automatically after 2 seconds
         });
+        setShowModal(false)
         navigate("/profile-upload");
       }
     } catch (err) {

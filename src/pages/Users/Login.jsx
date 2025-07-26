@@ -86,14 +86,16 @@ const Login = () => {
           title: "Unauthorized",
           text: "Invalid email or password.",
           icon: "error",
-          button: "Try Again",
+          buttons: false, // This hides all buttons
+          timer: 2000,     // Optional: closes alert automatically after 2 seconds
         });
       } else {
         await swal({
           title: "Login Failed",
           text: "Something went wrong. Please try again.",
           icon: "error",
-          button: "OK",
+          buttons: false, // This hides all buttons
+          timer: 2000,     // Optional: closes alert automatically after 2 seconds
         });
       }
     } finally {

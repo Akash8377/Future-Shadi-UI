@@ -20,73 +20,85 @@ const ProfileTab = ({onChangeTab}) => {
     setEditingSection(section);
   };
 
-  const handleSaveClick = async (section) => {
-    try {
-      // Create a deep copy of the original userInfo
-      const updatedUserInfo = JSON.parse(JSON.stringify(userInfo));
-      
-      // Merge the updatedData with the userInfo copy
-      Object.keys(updatedData).forEach(key => {
-        if (section === 'about' || section === 'contact' || section === 'description') {
-          // For simple fields (AboutMyself, ContactDetails and description)
-          console.log("updatedUserInfo[key]",updatedUserInfo[key])
-          console.log("updatedData[key]",updatedData[key])
-          updatedUserInfo[key] = updatedData[key];
-        } else if (section === 'partner') {
-          // For partner preferences which is stored as JSON string
-          const partnerPref = JSON.parse(updatedUserInfo.partner_preference || '{}');
-          updatedUserInfo.partner_preference = JSON.stringify({
-            ...partnerPref,
-            ...updatedData
-          });
-        }
-      });
+const handleSaveClick = async () => {
+  try {
+    // 1. Create a clean copy of userInfo with properly parsed nested objects
+    const updatedUserInfo = {
+      ...userInfo,
+      hobbies: typeof userInfo.hobbies === 'string' ? 
+        safeJsonParse(userInfo.hobbies) : userInfo.hobbies,
+      family_details: parseFamilyDetails(userInfo.family_details),
+      verificationData: typeof userInfo.verificationData === 'string' ? 
+        safeJsonParse(userInfo.verificationData) : userInfo.verificationData
+    };
 
-      // console.log("Complete updated userInfo:", updatedUserInfo);
-      
-      // Prepare the data to send to the server
-      const dataToSend = {
-        ...updatedUserInfo,
-        hobbies: updatedUserInfo.hobbies ? 
-          JSON.parse(updatedUserInfo.hobbies) : null,
-        family_details: updatedUserInfo.family_details ? 
-          JSON.parse(updatedUserInfo.family_details) : null,
-        verificationData: updatedUserInfo.verificationData ? 
-          JSON.parse(updatedUserInfo.verificationData) : null
+    // 2. Handle updates differently for family details
+    const isFamilyUpdate = isFamilyData(updatedData);
+    
+    if (isFamilyUpdate) {
+      updatedUserInfo.family_details = {
+        ...updatedUserInfo.family_details,
+        ...updatedData
       };
-
-      console.log("dataToSend", dataToSend)
-
-      // Make API call to update profile using Axios
-      const response = await axios.put(`${config.baseURL}/api/profile/update`, dataToSend, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+    } else {
+      Object.keys(updatedData).forEach(key => {
+        updatedUserInfo[key] = updatedData[key];
       });
-
-      // Axios response data is in response.data - no need for .json()
-      const result = response.data;
-
-      // Handle successful update
-      console.log('updated user successfully:', updatedUserInfo);
-      dispatch(setUser({
-        userInfo: updatedUserInfo,
-        token: token, // ← do NOT change token
-      }));
-      
-      // Update local state if needed
-      setEditingSection(null);
-      setUpdatedData({});
-
-      // Show success message
-      toast.success('Profile updated successfully!');
-      
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      // Handle error (show error message to user)
-      toast.error(`Error updating profile: ${error.response?.data?.message || error.message}`);
     }
-  };
+
+    // 3. Prepare data for API (ensure no stringified objects)
+    const dataToSend = {
+      ...updatedUserInfo,
+      family_details: updatedUserInfo.family_details || {} // Ensure never null
+    };
+    console.log("Data to send", dataToSend)
+
+    // 4. API call
+    const response = await axios.put(`${config.baseURL}/api/profile/update`, dataToSend, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    // 5. Update state
+    dispatch(setUser({
+      userInfo: updatedUserInfo,
+      token: token,
+    }));
+    
+    setEditingSection(null);
+    setUpdatedData({});
+    toast.success('Profile updated successfully!');
+    
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    toast.error(`Error updating profile: ${error.response?.data?.message || error.message}`);
+  }
+};
+
+// Helper functions
+const safeJsonParse = (str) => {
+  try {
+    return JSON.parse(str);
+  } catch {
+    return {};
+  }
+};
+
+const parseFamilyDetails = (familyData) => {
+  if (!familyData) return {};
+  if (typeof familyData === 'object') return familyData;
+  
+  try {
+    const parsed = JSON.parse(familyData);
+    return typeof parsed === 'object' ? parsed : {};
+  } catch {
+    return {};
+  }
+};
+
+const isFamilyData = (data) => {
+  const familyKeys = ['mother', 'father', 'sisters', 'brothers'];
+  return Object.keys(data).some(key => familyKeys.includes(key));
+};
 
   const handleDataChange = (section, field, value) => {
     // console.log(value)

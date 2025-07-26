@@ -106,3 +106,26 @@ export const formatHeight = (cm) => {
   const inches = Math.round(totalInches % 12);
   return `${feet}′ ${inches}″`;
 };
+
+
+export const convertAgeRange = (ageStr) => {
+  if (!ageStr) return [20, 30]; // Default fallback
+  return ageStr.split(/\s*–\s*/).map(Number).filter(n => !isNaN(n));
+};
+export const convertHeightRange = (heightStr) => {
+  if (!heightStr) return [59, 67]; // Default fallback
+  
+  const feetInchesToInches = (str) => {
+    const [feet, inches] = str.match(/\d+/g) || [0, 0];
+    return parseInt(feet) * 12 + parseInt(inches);
+  };
+
+  const heights = heightStr.split(/\s*–\s*/).map(feetInchesToInches);
+  return heights.length === 2 ? heights : [59, 67];
+};
+
+export const convertIncomeRange = (incomeStr) => {
+  if (!incomeStr) return [1, 5]; // Default fallback
+  const numbers = incomeStr.match(/\d+/g) || [1, 5];
+  return [parseInt(numbers[0]), parseInt(numbers[1] || numbers[0])];
+};

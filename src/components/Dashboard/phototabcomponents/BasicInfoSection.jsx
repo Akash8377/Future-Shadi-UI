@@ -94,7 +94,7 @@ const BasicInfoSection = ({ isEditing, getValue, onDataChange, editingFields }) 
                   ))}
                 </select>
               ) : (
-                getValue('country')
+                getValue('country') || ''
               )}</td>
             </tr>
           </tbody>

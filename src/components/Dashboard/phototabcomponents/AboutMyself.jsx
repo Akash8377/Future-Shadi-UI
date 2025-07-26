@@ -9,9 +9,9 @@ import HobbiesSection from './HobbiesSection';
 
 const AboutMyself = ({ isEditing, onEditClick, onSaveClick, onCancelClick, onDataChange, updatedData }) => {
   const { userInfo } = useSelector(state => state.user);
-  console.log("user Info", userInfo)
-  const familyDetails = JSON.parse(userInfo?.family_details);
-  const hobbies = userInfo?.hobbies ? JSON.parse(userInfo?.hobbies) : [];
+  // console.log("user Info", userInfo)
+  const familyDetails = userInfo?.family_details ? typeof userInfo?.family_details === 'string' ? JSON.parse(userInfo?.family_details): userInfo?.family_details:{mother:"",father:"",sisters:"",brothers:""};
+  const hobbies = typeof userInfo?.hobbies === 'string'  ? JSON.parse(userInfo?.hobbies) : userInfo?.hobbies;
   const [selectedHobbies, setSelectedHobbies] = useState(hobbies || []);
   const [editingFields, setEditingFields] = useState("");
 
@@ -32,11 +32,11 @@ const AboutMyself = ({ isEditing, onEditClick, onSaveClick, onCancelClick, onDat
   };
 
   const getValue = (field) => {
-    return updatedData[field] !== undefined ? updatedData[field] : userInfo[field];
+    return updatedData[field] !== undefined ? updatedData[field] : userInfo[field] || "";
   };
 
   const getFamilyValue = (field) => {  
-    return updatedData[field] !== undefined ? updatedData[field] : familyDetails[field];
+    return updatedData[field] !== undefined ? updatedData[field] : familyDetails[field] || "";
   };
 
   return (

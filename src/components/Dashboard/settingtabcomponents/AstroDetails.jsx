@@ -2,41 +2,100 @@ import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import axios from 'axios';
 import config from '../../../config';
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUser } from '../../../features/user/userSlice';
+import { RASHI_OPTIONS, NAKSHATRA_OPTIONS, MANGLIK_OPTIONS, CITY_OPTIONS } from '../../../constants/formData';
 
-const AstroDetails = ({userInfo, token}) => {
-    const [isOpen, setIsOpen] = useState(false);
+const AstroDetails = ({ userInfo, token }) => {
   const [isMainOpen, setIsMainOpen] = useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isAstroOpen, setIsAstroOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
-   const [contactStatus, setContactStatus] = useState("premiumMembers");
-  
-     useEffect(() => {
-      const loadContactSettings = async () => {
-        try {
-          const response = await axios.get(
-            `${config.baseURL}/api/profile/profile-settings`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`
-              }
-            }
-          );
-          console.log("response.data.settings?.display_contact_status",response.data.settings)
-          if (response.data.settings?.display_contact_status) {
-            setContactStatus(response.data.settings.display_contact_status);
-          }
-        } catch (error) {
-          console.error('Failed to load contact settings:', error);
+  const [contactStatus, setContactStatus] = useState("visibleToALL");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [formData, setFormData] = useState({
+    birth_time: userInfo?.birth_time || "08:00",
+    birth_city: userInfo?.birth_city || CITY_OPTIONS[0],
+    manglik: userInfo?.manglik || "DontKnow",
+    nakshatra: userInfo?.nakshatra || NAKSHATRA_OPTIONS[1].key,
+    rashi: userInfo?.rashi || RASHI_OPTIONS[0].key
+  });
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const loadContactSettings = async () => {
+      if (!isMainOpen) return;
+      try {
+        const response = await axios.get(
+          `${config.baseURL}/api/profile/profile-settings`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        if (response.data.settings?.astro_display_status) {
+          setContactStatus(response.data.settings.astro_display_status);
         }
-      };
-  
-      if (isOpen) {
-        loadContactSettings();
+      } catch (error) {
+        console.error("Failed to load contact settings:", error);
       }
-    }, [isOpen]);
+    };
+    loadContactSettings();
+  }, [isMainOpen, token]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleRadioChange = (name, value) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (type, data) => {
+    try {
+      setLoading(true);
+      setError("");
+      setSuccess("");
+      
+      const url = type === 'settings' 
+        ? '/api/profile/profile-settings' 
+        : '/api/profile/astro-details';
+      
+      await axios.put(`${config.baseURL}${url}`, data, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      if (type === 'astro') {
+        const updatedUser = { ...userInfo, ...data };
+        dispatch(setUser({ userInfo: updatedUser, token }));
+        setShowModal(false);
+      }
+
+      setSuccess(`${type === 'settings' ? 'Privacy' : 'Astro'} settings updated successfully!`);
+      setTimeout(() => setSuccess(""), 2000);
+    } catch (err) {
+      setError(err.response?.data?.message || `Failed to update ${type} settings`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const renderRadioGroup = (name, options) => (
+    <div className="toggle-group">
+      {options.map((option) => (
+        <label key={option.key} className="custom-radio">
+          <input
+            type="radio"
+            name={name}
+            checked={formData[name] === option.key}
+            onChange={() => handleRadioChange(name, option.key)}
+          />
+          <span className="switch-label">{option.label}</span>
+        </label>
+      ))}
+    </div>
+  );
 
   return (
     <>
@@ -81,13 +140,11 @@ const AstroDetails = ({userInfo, token}) => {
                         className="form-check-input"
                         type="radio"
                         name="contactStatus"
-                        id="premiumMembers"
-                        defaultChecked
+                        id="visibleToALL"
+                        checked={contactStatus === "visibleToALL"}
+                        onChange={() => setContactStatus("visibleToALL")}
                       />
-                      <label
-                        className="form-check-label"
-                        htmlFor="premiumMembers"
-                      >
+                      <label className="form-check-label" htmlFor="visibleToALL">
                         Visible to all Members
                       </label>
                     </div>
@@ -96,12 +153,11 @@ const AstroDetails = ({userInfo, token}) => {
                         className="form-check-input"
                         type="radio"
                         name="contactStatus"
-                        id="premiumLiked"
+                        id="visibleToContactedAndAccepted"
+                        checked={contactStatus === "visibleToContactedAndAccepted"}
+                        onChange={() => setContactStatus("visibleToContactedAndAccepted")}
                       />
-                      <label
-                        className="form-check-label"
-                        htmlFor="premiumLiked"
-                      >
+                      <label className="form-check-label" htmlFor="visibleToContactedAndAccepted">
                         Visible to Contacted and accepted Members
                       </label>
                     </div>
@@ -110,15 +166,26 @@ const AstroDetails = ({userInfo, token}) => {
                         className="form-check-input"
                         type="radio"
                         name="contactStatus"
-                        id="noOne"
+                        id="hideFromALL"
+                        checked={contactStatus === "hideFromALL"}
+                        onChange={() => setContactStatus("hideFromALL")}
                       />
-                      <label className="form-check-label" htmlFor="noOne">
+                      <label className="form-check-label" htmlFor="hideFromALL">
                         Hide From All
                       </label>
                     </div>
+                    
+                    {error && <div className="alert alert-danger mt-3">{error}</div>}
+                    {success && <div className="alert alert-success mt-3">{success}</div>}
 
                     <div className="buttons astro-btn">
-                      <button className="btn-submit">Save</button>
+                      <button 
+                        className="btn-submit"
+                        onClick={() => handleSubmit('settings', { astro_display_status: contactStatus })}
+                        disabled={loading}
+                      >
+                        {loading ? "Saving..." : "Save"}
+                      </button>
                       <button className="btn-cancel">Cancel</button>
                     </div>
                   </div>
@@ -136,8 +203,8 @@ const AstroDetails = ({userInfo, token}) => {
                   <button
                     className="edit-btn"
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent accordion toggle
-                      setShowModal(true); // Show modal
+                      e.stopPropagation();
+                      setShowModal(true);
                     }}
                   >
                     EDIT
@@ -186,7 +253,7 @@ const AstroDetails = ({userInfo, token}) => {
 
       <Modal
         show={showModal}
-        onHide={!showModal}
+        onHide={() => setShowModal(false)}
         backdrop="static"
         keyboard={false}
         centered
@@ -215,18 +282,25 @@ const AstroDetails = ({userInfo, token}) => {
                   type="time"
                   className="form-control"
                   id="timeOfBirth"
-                  defaultValue="08:00"
+                  name="birth_time"
+                  value={formData.birth_time}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="col">
                 <label htmlFor="placeOfBirth" className="form-label">
                   Place of Birth
                 </label>
-                <select className="form-select" id="placeOfBirth">
-                  <option>Faridabad, Haryana, India</option>
-                  <option>Delhi, India</option>
-                  <option>Mumbai, India</option>
-                  <option>Bangalore, India</option>
+                <select
+                  className="form-select"
+                  id="placeOfBirth"
+                  name="birth_city"
+                  value={formData.birth_city}
+                  onChange={handleInputChange}
+                >
+                  {CITY_OPTIONS.map(city => (
+                    <option key={city} value={city}>{city}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -234,20 +308,7 @@ const AstroDetails = ({userInfo, token}) => {
             <div className="mb-3">
               <div className="">
                 <h5 className="modal-title">Manglik Dosh</h5>
-                <div className="toggle-group">
-                  <label className="custom-radio">
-                    <input type="radio" name="manglik" defaultChecked />
-                    <span className="switch-label">Don't Know</span>
-                  </label>
-                  <label className="custom-radio">
-                    <input type="radio" name="manglik" />
-                    <span className="switch-label">Yes</span>
-                  </label>
-                  <label className="custom-radio">
-                    <input type="radio" name="manglik" />
-                    <span className="switch-label">No</span>
-                  </label>
-                </div>
+                {renderRadioGroup("manglik", MANGLIK_OPTIONS)}
               </div>
             </div>
 
@@ -258,40 +319,37 @@ const AstroDetails = ({userInfo, token}) => {
               <small className="d-block text-muted">
                 This is based on lunar star sign.
               </small>
-              <select className="form-select" id="raashi">
-                <option>Capricorn (Makar)</option>
-                <option>Aquarius (Kumbh)</option>
-                <option>Pisces (Meen)</option>
+              <select
+                className="form-select"
+                id="raashi"
+                name="rashi"
+                value={formData.rashi}
+                onChange={handleInputChange}
+              >
+                {RASHI_OPTIONS.map(rashi => (
+                  <option key={rashi.key} value={rashi.key}>{rashi.label}</option>
+                ))}
               </select>
             </div>
 
             <div className="mb-3">
               <div className="">
                 <h5 className="modal-title">Nakshtra</h5>
-                <div className="toggle-group">
-                  <label className="custom-radio">
-                    <input type="radio" name="nakshtra" />
-                    <span className="switch-label">Uttra Ashadha</span>
-                  </label>
-                  <label className="custom-radio">
-                    <input type="radio" name="nakshtra" defaultChecked />
-                    <span className="switch-label">Shravana</span>
-                  </label>
-                  <label className="custom-radio">
-                    <input type="radio" name="nakshtra" />
-                    <span className="switch-label">Dhanistha</span>
-                  </label>
-                </div>
+                {renderRadioGroup("nakshatra", NAKSHATRA_OPTIONS)}
               </div>
             </div>
           </div>
-          {/* </div> */}
-          <Modal.Footer>
-            <button type="button" className="btn w-100 py-2 btn-filled">
-              Continue
-            </button>
-          </Modal.Footer>
         </Modal.Body>
+        <Modal.Footer>
+          <button
+            type="button"
+            className="btn w-100 py-2 btn-filled"
+            onClick={() => handleSubmit('astro', formData)}
+            disabled={loading}
+          >
+            {loading ? "Saving..." : "Save Changes"}
+          </button>
+        </Modal.Footer>
       </Modal>
     </>
   );

@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from "../../../features/user/userSlice";
 
 const ContactFilter = ({ userInfo, token }) => {
-  const partnerPref = typeof userInfo?.partner_preference=== 'object'? userInfo?.partner_preference:JSON.parse(userInfo?.partner_preference);
+  const partnerPref = typeof userInfo?.partner_preference === 'object'? userInfo?.partner_preference:JSON.parse(userInfo?.partner_preference || {});
   const dispatch = useDispatch()
   // Initial states
   const [mainOpen, setMainOpen] = useState(false);
@@ -265,7 +265,7 @@ const [selectedOptions, setSelectedOptions] = useState(Object.fromEntries(
                             <div className="country-part">
                               <div className="box">
                                 <label>Selected {label}</label>
-                                {key === "age" && renderRangeSlider("age", ageRange, setAgeRange, 18, 60)}
+                                {key === "age" && renderRangeSlider("age", ageRange, setAgeRange, 20, 71)}
                                 {key === "height" && renderRangeSlider("height", heightRange, setHeightRange, 140, 200, "(ft/inch)")}
                                 {!["age", "height"].includes(key) && renderDropdown(key, label)}
                                 <div className="buttons mt-3">

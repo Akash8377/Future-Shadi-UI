@@ -13,10 +13,13 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+  // Dispatch and navigate inside a timeout to avoid React's concurrent mode issues
+  navigate("/login");
+  toast.success("Logged out successfully!");
+  setTimeout(() => {
     dispatch(clearUser());
-    navigate("/login");
-    toast.success("Logged out successfully!");
-  };
+  }, 1000);
+};
 
   // Close dropdown when clicked outside
   useEffect(() => {

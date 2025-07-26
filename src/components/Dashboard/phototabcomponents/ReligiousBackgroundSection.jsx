@@ -174,11 +174,7 @@ const ReligiousBackgroundSection = ({ setEditingFields, isEditing, getValue, onD
                   className="form-control form-control-sm d-inline-block w-75"
                 />
               ) : (
-                getValue('birth_time') ? (
-                  getValue('birth_time')
-                ) : (
-                  <a href="#">Enter Now</a>
-                )
+                getValue('birth_time') ||"-----"
               )}</td>
             </tr>
             <tr>
@@ -191,11 +187,7 @@ const ReligiousBackgroundSection = ({ setEditingFields, isEditing, getValue, onD
                   className="form-control form-control-sm d-inline-block w-75"
                 />
               ) : (
-                getValue('birth_city') ? (
-                  getValue('birth_city')
-                ) : (
-                  <a href="#">Enter Now</a>
-                )
+                getValue('birth_city') ||"-----"
               )}</td>
             </tr>
           </tbody>

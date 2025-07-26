@@ -125,12 +125,13 @@ const ForgotPasswordOTP = () => {
               name="otp"
               value={formData.otp}
               onChange={handleChange}
-              placeholder="Enter OTP sent to your email"
-            />
+              placeholder="----"
+              className='enter-otp'
+              />
+              <small>OTP sent to {formData.identifier}</small>
             {errors.otp && <div className="error">{errors.otp}</div>}
-
             <button onClick={handleProceedToReset}>
-              Continue to Reset Password
+              Continue
             </button>
           </>
         )}
@@ -155,7 +156,7 @@ const ForgotPasswordOTP = () => {
               </span>
             </div>
             {errors.newPassword && <div className="error">{errors.newPassword}</div>}
-            <label>Confirm Password</label>
+            <label className='mt-3'>Confirm Password</label>
             <div className="password-input-container">
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
