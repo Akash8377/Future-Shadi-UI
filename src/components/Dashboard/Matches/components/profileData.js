@@ -1,6 +1,6 @@
-  import profilepic1 from '../../../assets/profilepic1.jpg';
-  import prachipic from '../../../assets/prachipic.jpg';
-    import requestedPhoto from '../../../assets/request-photo.jpg';
+  import profilepic1 from '../../../../assets/profilepic1.jpg';
+  import prachipic from '../../../../assets/prachipic.jpg';
+    import requestedPhoto from '../../../../assets/request-photo.jpg';
 
   
   export const profileData = [

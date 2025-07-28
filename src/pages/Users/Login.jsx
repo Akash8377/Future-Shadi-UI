@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../features/user/userSlice';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import { toast } from '../../components/Common/Toast';
 import config from '../../config';
 
 const Login = () => {
@@ -31,77 +30,116 @@ const Login = () => {
 
   const validateForm = () => {
     const newErrors = {};
-
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
-
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) return;
-
+const handleRecoverAccount = async () => {
+  try {
     setIsSubmitting(true);
+    const response = await axios.post(`${config.baseURL}/api/auth/recover`, {
+      email: formData.email,
+      password: formData.password
+    });
 
-    try {
-      const response = await axios.post(`${config.baseURL}/api/auth/login`, {
-        email: formData.email,
-        password: formData.password,
+    if (response.data.success) {
+      await Swal.fire({
+        title: "Account Recovered",
+        text: "Your account has been successfully recovered. Please login again.",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 2000
+      });
+    }
+  } catch (error) {
+    await Swal.fire({
+      title: "Recovery Failed",
+      text: error.response?.data?.message || "Could not recover account",
+      icon: "error",
+      showConfirmButton: false,
+      timer: 2000
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
+
+  setIsSubmitting(true);
+
+  try {
+    const response = await axios.post(`${config.baseURL}/api/auth/login`, {
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if (response.data.success) {
+      dispatch(setUser({
+        userInfo: response.data.user,
+        token: response.data.token,
+        rememberMe: formData.rememberMe
+      }));
+
+      await Swal.fire({
+        title: "Success",
+        text: "Logged in successfully!",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 2000
       });
 
-      if (response.data.success) {
-        dispatch(setUser({
-          userInfo: response.data.user,
-          token: response.data.token,
-          rememberMe: formData.rememberMe
-        }));
-
-        await swal({
-          title: "Success",
-          text: "Logged in successfully!",
-          icon: "success",
-          buttons: false, // This hides all buttons
-          timer: 2000,     // Optional: closes alert automatically after 2 seconds
-        });
-
-        navigate('/dashboard');
-      }
-    } catch (error) {
-      console.error('Login error:', error.response?.data || error.message);
-
-      if (error.response?.status === 401) {
-        await swal({
-          title: "Unauthorized",
-          text: "Invalid email or password.",
-          icon: "error",
-          buttons: false, // This hides all buttons
-          timer: 2000,     // Optional: closes alert automatically after 2 seconds
-        });
-      } else {
-        await swal({
-          title: "Login Failed",
-          text: "Something went wrong. Please try again.",
-          icon: "error",
-          buttons: false, // This hides all buttons
-          timer: 2000,     // Optional: closes alert automatically after 2 seconds
-        });
-      }
-    } finally {
-      setIsSubmitting(false);
+      navigate('/dashboard');
     }
-  };
+  } catch (error) {
+    if (error.response?.status === 403 && error.response.data.recoverable) {
+      const result = await Swal.fire({
+        title: "Account Deleted",
+        text: "Your account was deleted but can be recovered within 30 days. Would you like to recover it now?",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Cancel",
+        confirmButtonText: "Recover",
+        cancelButtonColor: "#aaa",
+        confirmButtonColor: "#d61962",  // Custom Recover button color
+      });
+
+      if (result.isConfirmed) {
+        await handleRecoverAccount();
+      }
+
+    } else if (error.response?.status === 401) {
+      await Swal.fire({
+        title: "Unauthorized",
+        text: "Invalid email or password.",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 2000
+      });
+    } else {
+      await Swal.fire({
+        title: "Login Failed",
+        text: "Something went wrong. Please try again.",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 2000
+      });
+    }
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
 
   const togglePasswordVisibility = () => {

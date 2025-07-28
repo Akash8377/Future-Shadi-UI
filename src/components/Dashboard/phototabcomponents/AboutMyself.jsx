@@ -21,7 +21,7 @@ const AboutMyself = ({ isEditing, onEditClick, onSaveClick, onCancelClick, onDat
         const newHobbies = prev.includes(hobbyValue)
           ? prev.filter(item => item !== hobbyValue)
           : [...prev, hobbyValue];
-        onDataChange('hobbies', JSON.stringify(newHobbies));
+        onDataChange('hobbies', newHobbies);
         return newHobbies;
       });
     } else if (hobbyValue.target) {

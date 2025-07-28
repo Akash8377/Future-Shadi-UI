@@ -83,7 +83,7 @@ const Profile = ({onChangeTab}) => {
     <div>
       <div className="profile-name">
         <h4>
-          {userInfo?.first_name} {userInfo?.last_name} <small className="text-muted">(SH19430033)</small>
+          {userInfo?.first_name} {userInfo?.last_name} <small className="text-muted">(SH{userInfo.id?.toString().padStart(8, '0')})</small>
         </h4>
       </div>
       <div className="border p-4 bg-white mt-3">

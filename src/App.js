@@ -13,7 +13,7 @@ import DashboardPage from './components/Dashboard/DashboardPage.jsx';
 import ForgotPasswordOTP from './pages/Users/forget-password/ForgotPasswordOTP.jsx';
 import Matches from './components/Dashboard/Matches/Matches.jsx';
 import Search from './components/Dashboard/search/Search.jsx';
-import MessageInbox from './components/Dashboard/imboxmessage/MessageInbox.jsx';
+import MessageInbox from './components/Dashboard/inboxmessage/MessageInbox.jsx';
 
 function App() {
   return (
