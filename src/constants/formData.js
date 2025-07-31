@@ -367,7 +367,6 @@ export const HEIGHTS = Array.from({ length: 60 }, (_, i) => ({
 export const DIETS = [
   { value: "Veg", label: "Veg" },
   { value: "Non Veg", label: "Non Veg" },
-  { value: "Occasionally Non-Veg", label: "Occasionally Non-Veg" },
   { value: "Eggetarian", label: "Eggetarian" },
   { value: "Jain", label: "Jain" },
   { value: "Vegan", label: "Vegan" },
@@ -1023,9 +1022,10 @@ export const QUALIFICATIONS = [
   { value: "High School", label: "High School" },
   { value: "Intermediate", label: "Intermediate" },
   { value: "Diploma", label: "Diploma" },
-  { value: "Bachelor's Degree", label: "Bachelor" },
-  { value: "Master's Degree", label: "Master" },
-  { value: "Doctorate", label: "PhD" },
+  { value: "Bachelors", label: "Bachelors" },
+  { value: "Masters", label: "Masters" },
+  { value: 'PhD', label: 'PhD' },
+  { value: 'Other', label: 'Other' }
 ]
 export const STATE = {
   "India": [

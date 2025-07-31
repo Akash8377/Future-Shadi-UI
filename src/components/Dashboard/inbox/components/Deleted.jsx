@@ -1,0 +1,145 @@
+
+import React, { useEffect, useState } from 'react';
+import config from '../../../../config'; 
+import SidebarFilterSort from './SidebarFilterSort';
+import { useSelector } from 'react-redux';
+
+function Deleted() {
+  const [receivers, setReceivers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 1;
+
+  const user = useSelector((state) => state.user.userInfo);
+
+  useEffect(() => {
+    const fetchDeletedReceivers = async () => {
+      try {
+        const response = await fetch(`${config.baseURL}/api/inbox/deleted-receiver/${user.id}`);
+        const data = await response.json();
+        setReceivers(data);
+      } catch (error) {
+        console.error('Error fetching accepted receivers:', error);
+      }
+    };
+
+    fetchDeletedReceivers();
+  }, []);
+
+  console.log("Accepted Receivers:", receivers);
+  const totalPages = Math.ceil(receivers.length / itemsPerPage);
+  const currentReceiver = receivers[currentPage];
+
+  const handlePrev = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const calculateAge = (day, month, year) => {
+    const birthDate = new Date(year, month - 1, day);
+    const ageDiff = Date.now() - birthDate.getTime();
+    const ageDate = new Date(ageDiff);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  };
+
+  return (
+    <div className="all-request-part">
+      <div className="row">
+        <div className="col-md-3">
+          <SidebarFilterSort />
+        </div>
+        <div className="col-md-9">
+          <div className="tab-container">
+            <div className="profile-request">
+              {currentReceiver ? (
+                <div className="card-profile">
+                  <div className="row">
+                    <div className="col-md-3 text-center">
+                      {currentReceiver.sender_profile_image ? (
+                        <img
+                          src={`${config.baseURL}/uploads/profiles/${currentReceiver.sender_profile_image}`}
+                          className="profile-img"
+                          alt="Profile"
+                        />
+                      ) : (
+                        <a href="#" className="request-photo-inbox">
+                          Request a Photo
+                        </a>
+                      )}
+                    </div>
+
+                    <div className="col-md-7">
+                      <div className="d-flex justify-content-between">
+                        <div className="profile-part-inbox">
+                          <div className="profile-nameinbox">
+                            {currentReceiver.sender_first_name} {currentReceiver.sender_last_name}
+                          </div>
+                          <div className="text-success mb-2" style={{ fontSize: "14px" }}>
+                            <i className="bi bi-chat-dots"></i> Online 2d ago
+                          </div>
+                        </div>
+                        <div className="text-muted" style={{ fontSize: "14px" }}>
+                          {new Date(currentReceiver.created_at).toLocaleDateString()}
+                        </div>
+                      </div>
+
+                      <hr />
+                      <div className="profile-info">
+                        {calculateAge(
+                          currentReceiver.sender_birth_day,
+                          currentReceiver.sender_birth_month,
+                          currentReceiver.sender_birth_year
+                        )}{" "}
+                        yrs, {currentReceiver.sender_height} <br />
+                        {currentReceiver.community}, {currentReceiver.sender_religion} <br />
+                        {currentReceiver.sender_city}, {currentReceiver.sender_living_in} <br />
+                        {currentReceiver.sender_qualification} <br />
+                        {currentReceiver.sender_profession}
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <p>No accepted notifications found.</p>
+              )}
+
+              <div className="viwed-application">
+                <img src="images/greencheck.png" alt="Green Check" />
+                <p>View All Pending Invitations</p>
+              </div>
+
+              <div className="pagination-wrapper">
+                <button
+                  className="pagination-button"
+                  onClick={handlePrev}
+                  disabled={currentPage === 0}
+                >
+                  &larr; Prev
+                </button>
+                <span className="pagination-info">
+                  Showing {currentPage + 1} of {totalPages}
+                </span>
+                <button
+                  className="pagination-button"
+                  onClick={handleNext}
+                  disabled={currentPage === totalPages - 1}
+                >
+                  Next &rarr;
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Deleted;

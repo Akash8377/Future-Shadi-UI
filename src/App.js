@@ -14,7 +14,8 @@ import ForgotPasswordOTP from './pages/Users/forget-password/ForgotPasswordOTP.j
 import Matches from './components/Dashboard/Matches/Matches.jsx';
 import Search from './components/Dashboard/search/Search.jsx';
 import MessageInbox from './components/Dashboard/inboxmessage/MessageInbox.jsx';
-
+import SearchResultsPage from './components/Dashboard/search/SearchResultsPage.jsx';
+import Inbox from './components/Dashboard/inbox/Inbox.jsx';
 function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -33,6 +34,8 @@ function App() {
         <Route path="/message-inbox" element={<MessageInbox />} />
         <Route path="/matches" element={<Matches />} />
         <Route path="/search-profile" element={<Search />} />
+        <Route path="/search-results" element={<SearchResultsPage />} />
+        <Route path="/inbox" element={<Inbox />} />
       </Routes>
     </Suspense>
   );

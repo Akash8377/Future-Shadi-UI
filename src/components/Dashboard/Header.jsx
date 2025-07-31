@@ -85,14 +85,13 @@ const Header = () => {
               </NavLink>
             </li>
             <li className="nav-item position-relative">
-              <NavLink
+               <NavLink
                 className="nav-link text-white"
-                to="/message-inbox"
+                to="/inbox"
                 title="Inbox Messages"
                 onClick={() => setActiveTab("")}
               >
                 Inbox
-                <span className="badge bg-white text-dark rounded-pill position-absolute top-0 start-100 translate-middle">1</span>
               </NavLink>
             </li>
           </ul>

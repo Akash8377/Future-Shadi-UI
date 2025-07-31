@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { COUNTRIES, EDUCATION_LEVELS, RELIGIONS, MONTHS, DAYS, YEARS } from '../../constants/formData';
+import { COUNTRIES, QUALIFICATIONS, RELIGIONS, MONTHS, DAYS, YEARS } from '../../constants/formData';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import config from '../../config';
@@ -137,7 +137,7 @@ const Register = () => {
                   {renderRadio()}
                   {renderDateFields()}
                   {renderSelect('religion', 'Religion', RELIGIONS)}
-                  {renderSelect('education', 'Education', EDUCATION_LEVELS)}
+                  {renderSelect('education', 'Education', QUALIFICATIONS)}
                   {renderSelect('country', 'Country', COUNTRIES)}
                   {renderInput('email', 'Email Address', 'email')}
                   {renderInput('password', 'Password', 'password')}
