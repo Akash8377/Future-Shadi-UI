@@ -60,7 +60,9 @@ const DashboardPage = () => {
             <DashboardTab onChangeTab={setActiveTab} />
           ) : activeTab === "profile" ? (
             <ProfileTab onChangeTab={setActiveTab} />
-          ) :(
+          ) : activeTab === "more" ? (
+            <MoreTab onChangeTab={setActiveTab} />
+          ):(
             ActiveComponent && <ActiveComponent />
           )}
         </div>

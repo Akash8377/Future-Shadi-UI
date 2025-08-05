@@ -37,16 +37,17 @@ const AdvancedSearchForm = () => {
     </div>
   );
 
-  const renderSelect = (label, name, options) => (
-    <div className="row mb-3">
-      <div className="col-md-3"><label htmlFor={name}>{label}</label></div>
-      <div className="col-md-9">
-        <select className="form-select" id={name} name={name} value={formData[name]} onChange={handleChange}>
-          {options.map(item => <option key={item.value} value={item.value}>{item.label}</option>)}
-        </select>
-      </div>
+const renderSelect = (label, name, options) => (
+  <div className="row mb-3">
+    <div className="col-md-3"><label htmlFor={name}>{label}</label></div>
+    <div className="col-md-9">
+      <select className="form-select" id={name} name={name} value={formData[name]} onChange={handleChange}>
+        <option key={""} value={""}>{`Select ${name.replace('advance', '').replace(/([A-Z])/g, ' $1').trim()}`}</option>
+        {options.map(item => <option key={item.value} value={item.value}>{item.label}</option>)}
+      </select>
     </div>
-  );
+  </div>
+);
 
   const renderCheckboxGroup = (label, name, items, handler) => (
     <div className="row mb-3">
@@ -70,10 +71,6 @@ const AdvancedSearchForm = () => {
       </div>
     </div>
   );
-
-  if(searchResults){
-    console.log("Search Result", searchResults)
-  }
 
   const renderAccordionItem = (id, title, children) => (
     <div className="accordion-item">
@@ -112,6 +109,8 @@ const AdvancedSearchForm = () => {
               className="form-select" 
               multiple
               onChange={(e) => handleMultiSelectChange('advanceMotherTongue','advanceMotherTongue')}
+              placeholder="Select Mother Tongue"
+              value={formData['advanceMotherTongue']}
             >
               {LANGUAGES.map((item) => (
                 <option key={item.value} value={item.value}>{item.label}</option>

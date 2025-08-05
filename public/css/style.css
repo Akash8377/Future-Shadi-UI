@@ -1904,9 +1904,9 @@ a.match-top {
     align-items: center;
 }
 
-.recent-search-box .search-item:hover {
+/* .recent-search-box .search-item:hover {
     background-color: #f9f9f9;
-}
+} */
 
 .recent-search-box .view-more {
     color: var(--color-primary);
@@ -1928,6 +1928,14 @@ a.match-top {
 }
 
 .recent-search-box .view-more:hover .hover-box {
+    display: block;
+}
+
+.recent-search-box .recent-search-item {
+    cursor: pointer;
+    position: relative;
+}
+.recent-search-box .recent-search-item:hover .hover-box {
     display: block;
 }
 

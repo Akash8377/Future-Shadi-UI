@@ -15,7 +15,7 @@ const DashProfile = ({onEditClick}) => {
     };
 
     const fileInputRef = useRef(null);
-    // console.log("User Info", userInfo)
+    console.log("User Info", userInfo)
 
     const handleUploadClick  =() =>{
         if(fileInputRef.current){
@@ -114,7 +114,7 @@ const DashProfile = ({onEditClick}) => {
               <div className="section d-flex justify-content-between align-items-center">
                 <div>
                   <div className="title">{userInfo?.first_name} {userInfo?.last_name}</div>
-                  <div className="small text-muted">SH{userInfo.id?.toString().padStart(8, '0')}</div>
+                  <div className="small text-muted">{userInfo.profileId}</div>
                 </div>
                 <Link href="#" onClick={onEditClick} className="small fw-semibold text-decoration-none" style={{ color: '#d61962' }}>Edit</Link>
               </div>

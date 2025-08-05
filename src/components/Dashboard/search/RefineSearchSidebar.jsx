@@ -109,7 +109,7 @@ const MultiSelectFilter = ({ title, options, value = [], onChange, showMore = fa
             className="btn btn-link p-0 text-decoration-none small"
             onClick={() => setExpanded(!expanded)} 
           >
-            {expanded ? "- Show Less" : "+ Show More"}
+            {expanded ? "Show Less" : "Show More"}
           </button>
             </div>
         )}

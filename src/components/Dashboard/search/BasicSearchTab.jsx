@@ -7,7 +7,7 @@ const BasicSearchTab = () => {
   return (
     <div className="Basic-search">
       <ProfileIdSearch isAdvanced={false} />
-      <RecentSearches />
+      <RecentSearches isAdvanced={false}/>
       <BasicSearchForm />
     </div>
   );

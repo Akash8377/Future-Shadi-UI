@@ -39,6 +39,7 @@ const BasicSearchForm = () => {
       <div className="col-md-3"><label htmlFor={name}>{label}</label></div>
       <div className="col-md-9">
         <select className="form-select" id={name} name={name} value={formData[name]} onChange={handleChange}>
+          <option key={""} value={""}> {`Select ${name.replace(/([A-Z])/g, ' $1').trim().replace(/^./, str => str.toUpperCase())}`}</option>
           {options.map(item => <option key={item.value} value={item.value}>{item.label}</option>)}
         </select>
       </div>
@@ -98,6 +99,8 @@ const BasicSearchForm = () => {
               className="form-select" 
               multiple
               onChange={() => handleMultiSelectChange('motherTongue', 'motherTongue')}
+               placeholder="Select Mother Tongue"
+              value={formData['motherTongue']}
             >
               {LANGUAGES.map(item => <option key={item.value} value={item.value}>{item.label}</option>)}
             </select>

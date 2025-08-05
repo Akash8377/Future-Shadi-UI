@@ -3,23 +3,24 @@ import axios from 'axios';
 import config from '../../../config';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from '../../Common/Toast';
 
 const useSearchFormHandlers = (isAdvanced = false) => {
-  const userInfo=useSelector((state) => state.user.userInfo);
-   const navigate = useNavigate();
+  const { userInfo, token } = useSelector(state => state.user);
+  const navigate = useNavigate();
   // Common initial values
   const commonInitialValues = {
     profileId: '',
     ageFrom: '20',
-    ageTo: '26',
+    ageTo: '70',
     heightFrom: '5ft 0in',
     heightTo: '5ft 11in',
-    maritalStatus: 'Never Married',
-    religion: 'Hindu',
-    motherTongue: ['English', 'Hindi', 'Haryanavi'],
-    community: 'Jat',
-    country: 'india',
-    state: 'Doesn\'t Matter',
+    maritalStatus: '',
+    religion: '',
+    motherTongue: [],
+    community: '',
+    country: '',
+    state: '',
     visibleToAll: true,
     protectedPhoto: false,
     filterMeOut: true,
@@ -31,28 +32,28 @@ const useSearchFormHandlers = (isAdvanced = false) => {
     // Advanced Search specific fields
     advanceProfileId: '',
     advanceAgeFrom: '20',
-    advanceAgeTo: '26',
+    advanceAgeTo: '70',
     advanceHeightFrom: '5ft 0in',
     advanceHeightTo: '5ft 11in',
-    advanceMaritalStatus: ['Never Married'],
-    advanceReligion: ['Hindu'],
-    advanceMotherTongue: ['English', 'Hindi', 'Haryanavi'],
-    advanceCommunity: ['Jat'],
-    advanceCountry: ['india'],
-    advanceState: ['Open for All'],
-    advanceResidencyStatus: ['Open for All'],
-    advanceCountryGrew: ['Open for All'],
-    advanceQualification: ['Open for All'],
-    advanceEducationArea: ['Open for All'],
-    advanceWorkingWith: ['Open for All'],
-    advanceProfessionArea: ['Open for All'],
-    advanceAnnualIncome: ['Open for All'],
-    advanceDiet: ['Open for All'],
+    advanceMaritalStatus: '',
+    advanceReligion: '',
+    advanceMotherTongue: [],
+    advanceCommunity: '',
+    advanceCountry: '',
+    advanceState: '',
+    advanceResidencyStatus: '',
+    advanceCountryGrew: '',
+    advanceQualification: '',
+    advanceEducationArea: '',
+    advanceWorkingWith: '',
+    advanceProfessionArea: '',
+    advanceAnnualIncome: '',
+    advanceDiet: [],
     advanceKeywords: '',
     advanceChatAvailable: true,
     advanceVisibleToAll: true,
     advanceProtectedPhoto: false,
-    advanceProfileManagedBy: ['Open for All'],
+    advanceProfileManagedBy: '',
     advanceFilterMeOut: true,
     advanceIFilteredOut: false
   };
@@ -114,57 +115,60 @@ const useSearchFormHandlers = (isAdvanced = false) => {
   };
 
   // Format search data for API request
-const formatSearchData = (isAdvanced) => {
-  const prefix = isAdvanced ? 'advance' : '';
-  
-  const getFieldValue = (field) => {
-    const fieldName = isAdvanced ? `advance${field.charAt(0).toUpperCase() + field.slice(1)}` : field;
-    return formData[fieldName];
-  };
+  const formatSearchData = (isAdvanced) => {
+    const prefix = isAdvanced ? 'advance' : '';
+    
+    const getFieldValue = (field) => {
+      const fieldName = isAdvanced ? `advance${field.charAt(0).toUpperCase() + field.slice(1)}` : field;
+      return formData[fieldName];
+    };
 
-  const formatValue = (value, isArrayField = false) => {
-    if (value === 'Open for All' || value === null || value === undefined) return null;
-    if (Array.isArray(value)) {
-      return isArrayField ? value : value[0]; // Return array only for specific fields
-    }
-    return isArrayField ? [value] : value; // Convert to array if needed
-  };
+    const formatValue = (value, isArrayField = false) => {
+      if (value === 'Open for All' || value === null || value === undefined) return null;
+      if (Array.isArray(value)) {
+        return isArrayField ? value : value[0]; // Return array only for specific fields
+      }
+      return isArrayField ? [value] : value; // Convert to array if needed
+    };
 
-  return {
-    searchType: isAdvanced ? 'Advanced' : 'Basic',
-    looking_for: userInfo.looking_for === 'Bride' ? 'Groom' : 'Bride',
-    profileId: formatValue(getFieldValue('profileId')),
-    ageFrom: formatValue(getFieldValue('ageFrom')),
-    ageTo: formatValue(getFieldValue('ageTo')),
-    heightFrom: formatValue(getFieldValue('heightFrom')),
-    heightTo: formatValue(getFieldValue('heightTo')),
-    maritalStatus: formatValue(getFieldValue('maritalStatus')),
-    religion: formatValue(getFieldValue('religion')),
-    motherTongue: formatValue(getFieldValue('motherTongue'), true), // true indicates array field
-    community: formatValue(getFieldValue('community')),
-    country: formatValue(getFieldValue('country')),
-    state: formatValue(getFieldValue('state')),
-    // Advanced-only fields
-    residencyStatus: isAdvanced ? formatValue(getFieldValue('residencyStatus')) : null,
-    countryGrew: isAdvanced ? formatValue(getFieldValue('countryGrew')) : null,
-    qualification: isAdvanced ? formatValue(getFieldValue('qualification')) : null,
-    educationArea: isAdvanced ? formatValue(getFieldValue('educationArea')) : null,
-    workingWith: isAdvanced ? formatValue(getFieldValue('workingWith')) : null,
-    professionArea: isAdvanced ? formatValue(getFieldValue('professionArea')) : null,
-    annualIncome: isAdvanced ? formatValue(getFieldValue('annualIncome')) : null,
-    diet: isAdvanced ? formatValue(getFieldValue('diet'), true) : null,
-    keywords: isAdvanced ? formatValue(getFieldValue('keywords')) : null,
-    page: 1,
-    limit: 20
+    return {
+      searchType: isAdvanced ? 'Advanced' : 'Basic',
+      looking_for: userInfo.looking_for === 'Bride' ? 'Groom' : 'Bride',
+      profileId: formatValue(getFieldValue('profileId')),
+      ageFrom: formatValue(getFieldValue('ageFrom')),
+      ageTo: formatValue(getFieldValue('ageTo')),
+      heightFrom: formatValue(getFieldValue('heightFrom')),
+      heightTo: formatValue(getFieldValue('heightTo')),
+      maritalStatus: formatValue(getFieldValue('maritalStatus')),
+      religion: formatValue(getFieldValue('religion')),
+      motherTongue: formatValue(getFieldValue('motherTongue'), true), // true indicates array field
+      community: formatValue(getFieldValue('community')),
+      country: formatValue(getFieldValue('country')),
+      state: formatValue(getFieldValue('state')),
+      // Advanced-only fields
+      residencyStatus: isAdvanced ? formatValue(getFieldValue('residencyStatus')) : null,
+      countryGrew: isAdvanced ? formatValue(getFieldValue('countryGrew')) : null,
+      qualification: isAdvanced ? formatValue(getFieldValue('qualification')) : null,
+      educationArea: isAdvanced ? formatValue(getFieldValue('educationArea')) : null,
+      workingWith: isAdvanced ? formatValue(getFieldValue('workingWith')) : null,
+      professionArea: isAdvanced ? formatValue(getFieldValue('professionArea')) : null,
+      annualIncome: isAdvanced ? formatValue(getFieldValue('annualIncome')) : null,
+      diet: isAdvanced ? formatValue(getFieldValue('diet'), true) : null,
+      keywords: isAdvanced ? formatValue(getFieldValue('keywords')) : null,
+      page: 1,
+      limit: 20
+    };
   };
-};
 
   // Search profiles using Axios
   const searchProfiles = async (searchParams) => {
     try {
-      console.log("searchParams",searchParams)
+      console.log("searchParams", searchParams)
       const response = await axios.get(`${config.baseURL}/api/search/search-profiles`, {
-        params: searchParams
+        params: searchParams,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
       return response.data;
     } catch (error) {
@@ -187,7 +191,7 @@ const formatSearchData = (isAdvanced) => {
       navigate('/search-results', {
         state: {
           searchData,
-          initialResults: results
+          initialResults: results.data
         }
       });
       
@@ -212,6 +216,25 @@ const formatSearchData = (isAdvanced) => {
     });
   };
 
+  const searchByProfileId = async (profileId, isAdvanced = false) => {
+  try {
+    const searchData = formatSearchData(isAdvanced);
+    const response = await axios.get(`${config.baseURL}/api/search/search-by-profileId/${profileId}`);
+    if(response.data.success) {
+      navigate('/search-results', {
+        state: {
+          searchData,
+          initialResults: [response.data.data]
+        }
+      })}else{
+        toast.error(response.data.message || "Profile not found");
+      };
+  } catch (error) {
+    console.error('Error searching profiles:', error);
+    throw error;
+  }
+  };
+
   return {
     formData,
     loading,
@@ -221,7 +244,7 @@ const formatSearchData = (isAdvanced) => {
     handleDietChange,
     handleProfileManagedByChange,
     handleSubmit,
-    resetForm
+    resetForm,searchByProfileId
   };
 };
 
