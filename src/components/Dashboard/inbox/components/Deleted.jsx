@@ -1,45 +1,34 @@
-
-import React, { useEffect, useState } from 'react';
-import config from '../../../../config'; 
-import SidebarFilterSort from './SidebarFilterSort';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import config from "../../../../config";
+import SidebarFilterSort from "./SidebarFilterSort";
+import { useSelector } from "react-redux";
+import { timeAgo } from "../../../../utils/timeAgo";
 
 function Deleted() {
   const [receivers, setReceivers] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 1;
 
+  const [selectedFilter, setSelectedFilter] = useState("allRequest");
+  const [selectedSort, setSelectedSort] = useState("mostRelevant");
+
   const user = useSelector((state) => state.user.userInfo);
 
   useEffect(() => {
     const fetchDeletedReceivers = async () => {
       try {
-        const response = await fetch(`${config.baseURL}/api/inbox/deleted-receiver/${user.id}`);
+        const response = await fetch(
+          `${config.baseURL}/api/inbox/deleted-receiver/${user.id}`
+        );
         const data = await response.json();
         setReceivers(data);
       } catch (error) {
-        console.error('Error fetching accepted receivers:', error);
+        console.error("Error fetching deleted receivers:", error);
       }
     };
 
     fetchDeletedReceivers();
-  }, []);
-
-  console.log("Accepted Receivers:", receivers);
-  const totalPages = Math.ceil(receivers.length / itemsPerPage);
-  const currentReceiver = receivers[currentPage];
-
-  const handlePrev = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentPage < totalPages - 1) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+  }, [user.id]);
 
   const calculateAge = (day, month, year) => {
     const birthDate = new Date(year, month - 1, day);
@@ -48,11 +37,52 @@ function Deleted() {
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   };
 
+  // FILTER & SORT LOGIC
+  const applyFilterAndSort = (data) => {
+    let filtered = [...data];
+
+    // Filter
+    if (selectedFilter === "onlineNow") {
+      filtered = filtered.filter((item) => item.sender_online);
+    } else if (selectedFilter === "withPhotos") {
+      filtered = filtered.filter((item) => item.sender_profile_image);
+    }
+
+    // Sort
+    if (selectedSort === "newestFirst") {
+      filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    } else if (selectedSort === "olderFirst") {
+      filtered.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+    }
+
+    return filtered;
+  };
+
+  const filteredReceivers = applyFilterAndSort(receivers);
+
+  // PAGINATION
+  const totalPages = Math.ceil(filteredReceivers.length / itemsPerPage);
+  const currentReceiver = filteredReceivers[currentPage];
+
+  const handlePrev = () => {
+    if (currentPage > 0) setCurrentPage(currentPage - 1);
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages - 1) setCurrentPage(currentPage + 1);
+  };
+
   return (
     <div className="all-request-part">
       <div className="row">
         <div className="col-md-3">
-          <SidebarFilterSort />
+          <SidebarFilterSort
+            selectedFilter={selectedFilter}
+            setSelectedFilter={setSelectedFilter}
+            selectedSort={selectedSort}
+            setSelectedSort={setSelectedSort}
+              namespace="deleted"
+          />
         </div>
         <div className="col-md-9">
           <div className="tab-container">
@@ -78,11 +108,21 @@ function Deleted() {
                       <div className="d-flex justify-content-between">
                         <div className="profile-part-inbox">
                           <div className="profile-nameinbox">
-                            {currentReceiver.sender_first_name} {currentReceiver.sender_last_name}
+                            {currentReceiver.sender_first_name}{" "}
+                            {currentReceiver.sender_last_name}
                           </div>
-                          <div className="text-success mb-2" style={{ fontSize: "14px" }}>
-                            <i className="bi bi-chat-dots"></i> Online 2d ago
-                          </div>
+
+                          {currentReceiver.sender_online ? (
+                            <div className="text-success mb-2" style={{ fontSize: "14px" }}>
+                              <i className="bi bi-circle-fill" style={{ color: "green", fontSize: "10px" }}></i>{" "}
+                              Online now
+                            </div>
+                          ) : (
+                            <div className="text-muted mb-2" style={{ fontSize: "14px" }}>
+                              <i className="bi bi-clock"></i> Last seen{" "}
+                              {timeAgo(currentReceiver.sender_last_seen)}
+                            </div>
+                          )}
                         </div>
                         <div className="text-muted" style={{ fontSize: "14px" }}>
                           {new Date(currentReceiver.created_at).toLocaleDateString()}
@@ -102,12 +142,11 @@ function Deleted() {
                         {currentReceiver.sender_qualification} <br />
                         {currentReceiver.sender_profession}
                       </div>
-
                     </div>
                   </div>
                 </div>
               ) : (
-                <p>No accepted notifications found.</p>
+                <p>No deleted notifications found.</p>
               )}
 
               <div className="viwed-application">

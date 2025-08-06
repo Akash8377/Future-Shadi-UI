@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
-import Step1 from "./Step1";
-import Step2 from "./Step2";
-import Step3 from "./Step3";
-import Step4 from "./Step4";
+import Step1 from "./Step1"; // Profile for and Gender
+import Step2 from "./Step2"; // Name and DOB
+import Step3 from "./Step3"; // Relegion, Community and Living in
+import Step4 from "./Step4"; // Verify Email and Phone
 import Step5 from "./Step5";
 import Step6 from "./Step6";
 import Step7 from "./Step7";

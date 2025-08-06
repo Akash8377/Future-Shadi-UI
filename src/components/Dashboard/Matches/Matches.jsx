@@ -1,8 +1,8 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from '../Header';
 import Footer from '../../Footer/Footer';
-
+import { useLocation } from 'react-router-dom';
 import NewMatches from './NewMatches';
 import TodaysMatches from './TodaysMatches';
 import MyMatches from './MyMatches';
@@ -30,6 +30,12 @@ const tabHeadings = {
 const Matches = () => {
   const [activeTab, setActiveTab] = useState("matches");
   const ActiveComponent = tabComponents[activeTab];
+ const location = useLocation();
+ useEffect(()=>{
+   if(location.state?.activtab){
+    setActiveTab(location.state?.activtab || "matches")
+   }
+ },[location.state?.activtab])
 
   return (
     <div>

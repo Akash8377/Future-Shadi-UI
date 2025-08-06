@@ -75,7 +75,7 @@ const SearchByCity = () => {
 
   return (
     <>
-      <section className="search-city">
+      <section id="search-city" className="search-city">
         <div className="container">
           <div className="row g-0">
             <div className="col-md-4 content">

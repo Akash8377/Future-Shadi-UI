@@ -129,3 +129,17 @@ export const convertIncomeRange = (incomeStr) => {
   const numbers = incomeStr.match(/\d+/g) || [1, 5];
   return [parseInt(numbers[0]), parseInt(numbers[1] || numbers[0])];
 };
+
+// Scroll to any component with any offset (adjust as needed)
+export const scrollToComponent = (elementId, offset = 0) => {
+  const element = document.getElementById(elementId);
+  if (element) {
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - offset;
+    
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  }
+};

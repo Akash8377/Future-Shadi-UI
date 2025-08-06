@@ -1,13 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-const Advertise = () => {
-    
-    const [showAllNotifications, setShowAllNotifications] = useState(false);
-    
-    const handleToggleNotifications = () => {
+const Advertise = ({notifications}) => {
+  const [showAllNotifications, setShowAllNotifications] = useState(false);
+  const handleToggleNotifications = () => {
     setShowAllNotifications((prev) => !prev);
-        };
-        
+  };
+  const [pending, setPending] = useState([])
+
+
+  useEffect(() => {
+    // Filter searches based on isAdvanced prop
+    if (notifications.length) {
+      const pending = notifications.filter(n =>
+        n.status === 'pending' || n.status === 'sent'
+      );
+      setPending(pending);
+    }
+  }, [notifications]);
+
+  const displayedNotification = showAllNotifications ? pending : pending.slice(0, 1);    
   return (
     <div>
        <div className="row g-4 mt-4">
@@ -43,38 +54,20 @@ const Advertise = () => {
           <div className="col-lg-3">
             <div className="card-lite p-3">
               <h6 className="mb-3">
-                <i className="fa fa-bell" aria-hidden="true"></i> Notifications <span className="notif-dot"></span>
+                <i className="fa fa-bell" aria-hidden="true"></i> {displayedNotification.length} Notifications {displayedNotification.length>0 && (<span className="notif-dot"></span>)}
               </h6>
               <div className="notif-card" id="noteBox">
-                <div className="notif-row">
-                  <img src="images/womenpic.jpg" alt="" />
+                {displayedNotification.length > 0 && displayedNotification.map((notification, index)=>(
+                <div className="notif-row" key={index}>
                   <div className="smallnew">
-                    <a href="#" className="notif-name">Shivani K</a> has sent you an<br />Interest
-                    <div className="text-muted mt-1">11 Jul</div>
+                    <a href="#" className="notif-name">{notification.message}</a>
+                  <div className="text-muted mt-1">{new Date(notification.created_at).toLocaleDateString()}{" "}{new Date(notification.created_at).toLocaleTimeString()}</div>
                   </div>
                 </div>
-                {showAllNotifications && (
-                    <>
-                        <div className="notif-row extra-note">
-                        <img src="images/womenpic.jpg" alt="" />
-                        <div className="smallnew">
-                            <a href="#" className="notif-name">Riya M</a> viewed your profile<br />
-                            <div className="text-muted mt-1">9 Jul</div>
-                        </div>
-                        </div>
-                        <div className="notif-row extra-note">
-                        <img src="images/womenpic.jpg" alt="" />
-                        <div className="smallnew">
-                            <a href="#" className="notif-name">Aasha H</a> liked your photo<br />
-                            <div className="text-muted mt-1">8 Jul</div>
-                        </div>
-                        </div>
-                    </>
-                    )}
-                    <span className="view-toggle cursor-pointer text-blue-600" onClick={handleToggleNotifications}>
-                        {showAllNotifications ? 'View Less' : 'View All'}
-                    </span>
-
+                ))}
+                {displayedNotification.length > 0 && (<span className="view-toggle cursor-pointer text-blue-600" onClick={handleToggleNotifications}>
+                    {showAllNotifications ? 'View Less' : 'View All'}
+                </span>)}
               </div>
             </div>
           </div>

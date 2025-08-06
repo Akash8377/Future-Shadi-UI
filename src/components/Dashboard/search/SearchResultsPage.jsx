@@ -82,7 +82,7 @@ const SearchResultsPage = () => {
   return (
     <>
       <Header/>
-      <div className="p-4">
+      <div className="container mt-3 p-4">
         <div className="row">
           <div className="col-md-3">
             <RefineSearchSidebar 

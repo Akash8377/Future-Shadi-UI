@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import DashboardTab from "./DashboardTab";
 import ProfileTab from "./ProfileTab";
@@ -8,6 +8,7 @@ import PartnerTab from "./PartnerTab";
 import SettingsTab from "./SettingsTab";
 import MoreTab from "./MoreTab";
 import Footer from "../Footer/Footer";
+import { useLocation } from 'react-router-dom';
 
 // Component mapping
 const tabComponents = {
@@ -32,7 +33,12 @@ const tabHeadings = {
 const DashboardPage = () => {
   const [activeTab, setActiveTab] = useState("dash");
   const ActiveComponent = tabComponents[activeTab];
-
+ const location = useLocation();
+ useEffect(()=>{
+   if(location.state?.activtab){
+    setActiveTab(location.state?.activtab || "matches")
+   }
+ },[location.state?.activtab])
 
   return (
     <div>
@@ -62,6 +68,8 @@ const DashboardPage = () => {
             <ProfileTab onChangeTab={setActiveTab} />
           ) : activeTab === "more" ? (
             <MoreTab onChangeTab={setActiveTab} />
+          ): activeTab === "photos" ? (
+            <PhotosTab onChangeTab={setActiveTab} />
           ):(
             ActiveComponent && <ActiveComponent />
           )}

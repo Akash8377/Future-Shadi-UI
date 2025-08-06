@@ -7,7 +7,7 @@ import config from '../../config';
 const MoreTab = ({onChangeTab}) => {
 
   return (
-    <div>
+    <div className='container mt-3'>
      <Notification onChangeTab={onChangeTab}/>
     </div>
   )

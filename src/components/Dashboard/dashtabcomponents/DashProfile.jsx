@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
 import ProfileTab from '../ProfileTab';
@@ -7,23 +7,23 @@ import { setUser } from '../../../features/user/userSlice';
 import { toast } from '../../Common/Toast';
 import axios from 'axios';
 
-const DashProfile = ({onEditClick}) => {
+const DashProfile = ({onEditClick, notifications}) => {
   const { userInfo, token } = useSelector(state => state.user);
   const dispatch =useDispatch()
-    const tabComponents = {
+  const [pending, setPending] = useState([])
+  const [accepted, setAccepted] = useState([])
+  const tabComponents = {
     profile: ProfileTab,
-    };
+  };
 
-    const fileInputRef = useRef(null);
-    console.log("User Info", userInfo)
-
-    const handleUploadClick  =() =>{
-        if(fileInputRef.current){
-            fileInputRef.current.click();
-        }
+  const fileInputRef = useRef(null);
+  const handleUploadClick  =() =>{
+    if(fileInputRef.current){
+      fileInputRef.current.click();
     }
+  }
 
-        const handleImageChange = (e) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       // Validate file size (15MB)
@@ -93,6 +93,20 @@ const DashProfile = ({onEditClick}) => {
     }
   };
 
+    useEffect(() => {
+      // Filter searches based on isAdvanced prop
+      if (notifications.length) {
+        const pending = notifications.filter(n => 
+          n.status === 'pending' || n.status === 'sent'
+        );
+        setPending(pending);
+        const accepted = notifications.filter(n => 
+          n.status === 'accepted'
+        );
+        setAccepted(accepted);
+      }
+    }, [notifications]);
+
   return (
     <div>
       <div className="row g-4">
@@ -145,11 +159,11 @@ const DashProfile = ({onEditClick}) => {
                 <tbody>
                   <tr className="head">
                     <td style={{ width: '33.33%' }}>
-                      1<br />
+                      {pending?.length || 0}<br />
                       <span className="fw-normal text-muted small">Pending Invitations</span>
                     </td>
                     <td style={{ width: '33.33%' }}>
-                      0<br />
+                      {accepted?.length || 0}<br />
                       <span className="fw-normal text-muted small">Accepted Invitations</span>
                     </td>
                     <td style={{ width: '33.33%' }}>

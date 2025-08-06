@@ -1,9 +1,10 @@
 import React from 'react'
+import Myphoto from './myphototab/Myphoto'
 
-const PhotosTab = () => {
+const PhotosTab = ({onChangeTab}) => {
   return (
-    <div>
-      dsfsf
+    <div className='container mt-3'>
+      <Myphoto onChangeTab={onChangeTab}/>
     </div>
   )
 }

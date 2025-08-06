@@ -1151,3 +1151,7 @@ input#yearly:checked + label[for="yearly"], input#monthly:checked + label[for="m
     background: #DF8525;
     color: #fff;
 }
+
+.widthFit{
+  width: fit-content !important;
+}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import config from "../../config"
+import { toast } from "../Common/Toast";
 
 const Step4 = ({ formData, setFormData, nextStep, prevStep }) => {
   const [verificationStep, setVerificationStep] = useState("input"); // 'input', 'email-otp', 'phone-otp'
@@ -44,12 +45,12 @@ const Step4 = ({ formData, setFormData, nextStep, prevStep }) => {
       const payload = type === "email" 
         ? { email: formData.email } 
         : { phone: formData.phone };
-
-      await axios.post(endpoint, payload);
-      
+      const response = await axios.post(endpoint, payload);
+      console.log("Response data:", response.data);
       setCountdown(60);
       setVerificationStep(`${type}-otp`);
     } catch (err) {
+      toast.error(err.response.data.message)
       setError(err.response?.data?.message || "Failed to send OTP. Please try again.");
     } finally {
       setLoading(false);

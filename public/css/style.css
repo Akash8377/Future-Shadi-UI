@@ -1888,7 +1888,10 @@ a.match-top {
     color: #fff;
 }
 
-
+.search-box button.btn.custom-btn {
+    background: var(--color-primary);
+    color: #fff;
+}
 
 
 .recent-search-box {
@@ -2001,7 +2004,7 @@ a.match-top {
     background: url(../images/select-icon.svg);
     width: 12px !important;
     display: block;
-    z-index: 9;
+    /* z-index: 9; */
     height: 9px !important;
     right: 14px !important;
     top: 58% !important;
@@ -2015,7 +2018,7 @@ a.match-top {
     background: url(../images/select-icon.svg);
     width: 12px !important;
     display: block;
-    z-index: 9;
+    /* z-index: 9; */
     height: 9px !important;
     position: absolute;
     right: 14px !important;

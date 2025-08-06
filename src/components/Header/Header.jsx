@@ -4,22 +4,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearUser } from '../../features/user/userSlice';
 import { toast } from '../../components/Common/Toast';
 import { Navbar, Nav, Container, Dropdown } from 'react-bootstrap';
-
+import { getSocket, disconnectSocket } from "../../utils/socket";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
   // Get user info directly from Redux store
   const { userInfo } = useSelector(state => state.user);
   const isLoggedIn = !!userInfo;
-
   const handleLogout = () => {
+
+     const socket = getSocket()
+        if (socket && socket.connected) {
+          const userId = userInfo?.id || userInfo?.user_id; // fallback just in case
+          socket.emit("userOffline", { userId });
+        }
+      disconnectSocket();
     dispatch(clearUser());
+    setIsDropdownOpen(false);
     navigate("/");
     toast.success("Logged out successfully!");
   };
-
   const handleNavToggle = () => {
     setIsNavCollapsed(!isNavCollapsed);
   };
@@ -83,8 +90,11 @@ const Header = () => {
                   </Dropdown.Toggle>
                   
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => navigate("/dashboard")}>
+                    <Dropdown.Item onClick={() => navigate("/dashboard", { state: { activtab: "dash" } })}>
                       Dashboard
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={() => navigate("/dashboard", { state: { activtab: "settings" } })}>
+                      Setting
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={handleLogout}>

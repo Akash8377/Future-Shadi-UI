@@ -1,6 +1,8 @@
 import React from 'react'
-
+import { scrollToComponent } from '../../utils/helpers'
+import { useNavigate } from 'react-router-dom'
 const Banner = () => {
+    const navigate = useNavigate()
     return (
         <section className="banner">
             <div className="banner-blk">
@@ -12,7 +14,7 @@ const Banner = () => {
                             Elite Way <br />
                             to Find Love
                         </h2>
-                        <button className="btn btn-filled" type="button">
+                        <button className="btn btn-filled" type="button" onClick={()=>scrollToComponent('searchByCity', 220)}>
                             Find Your Match
                         </button>
                     </div>

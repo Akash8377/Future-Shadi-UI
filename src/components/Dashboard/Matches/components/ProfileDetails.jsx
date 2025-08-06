@@ -1,6 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 const ProfileDetails = ({ currentProfile, matchingRatio, renderPreferenceRow }) => {
+  const userInfo = useSelector(state=>state.user.userInfo)
+  const family_details = typeof currentProfile?.family_details ==='object'?currentProfile?.family_details:JSON.parse(currentProfile?.family_details)
+  // console.log("Profiledetail User Info",userInfo)
   const calculateAge = (dobString) => {
     const dob = new Date(dobString);
     return Math.abs(new Date(Date.now() - dob.getTime()).getUTCFullYear() - 1970);
@@ -81,7 +86,17 @@ const ProfileDetails = ({ currentProfile, matchingRatio, renderPreferenceRow }) 
       <div className="mb-4 position-relative">
         <div className="timeline-icon"><i className="fa fa-globe" aria-hidden="true"></i></div>
         <h5 className="section-title">Horoscope Details</h5>
-        <div className="astro-box">
+        {userInfo?.rashi && userInfo?.manglik && userInfo?.nakshatra ? currentProfile?.rashi && currentProfile?.manglik && currentProfile?.nakshatra ? (
+          <div className="card-box">
+          <p><i className="fa fa-clock-o" aria-hidden="true"></i> {currentProfile.birth_time}</p>
+          <p><i className="fa fa-map-marker" aria-hidden="true"></i> {currentProfile.birth_city}</p>
+          <p><i className="fa fa-fire" aria-hidden="true"></i> {currentProfile.manglik}</p>
+          <p><i className="fa fa-star" aria-hidden="true"></i> {currentProfile.rashi}</p>
+          <p><i className="fa fa-moon-o" aria-hidden="true"></i> {currentProfile.nakshatra}</p>
+        </div>
+        ):(<div className="astro-box"><p className="astro-text">
+            Details not found
+          </p></div>):(<div className="astro-box">
           <div className="astro-icon">
             <i className="fa fa-folder-open-o" aria-hidden="true"></i>
           </div>
@@ -89,17 +104,24 @@ const ProfileDetails = ({ currentProfile, matchingRatio, renderPreferenceRow }) 
             For the common interest of members,<br />
             quickly enter your Astro details & unhide her info.
           </p>
-          <a href="#" className="astro-link">Add My Details <i
+          <NavLink to="/dashboard" state={{ activtab: "settings" }} className="astro-link">Add My Details <i
               className="fa fa-caret-down" aria-hidden="true"></i>
-          </a>
-        </div>
+          </NavLink>
+        </div>)}
       </div>
 
       {/* Family */}
       <div className="mb-4 position-relative">
         <div className="timeline-icon"><i className="fa fa-home" aria-hidden="true"></i></div>
         <h5 className="section-title">Family Details</h5>
-        <div className="astro-box">
+        {userInfo?.family_details ? family_details ? (<div className="card-box">
+          <p><i className="fa fa-female" aria-hidden="true"></i> {family_details?.mother}</p>
+          <p><i className="fa fa-male" aria-hidden="true"></i> {family_details?.father}</p>
+          <p><i className="fa fa-female" style={{transform: 'scale(0.8)'}} aria-hidden="true"></i> {family_details?.sisters}</p>
+          <p><i className="fa fa-male" style={{transform: 'scale(0.8)'}} aria-hidden="true"></i> {family_details?.brothers}</p>
+        </div>):(<div className="astro-box"><p className="astro-text">
+            Details not found
+          </p></div>):(<div className="astro-box">
           <div className="astro-icon">
             <i className="fa fa-folder-open-o" aria-hidden="true"></i>
           </div>
@@ -107,10 +129,10 @@ const ProfileDetails = ({ currentProfile, matchingRatio, renderPreferenceRow }) 
             For the common interest of members,<br />
             quickly enter your Astro details & unhide her info.
           </p>
-          <a href="#" className="astro-link">Add My Details <i
+          <NavLink to="/dashboard" state={{ activtab: "profile" }} className="astro-link">Add My Details <i
               className="fa fa-caret-down" aria-hidden="true"></i>
-          </a>
-        </div>
+          </NavLink>
+        </div>)}
       </div>
 
       {/* Education */}

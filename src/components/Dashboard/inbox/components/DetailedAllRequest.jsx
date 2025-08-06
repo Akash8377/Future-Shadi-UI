@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import config from "../../../../config";
+import { timeAgo } from "../../../../utils/timeAgo";
 
 function DetailedAllRequest({ receiverData , fetchReceiverData }) {
   const [currentPage, setCurrentPage] = useState(0);
 
-  console.log("Receiver Data:", receiverData);
+  // console.log("Receiver Data:", receiverData);
   const totalPages = receiverData.length;
 
   const handlePrev = () => {
@@ -32,7 +33,6 @@ function DetailedAllRequest({ receiverData , fetchReceiverData }) {
     if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
       age--;
     }
-
     return age;
   }
   
@@ -80,7 +80,6 @@ const handleReject = async (notificationId) => {
   }
 };
 
-
   if (!currentReceiver) return <div>No Requests Found</div>;
 
   return (
@@ -99,7 +98,6 @@ const handleReject = async (notificationId) => {
             </a>
             )}
           </div>
-
           <div className="col-md-7">
             <div className="d-flex justify-content-between">
               <div className="profile-part-inbox">
@@ -107,9 +105,15 @@ const handleReject = async (notificationId) => {
                   {currentReceiver.sender_first_name}{" "}
                   {currentReceiver.sender_last_name}
                 </div>
+                {currentReceiver.sender_online ? (
                 <div className="text-success mb-2" style={{ fontSize: "14px" }}>
-                  <i className="bi bi-chat-dots"></i> Online 2d ago
+                    <i className="bi bi-circle-fill" style={{ color: "green", fontSize: "10px" }}></i> Online now
                 </div>
+                ) : (
+                <div className="text-muted mb-2" style={{ fontSize: "14px" }}>
+                    <i className="bi bi-clock"></i> Last seen {timeAgo(currentReceiver.sender_last_seen)}
+                </div>
+                )}
               </div>
               <div className="text-muted" style={{ fontSize: "14px" }}>
                 {new Date(currentReceiver.created_at).toLocaleDateString()}

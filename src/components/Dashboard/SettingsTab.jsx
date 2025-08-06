@@ -110,7 +110,7 @@ const SettingsTab = () => {
               <PrivacyOptions userInfo={userInfo} token={token}  onSaveClick={() => handleSaveClick('privacy')} onDataChange={(field, value) => handleDataChange('privacy', field, value)}/>    
               <ShadiLive userInfo={userInfo} token={token}  onSaveClick={() => handleSaveClick('shadi_live')} onDataChange={(field, value) => handleDataChange('shadi_live', field, value)}/>
               <HideAndDeleteProfile userInfo={userInfo} token={token}  onSaveClick={() => handleSaveClick('hide_delete')} onDataChange={(field, value) => handleDataChange('hide_delete', field, value)}/>
-              <Messages userInfo={userInfo} token={token}  onSaveClick={() => handleSaveClick('messages')} onDataChange={(field, value) => handleDataChange('messages', field, value)}/>
+              {/* <Messages userInfo={userInfo} token={token}  onSaveClick={() => handleSaveClick('messages')} onDataChange={(field, value) => handleDataChange('messages', field, value)}/> */}
             </div>
           </div>
         </div>
