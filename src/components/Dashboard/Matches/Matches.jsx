@@ -24,7 +24,7 @@ const tabHeadings = {
   todays: "Today's Matches",
   mymatches: "My Matches",
   nearme: "Near Me",
-  morematches: "More Matches",
+  // morematches: "More Matches",
 };
 
 const Matches = () => {
