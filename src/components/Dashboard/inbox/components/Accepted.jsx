@@ -3,6 +3,7 @@ import config from "../../../../config";
 import SidebarFilterSort from "./SidebarFilterSort";
 import { useSelector } from "react-redux";
 import { timeAgo } from "../../../../utils/timeAgo";
+import { Link } from "react-router-dom";
 
 function Accepted() {
   const [receivers, setReceivers] = useState([]);
@@ -89,6 +90,7 @@ function Accepted() {
           <div className="tab-container">
             <div className="profile-request">
               {currentReceiver ? (
+                <>
                 <div className="card-profile">
                   <div className="row">
                     <div className="col-md-3 text-center">
@@ -146,12 +148,9 @@ function Accepted() {
                     </div>
                   </div>
                 </div>
-              ) : (
-                <p>No accepted notifications found.</p>
-              )}
-              <div className="viwed-application">
+                   <div className="viwed-application">
                 <img src="images/greencheck.png" alt="Green Check" />
-                <p>View All Pending Invitations</p>
+                <p>View All Accepted Invitations</p>
               </div>
 
               <div className="pagination-wrapper">
@@ -169,6 +168,20 @@ function Accepted() {
                   Next &rarr;
                 </button>
               </div>
+                </>
+              ) : (<div class="filtred-out">
+								<div class="profile-request">
+									<div class="card-profile">
+										<div class="Filtered-out">
+											<img src="images/filtredout.jpg"/>
+											<h4>No accepted request found.</h4>
+											<Link to="/matches" class=" text-decoration-none" style={{color:"#d61962"}}>View All
+												Matches <i class="fa fa-angle-right" aria-hidden="true"></i></Link>
+										</div>
+									</div>
+								</div>
+							</div>
+              )}
             </div>
           </div>
         </div>

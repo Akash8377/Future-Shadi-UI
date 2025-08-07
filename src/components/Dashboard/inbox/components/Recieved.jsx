@@ -104,14 +104,14 @@ function Received() {
                 />
               </Tab>
 
-              {filteredReceiverPreferences.length > 0 && (
+              {/* {filteredReceiverPreferences.length > 0 && ( */}
                 <Tab eventKey="partner" title="Detailed Filtered Out">
                   <DetailedFilteredOut
                     filteredOut={filteredReceiverPreferences}
                     prefErrorMessage={prefErrorMessage}
                   />
                 </Tab>
-              )}
+              {/* )} */}
             </Tabs>
           </div>
         </div>

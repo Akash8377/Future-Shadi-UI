@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Toast } from './components/Common/Toast';
 import Home from './pages/Home/Home.jsx';
-import Register from './pages/Users/Register.jsx';
 import Login from './pages/Users/Login.jsx';
 import ProfileUpload from './pages/Users/ProfileUpload.jsx';
 import VerifyProfile from './pages/Users/VerifyProfile.jsx';
@@ -16,29 +16,88 @@ import Search from './components/Dashboard/search/Search.jsx';
 import MessageInbox from './components/Dashboard/inboxmessage/MessageInbox.jsx';
 import SearchResultsPage from './components/Dashboard/search/SearchResultsPage.jsx';
 import Inbox from './components/Dashboard/inbox/Inbox.jsx';
+
+// Protected Route Component
+const ProtectedRoute = () => {
+  const { token } = useSelector((state) => state.user);
+  return token ? <Outlet /> : <Navigate to="/login" replace />;
+};
+
 function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Toast />
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/sign-up" element={<Register />} /> */}
-        <Route path="/profile-upload" element={<ProfileUpload />} />
-        <Route path="/hobbies" element={<HobbiesInterests />} />
-        <Route path="/verify-profile" element={<VerifyProfile />} />
-        <Route path="/family-details" element={<FamilyDetailsForm />} />
-        <Route path="/partner-preferences" element={<PartnerPreferences />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/forget-password" element={<ForgotPasswordOTP />} />
-        <Route path="/message-inbox" element={<MessageInbox />} />
-        <Route path="/matches" element={<Matches />} />
-        <Route path="/search-profile" element={<Search />} />
-        <Route path="/search-results" element={<SearchResultsPage />} />
-        <Route path="/inbox" element={<Inbox />} />
+
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/profile-upload" element={<ProfileUpload />} />
+          <Route path="/hobbies" element={<HobbiesInterests />} />
+          <Route path="/verify-profile" element={<VerifyProfile />} />
+          <Route path="/family-details" element={<FamilyDetailsForm />} />
+          <Route path="/partner-preferences" element={<PartnerPreferences />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/message-inbox" element={<MessageInbox />} />
+          <Route path="/matches" element={<Matches />} />
+          <Route path="/search-profile" element={<Search />} />
+          <Route path="/search-results" element={<SearchResultsPage />} />
+          <Route path="/inbox" element={<Inbox />} />
+        </Route>
+        
+        {/* Catch-all redirect */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>
   );
 }
 
 export default App;
+
+
+
+// import React, { Suspense } from 'react';
+// import { Routes, Route } from 'react-router-dom';
+// import { Toast } from './components/Common/Toast';
+// import Home from './pages/Home/Home.jsx';
+// import Login from './pages/Users/Login.jsx';
+// import ProfileUpload from './pages/Users/ProfileUpload.jsx';
+// import VerifyProfile from './pages/Users/VerifyProfile.jsx';
+// import HobbiesInterests from './pages/Users/HobbiesInterests.jsx';
+// import FamilyDetailsForm from './pages/Users/FamilyDetailsForm.jsx';
+// import PartnerPreferences from './pages/Users/PartnerPreferences.jsx';
+// import DashboardPage from './components/Dashboard/DashboardPage.jsx';
+// import ForgotPasswordOTP from './pages/Users/forget-password/ForgotPasswordOTP.jsx';
+// import Matches from './components/Dashboard/Matches/Matches.jsx';
+// import Search from './components/Dashboard/search/Search.jsx';
+// import MessageInbox from './components/Dashboard/inboxmessage/MessageInbox.jsx';
+// import SearchResultsPage from './components/Dashboard/search/SearchResultsPage.jsx';
+// import Inbox from './components/Dashboard/inbox/Inbox.jsx';
+// function App() {
+//   return (
+//     <Suspense fallback={<div>Loading...</div>}>
+//       <Toast />
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/login" element={<Login />} />
+//         <Route path="/profile-upload" element={<ProfileUpload />} />
+//         <Route path="/hobbies" element={<HobbiesInterests />} />
+//         <Route path="/verify-profile" element={<VerifyProfile />} />
+//         <Route path="/family-details" element={<FamilyDetailsForm />} />
+//         <Route path="/partner-preferences" element={<PartnerPreferences />} />
+//         <Route path="/dashboard" element={<DashboardPage />} />
+//         <Route path="/forget-password" element={<ForgotPasswordOTP />} />
+//         <Route path="/message-inbox" element={<MessageInbox />} />
+//         <Route path="/matches" element={<Matches />} />
+//         <Route path="/search-profile" element={<Search />} />
+//         <Route path="/search-results" element={<SearchResultsPage />} />
+//         <Route path="/inbox" element={<Inbox />} />
+//       </Routes>
+//     </Suspense>
+//   );
+// }
+
+// export default App;

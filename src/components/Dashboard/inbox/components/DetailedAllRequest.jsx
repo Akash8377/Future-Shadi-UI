@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import config from "../../../../config";
 import { timeAgo } from "../../../../utils/timeAgo";
+import { Link } from "react-router-dom";
 
 function DetailedAllRequest({ receiverData , fetchReceiverData }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -80,7 +81,18 @@ const handleReject = async (notificationId) => {
   }
 };
 
-  if (!currentReceiver) return <div>No Requests Found</div>;
+  if (!currentReceiver) return (<div class="mt-2 filtred-out">
+								<div class="profile-request">
+									<div class="card-profile">
+										<div class="Filtered-out">
+											<img src="images/filtredout.jpg"/>
+											<h4>There is no invitations</h4>
+											<Link to="/matches" class=" text-decoration-none" style={{color:"#d61962"}}>View All
+												Matches <i class="fa fa-angle-right" aria-hidden="true"></i></Link>
+										</div>
+									</div>
+								</div>
+							</div>);
 
   return (
     <div className="profile-request">
@@ -195,7 +207,7 @@ const handleReject = async (notificationId) => {
 
       <div className="viwed-application">
         <img src="images/greencheck.png" alt="Green Check" />
-        <p>View All Pending Invitations</p>
+        <p>View All Received Invitations</p>
       </div>
 
       <div className="pagination-wrapper">

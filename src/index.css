@@ -993,6 +993,7 @@ input#yearly:checked + label[for="yearly"], input#monthly:checked + label[for="m
 .upload-box {
     text-align: center;
     position: relative;
+    padding: 0px !important;
 }
 
 .upload-btn {

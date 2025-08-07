@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import { MARITAL_STATUS, RELIGIONS, COMMUNITIES, LANGUAGES, COUNTRIES } from "../../../constants/formData";
+import { MARITAL_STATUS, RELIGIONS, COMMUNITIES, LANGUAGES, COUNTRIES, INITIAL_PREFS } from "../../../constants/formData";
 import { parseAgeRange, parseHeight, formatHeight } from "../../../utils/helpers";
 import { toast } from "../../../components/Common/Toast";
 import axios from "axios";
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from "../../../features/user/userSlice";
 
 const ContactFilter = ({ userInfo, token }) => {
-  const partnerPref = typeof userInfo?.partner_preference === 'object'? userInfo?.partner_preference:JSON.parse(userInfo?.partner_preference || {});
+  const partnerPref = userInfo?.partner_preference ? typeof userInfo?.partner_preference === 'object'? userInfo?.partner_preference:JSON.parse(userInfo?.partner_preference || INITIAL_PREFS) : INITIAL_PREFS;
   const dispatch = useDispatch()
   // Initial states
   const [mainOpen, setMainOpen] = useState(false);
