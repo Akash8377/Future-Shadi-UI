@@ -1,27 +1,37 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import config from '../../../config';
-import ProfileDetails from './components/ProfileDetails';
-import PartnerPreferences from './components/PartnerPreferences';
+import React, { useEffect, useState, useMemo } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import config from "../../../config";
+import ProfileDetails from "./components/ProfileDetails";
+import PartnerPreferences from "./components/PartnerPreferences";
+import { timeAgo } from "../../../utils/timeAgo";
+import ConnectBox from "./components/ConnectBox";
+import ContactOptions from "./components/ContactOptions";
 
 const TodaysMatches = () => {
   // State and data
   const [profiles, setProfiles] = useState([]);
   const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState('detailed');
-  const [countdown, setCountdown] = useState({ hours: 8, minutes: 18, seconds: 37 });
-  
+  const [activeTab, setActiveTab] = useState("detailed");
+  const [countdown, setCountdown] = useState({
+    hours: 8,
+    minutes: 18,
+    seconds: 37,
+  });
+
   const user = useSelector((state) => state.user.userInfo);
   const lookingFor = user?.looking_for;
-  const searchFor = lookingFor === 'Bride' ? 'Groom' : 'Bride';
+  const searchFor = lookingFor === "Bride" ? "Groom" : "Bride";
 
   // Fetch profiles
   const fetchTodaysProfiles = async () => {
     try {
-      const response = await axios.get(`${config.baseURL}/api/profile/new-matches`, {
-        params: { looking_for: searchFor }
-      });
+      const response = await axios.get(
+        `${config.baseURL}/api/matches/new-matches`,
+        {
+          params: { user_id: user.id, looking_for: searchFor },
+        }
+      );
       setProfiles(response.data.users || []);
     } catch (error) {
       console.error("Error fetching profiles", error);
@@ -33,49 +43,52 @@ const TodaysMatches = () => {
     if (searchFor) fetchTodaysProfiles();
   }, [searchFor]);
 
+  console.log(profiles, "profiless todays match");
   // Countdown timer
   useEffect(() => {
-  const calculateTimeUntilMidnight = () => {
-    const now = new Date();
-    const midnight = new Date();
-    midnight.setHours(24, 0, 0, 0); // Set to midnight tonight
-    
-    const diff = midnight - now; // Difference in milliseconds
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    
-    return { hours, minutes, seconds };
-  };
+    const calculateTimeUntilMidnight = () => {
+      const now = new Date();
+      const midnight = new Date();
+      midnight.setHours(24, 0, 0, 0); // Set to midnight tonight
 
-  // Initialize with current time until midnight
-  setCountdown(calculateTimeUntilMidnight());
+      const diff = midnight - now; // Difference in milliseconds
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-  const timer = setInterval(() => {
-    setCountdown(prev => {
-      const { hours, minutes, seconds } = prev;
-      
-      if (seconds > 0) return { ...prev, seconds: seconds - 1 };
-      if (minutes > 0) return { hours, minutes: minutes - 1, seconds: 59 };
-      if (hours > 0) return { hours: hours - 1, minutes: 59, seconds: 59 };
-      
-      // When reaching midnight, reset to next day's midnight
-      clearInterval(timer);
-      const newCountdown = calculateTimeUntilMidnight();
-      return newCountdown;
-    });
-  }, 1000);
+      return { hours, minutes, seconds };
+    };
 
-  return () => clearInterval(timer);
-}, []);
+    // Initialize with current time until midnight
+    setCountdown(calculateTimeUntilMidnight());
+
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        const { hours, minutes, seconds } = prev;
+
+        if (seconds > 0) return { ...prev, seconds: seconds - 1 };
+        if (minutes > 0) return { hours, minutes: minutes - 1, seconds: 59 };
+        if (hours > 0) return { hours: hours - 1, minutes: 59, seconds: 59 };
+
+        // When reaching midnight, reset to next day's midnight
+        clearInterval(timer);
+        const newCountdown = calculateTimeUntilMidnight();
+        return newCountdown;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   // Current profile and matching calculations
   const currentProfile = profiles[currentProfileIndex] || {};
-  const nextProfile = profiles[currentProfileIndex+1] || {};
-   const isLastProfile = currentProfileIndex === profiles.length - 1;
+  const nextProfile = profiles[currentProfileIndex + 1] || {};
+  const isLastProfile = currentProfileIndex === profiles.length - 1;
   const calculateAge = (dobString) => {
     const dob = new Date(dobString);
-    return Math.abs(new Date(Date.now() - dob.getTime()).getUTCFullYear() - 1970);
+    return Math.abs(
+      new Date(Date.now() - dob.getTime()).getUTCFullYear() - 1970
+    );
   };
 
   const age = calculateAge(currentProfile.dob);
@@ -84,60 +97,87 @@ const TodaysMatches = () => {
   const matchingRatio = useMemo(() => {
     if (!currentProfile.partner_preference || !user) return 0;
     const partnerPreference = JSON.parse(currentProfile.partner_preference);
-    
+
     const criteria = [
-      { 
+      {
         condition: () => {
-          const [minAge, maxAge] = partnerPreference.basic?.ageRange?.split('–').map(age => parseInt(age.trim())) || [];
+          const [minAge, maxAge] =
+            partnerPreference.basic?.ageRange
+              ?.split("–")
+              .map((age) => parseInt(age.trim())) || [];
           const userAge = calculateAge(user.dob);
           return minAge && maxAge && userAge >= minAge && userAge <= maxAge;
-        }
+        },
       },
       {
         condition: () => {
-          const [minHeight, maxHeight] = partnerPreference.basic?.heightRange?.split('–').map(h => h.trim()) || [];
+          const [minHeight, maxHeight] =
+            partnerPreference.basic?.heightRange
+              ?.split("–")
+              .map((h) => h.trim()) || [];
           // Convert heights to inches for comparison (simplified)
           return minHeight && maxHeight; // Actual height comparison would need more complex logic
-        }
+        },
       },
       {
-        condition: () => partnerPreference.basic?.maritalStatus === user.marital_status
+        condition: () =>
+          partnerPreference.basic?.maritalStatus === user.marital_status,
       },
       {
-        condition: () => partnerPreference.community?.religion === user.religion
+        condition: () =>
+          partnerPreference.community?.religion === user.religion,
       },
       {
-        condition: () => partnerPreference.community?.motherTongue === user.mother_tongue
+        condition: () =>
+          partnerPreference.community?.motherTongue === user.mother_tongue,
       },
       {
-        condition: () => partnerPreference.location?.country?.includes(user.country)
+        condition: () =>
+          partnerPreference.location?.country?.includes(user.country),
       },
       {
-        condition: () => partnerPreference.education?.qualification === user.qualification
-      }
+        condition: () =>
+          partnerPreference.education?.qualification === user.qualification,
+      },
     ];
 
-    const matched = criteria.filter(c => c.condition()).length;
+    const matched = criteria.filter((c) => c.condition()).length;
     return Math.round((matched / criteria.length) * 100);
   }, [currentProfile, user]);
 
   // Handlers
   const handleNextProfile = () => {
-    setCurrentProfileIndex(prev => prev < profiles.length - 1 ? prev + 1 : 0);
-    setActiveTab('detailed');
+    setCurrentProfileIndex((prev) =>
+      prev < profiles.length - 1 ? prev + 1 : 0
+    );
+    setActiveTab("detailed");
   };
 
-  const handleConnectNow = () => {
-    console.log("Connecting with profile:", currentProfile);
-    alert(`Connecting with ${currentProfile.first_name} ${currentProfile.last_name}`);
-  };
 
+  const handleConnectClick = async (id) => {
+    setProfiles((prev) =>
+      prev.map((profile) =>
+        profile.id === id ? { ...profile, showContactOptions: true } : profile
+      )
+    );
+    try {
+      await axios.post(`${config.baseURL}/api/notifications/send`, {
+        receiver_user_id: id,
+        sender_user_id: user?.id,
+        type: "connect",
+        message: `${user?.first_name} wants to connect with you`,
+      });
+      console.log("Notification sent successfully");
+    } catch (error) {
+      console.error("Error sending notification", error);
+    }
+  };
   // Render helpers
   const renderPreferenceRow = (title, value) => (
     <div className="row mb-2">
       <div className="col-md-6">
         <div className="label-title">{title}</div>
-        <div className="label-value">{value || 'Not specified'}</div>
+        <div className="label-value">{value || "Not specified"}</div>
       </div>
       <div className="col-md-6 text-end">
         <i className="fa fa-check-circle-o" aria-hidden="true"></i>
@@ -166,14 +206,19 @@ const TodaysMatches = () => {
                 src={currentProfile.profile_image 
                   ? `${config.baseURL}/uploads/profiles/${currentProfile.profile_image}` 
                   : "images/matchesprofile.jpg"} 
-                alt="Profile"
+                alt="Profile" className=""
               />
             </div>
             <div className="verified-profile">
-              <h4><i className="fa fa-certificate" aria-hidden="true"></i> Verified Profile</h4>
+              <h4>
+                <i className="fa fa-certificate" aria-hidden="true"></i>{" "}
+                Verified Profile
+              </h4>
               <div className="sub-partverified">
                 <ul>
-                  <li>Name verified against <a href="">Govt ID</a></li>
+                  <li>
+                    Name verified against <a href="">Govt ID</a>
+                  </li>
                   <li>Mobile Number Is Verified</li>
                 </ul>
               </div>
@@ -185,17 +230,38 @@ const TodaysMatches = () => {
             <div className="header-bar d-flex justify-content-between align-items-center">
               <div className="d-flex align-items-center">
                 <span className="time-label">Time left to Connect</span>
-                <span className="question-icon" title="Remaining time to connect">&#x3f;</span>
+                <span
+                  className="question-icon"
+                  title="Remaining time to connect"
+                >
+                  &#x3f;
+                </span>
                 <span className="countdown ms-2">
-                  {String(countdown.hours).padStart(2, '0')}h : {String(countdown.minutes).padStart(2, '0')}m : {String(countdown.seconds).padStart(2, '0')}s
+                  {String(countdown.hours).padStart(2, "0")}h :{" "}
+                  {String(countdown.minutes).padStart(2, "0")}m :{" "}
+                  {String(countdown.seconds).padStart(2, "0")}s
                 </span>
               </div>
-              {!isLastProfile && <div className="d-flex align-items-center">
-                <img src={nextProfile.profile_image 
-                  ? `${config.baseURL}/uploads/profiles/${nextProfile.profile_image}` 
-                  : "images/matchesprofile.jpg"}  alt="Profile" className="profile-circle" />
-                 <button className="next-link" onClick={handleNextProfile} disabled={isLastProfile}>Next &gt;</button>
-              </div>}
+              {!isLastProfile && (
+                <div className="d-flex align-items-center">
+                  <img
+                    src={
+                      nextProfile.profile_image
+                        ? `${config.baseURL}/uploads/profiles/${nextProfile.profile_image}`
+                        : "images/matchesprofile.jpg"
+                    }
+                    alt="Profile"
+                    className="profile-circle"
+                  />
+                  <button
+                    className="next-link"
+                    onClick={handleNextProfile}
+                    disabled={isLastProfile}
+                  >
+                    Next &gt;
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="profile-newmatch">
@@ -203,25 +269,50 @@ const TodaysMatches = () => {
                 <div className="col-md-9">
                   <div className="p-3">
                     <h5 className="mb-1">
-                      {currentProfile.first_name} {currentProfile.last_name?.charAt(0)}
+                      {currentProfile.first_name}{" "}
+                      {currentProfile.last_name?.charAt(0)}
                       <img src="images/verified-badge.png" alt="Verified" />
                     </h5>
                     <div className="d-flex justify-content-between mb-2 small">
-                      <span className="text-success"><i className="fa fa-phone" aria-hidden="true"></i> Online now</span>
-                      <span className="text-muted"><i className="fa fa-users" aria-hidden="true"></i> You &amp; Her</span>
-                      <span className="text-warning"><i className="fa fa-globe" aria-hidden="true"></i> Astro</span>
+                      <span
+                        className={
+                          currentProfile.online ? "text-success" : "text-muted"
+                        }
+                      >
+                        <i className="fa fa-phone" aria-hidden="true"></i>
+                        {currentProfile.online
+                          ? " Online now"
+                          : ` Last seen ${timeAgo(currentProfile.last_seen)}`}
+                      </span>
+                      <span className="text-muted">
+                        <i className="fa fa-users" aria-hidden="true"></i> You
+                        &amp; Her
+                      </span>
+                      <span className="text-warning">
+                        <i className="fa fa-globe" aria-hidden="true"></i> Astro
+                      </span>
                     </div>
                     <hr />
                     <div className="match-detail">
                       <div className="row text-dark mb-2">
                         <div className="col-6">
-                          <div>{age} yrs, {currentProfile.height}</div>
-                          <div>{currentProfile.religion}, {currentProfile.sub_community}</div>
-                          <div>{currentProfile.mother_tongue || currentProfile.community}</div>
+                          <div>
+                            {age} yrs, {currentProfile.height}
+                          </div>
+                          <div>
+                            {currentProfile.religion},{" "}
+                            {currentProfile.sub_community}
+                          </div>
+                          <div>
+                            {currentProfile.mother_tongue ||
+                              currentProfile.community}
+                          </div>
                         </div>
                         <div className="col-6">
                           <div>{currentProfile.marital_status}</div>
-                          <div>{currentProfile.city}, {currentProfile.country}</div>
+                          <div>
+                            {currentProfile.city}, {currentProfile.country}
+                          </div>
                           <div>{currentProfile.profession}</div>
                         </div>
                       </div>
@@ -230,13 +321,15 @@ const TodaysMatches = () => {
                 </div>
 
                 <div className="col-md-3 d-flex align-items-center justify-content-center connect-now p-2">
-                  <div className="text-center">
-                    <div className="small text-muted mb-2">Like this profile?</div>
-                    <img src="images/checked.png" alt="Check" className="mb-2" style={{ width: '40px' }} /><br/>
-                    <button className="btn btn-outline-success btn-sm" onClick={handleConnectNow}>
-                      Connect Now
-                    </button>
-                  </div>
+                  {currentProfile.connectionRequest ? (
+                    <ContactOptions profile={currentProfile} />
+                  ) : (
+                    <ConnectBox
+                      handleConnectClick={() =>
+                        handleConnectClick(currentProfile.id)
+                      }
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -246,14 +339,22 @@ const TodaysMatches = () => {
               <div className="tab-container">
                 <ul className="nav nav-tabs border-0">
                   <li className="nav-item">
-                    <button className={`nav-link ${activeTab === 'detailed' ? 'active' : ''}`} 
-                      onClick={() => setActiveTab('detailed')}>
+                    <button
+                      className={`nav-link ${
+                        activeTab === "detailed" ? "active" : ""
+                      }`}
+                      onClick={() => setActiveTab("detailed")}
+                    >
                       Detailed Profile
                     </button>
                   </li>
                   <li className="nav-item">
-                    <button className={`nav-link ${activeTab === 'partner' ? 'active' : ''}`} 
-                      onClick={() => setActiveTab('partner')}>
+                    <button
+                      className={`nav-link ${
+                        activeTab === "partner" ? "active" : ""
+                      }`}
+                      onClick={() => setActiveTab("partner")}
+                    >
                       Partner Preferences
                     </button>
                   </li>
@@ -265,17 +366,17 @@ const TodaysMatches = () => {
               </div>
 
               <div className="tab-content pt-3">
-                {activeTab === 'detailed' && (
-                  <ProfileDetails 
-                    currentProfile={currentProfile} 
+                {activeTab === "detailed" && (
+                  <ProfileDetails
+                    currentProfile={currentProfile}
                     matchingRatio={matchingRatio}
                     renderPreferenceRow={renderPreferenceRow}
                   />
                 )}
 
-                {activeTab === 'partner' && (
-                  <PartnerPreferences 
-                    currentProfile={currentProfile} 
+                {activeTab === "partner" && (
+                  <PartnerPreferences
+                    currentProfile={currentProfile}
                     matchingRatio={matchingRatio}
                     renderPreferenceRow={renderPreferenceRow}
                   />

@@ -51,7 +51,7 @@ const Header = ({ unreadNotificationCount }) => {
     <nav className="navbar navbar-expand-lg topbar">
       <div className="container-fluid px-4 px-md-4">
         <NavLink className="navbar-brand" to="/">
-          <img src="/images/logo.svg" alt="Shaadi" className="brand-logo" />
+          <img src="/images/dashbard-logo.png" alt="Shaadi" className="brand-logo" />
         </NavLink>
         <button
           className="navbar-toggler text-white"
@@ -115,7 +115,7 @@ const Header = ({ unreadNotificationCount }) => {
             
           </ul>
 
-          <div className="d-flex align-items-center gap-3 ms-lg-3">
+          <div className="d-flex align-items-center gap-1 ms-lg-3">
             <button className="btn btn-sm btn-outline-light btn-upgrade d-flex align-items-center gap-1">
               <i className="bi bi-gem"></i> Upgrade Now
             </button>

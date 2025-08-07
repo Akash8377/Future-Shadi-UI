@@ -94,7 +94,7 @@ const Notification = ({ onChangeTab }) => {
                       </Link>
                     </div>
                     <div className="col-12 col-md-12">
-                      <Link to="/matches" state={{ activtab: "morematches" }}>
+                      <Link to="/matches" state={{ activtab: "shortlisted" }}>
                         Shortlist Profiles
                       </Link>
                     </div>

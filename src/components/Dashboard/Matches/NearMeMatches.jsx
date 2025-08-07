@@ -21,8 +21,9 @@ const NearMeMatches = () => {
 
   const fetchFilteredProfiles = async () => {
     try {
-      const response = await axios.get(`${config.baseURL}/api/profile/new-matches-near-me`, {
+      const response = await axios.get(`${config.baseURL}/api/matches/new-matches-near-me`, {
         params: {
+          user_id:user.id,
           looking_for: searchFor,
           nearMe:user.city,
           ...filters,

@@ -5,6 +5,7 @@ import Accepted from './Accepted';
 import Sent from './Sent';
 import Requested from './Requested';
 import Deleted from './Deleted';
+import ChatBox from './ChatBox';
 
 const tabComponents = [
   {
@@ -63,6 +64,7 @@ function MainTabs() {
           </div>
         ))}
       </div>
+      <ChatBox/>
     </div>
   );
 }

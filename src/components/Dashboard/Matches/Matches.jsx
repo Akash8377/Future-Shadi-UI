@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Header from '../Header';
 import Footer from '../../Footer/Footer';
@@ -8,6 +7,7 @@ import TodaysMatches from './TodaysMatches';
 import MyMatches from './MyMatches';
 import NearMeMatches from './NearMeMatches';
 import MoreMatches from './MoreMatches';
+import Shortlisted from "./Shortlisted";
 
 // Tab component mapping
 const tabComponents = {
@@ -15,6 +15,7 @@ const tabComponents = {
   todays: TodaysMatches,
   mymatches: MyMatches,
   nearme: NearMeMatches,
+  shortlisted: Shortlisted,
   morematches: MoreMatches,
 };
 
@@ -24,7 +25,8 @@ const tabHeadings = {
   todays: "Today's Matches",
   mymatches: "My Matches",
   nearme: "Near Me",
-  // morematches: "More Matches",
+  morematches: "More Matches",
+  shortlisted:"Shortlisted",
 };
 
 const Matches = () => {

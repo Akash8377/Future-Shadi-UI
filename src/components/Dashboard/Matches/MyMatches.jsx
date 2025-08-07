@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import RefineSearchSidebar from './components/RefineSearchSidebar';
-import ProfileCard from './components/ProfileCard';
-import Pagination from './components/Pagination';
-import axios from 'axios';
-import config from '../../../config';
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import RefineSearchSidebar from "./components/RefineSearchSidebar";
+import ProfileCard from "./components/ProfileCard";
+import Pagination from "./components/Pagination";
+import axios from "axios";
+import config from "../../../config";
 
 const PROFILES_PER_PAGE = 10;
 
@@ -16,18 +16,22 @@ const MyMatches = () => {
 
   const user = useSelector((state) => state.user.userInfo);
   const lookingFor = user?.looking_for;
-  const searchFor = lookingFor === 'Bride' ? 'Groom' : 'Bride';
+  const searchFor = lookingFor === "Bride" ? "Groom" : "Bride";
   const partnerPreference = user?.partner_preference || {};
 
   const fetchFilteredProfiles = async () => {
     try {
-      const response = await axios.get(`${config.baseURL}/api/profile/my-matches`, {
-        params: {
-          looking_for: searchFor,
-          partner_preference: JSON.stringify(user?.partner_preference),
-          ...filters,
-        },
-      });
+      const response = await axios.get(
+        `${config.baseURL}/api/matches/my-matches`,
+        {
+          params: {
+            user_id: user.id,
+            looking_for: searchFor,
+            partner_preference: JSON.stringify(user?.partner_preference),
+            ...filters,
+          },
+        }
+      );
       setProfiles(response.data.users || []);
       setCurrentPage(1); // Reset to page 1 on new search
     } catch (error) {
@@ -39,18 +43,32 @@ const MyMatches = () => {
     if (searchFor) fetchFilteredProfiles();
   }, [filters, searchFor]);
 
-  const handleConnectClick = (id) => {
-    setProfiles(prev =>
-      prev.map(profile =>
+  const handleConnectClick = async (id) => {
+    setProfiles((prev) =>
+      prev.map((profile) =>
         profile.id === id ? { ...profile, showContactOptions: true } : profile
       )
     );
+    try {
+      await axios.post(`${config.baseURL}/api/notifications/send`, {
+        receiver_user_id: id,
+        sender_user_id: user?.id,
+        type: "connect",
+        message: `${user?.first_name} wants to connect with you`,
+      });
+      console.log("Notification sent successfully");
+    } catch (error) {
+      console.error("Error sending notification", error);
+    }
   };
 
   // Slice the profiles for current page
   const indexOfLastProfile = currentPage * PROFILES_PER_PAGE;
   const indexOfFirstProfile = indexOfLastProfile - PROFILES_PER_PAGE;
-  const currentProfiles = profiles.slice(indexOfFirstProfile, indexOfLastProfile);
+  const currentProfiles = profiles.slice(
+    indexOfFirstProfile,
+    indexOfLastProfile
+  );
 
   return (
     <div className="p-4">
@@ -62,7 +80,7 @@ const MyMatches = () => {
           <h4>New Members Who Match Your Preferences</h4>
           <div className="card border-0 shadow-sm mb-3">
             {currentProfiles.length > 0 ? (
-              currentProfiles.map(profile => (
+              currentProfiles.map((profile) => (
                 <ProfileCard
                   key={profile.id}
                   profile={profile}

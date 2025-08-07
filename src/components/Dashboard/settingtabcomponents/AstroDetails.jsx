@@ -291,17 +291,14 @@ const AstroDetails = ({ userInfo, token }) => {
                 <label htmlFor="placeOfBirth" className="form-label">
                   Place of Birth
                 </label>
-                <select
-                  className="form-select"
-                  id="placeOfBirth"
-                  name="birth_city"
-                  value={formData.birth_city}
-                  onChange={handleInputChange}
-                >
-                  {CITY_OPTIONS.map(city => (
-                    <option key={city} value={city}>{city}</option>
-                  ))}
-                </select>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="placeOfBirth"
+                    name="birth_city"
+                    value={formData.birth_city}
+                    onChange={handleInputChange}
+                  />
               </div>
             </div>
 
