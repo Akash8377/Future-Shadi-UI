@@ -7,6 +7,7 @@ import ProfileCard from './components/ProfileCard';
 import Pagination from './components/Pagination';
 import axios from 'axios';
 import config from '../../../config';
+import { toast } from "../../Common/Toast";
  
 const Shortlisted = () => {
   const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
@@ -55,6 +56,7 @@ const Shortlisted = () => {
       type: "connect",
       message: `${user?.first_name} wants to connect with you`,
     });
+    toast.success("Request sent successfully")
     console.log("Notification sent successfully");
   } catch (error) {
     console.error("Error sending notification", error);

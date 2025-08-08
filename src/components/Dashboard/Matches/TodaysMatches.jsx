@@ -7,6 +7,7 @@ import PartnerPreferences from "./components/PartnerPreferences";
 import { timeAgo } from "../../../utils/timeAgo";
 import ConnectBox from "./components/ConnectBox";
 import ContactOptions from "./components/ContactOptions";
+import { toast } from "../../Common/Toast";
 
 const TodaysMatches = () => {
   // State and data
@@ -167,6 +168,7 @@ const TodaysMatches = () => {
         type: "connect",
         message: `${user?.first_name} wants to connect with you`,
       });
+      toast.success("Request sent successfully")
       console.log("Notification sent successfully");
     } catch (error) {
       console.error("Error sending notification", error);

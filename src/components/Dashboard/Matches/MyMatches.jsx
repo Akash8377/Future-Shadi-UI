@@ -5,6 +5,7 @@ import ProfileCard from "./components/ProfileCard";
 import Pagination from "./components/Pagination";
 import axios from "axios";
 import config from "../../../config";
+import { toast } from "../../Common/Toast";
 
 const PROFILES_PER_PAGE = 10;
 
@@ -57,6 +58,7 @@ const MyMatches = () => {
         message: `${user?.first_name} wants to connect with you`,
       });
       console.log("Notification sent successfully");
+      toast.success("Request sent successfully")
     } catch (error) {
       console.error("Error sending notification", error);
     }

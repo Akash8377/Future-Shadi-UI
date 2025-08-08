@@ -8,6 +8,7 @@ import axios from 'axios';
 import config from '../../../config';
 import Header from '../Header';
 import Footer from '../../Footer/Footer';
+import { toast } from "../../Common/Toast";
 
 const SearchResultsPage = () => {
   const location = useLocation();
@@ -72,6 +73,7 @@ const SearchResultsPage = () => {
         profile.id === id ? { ...profile, showContactOptions: true } : profile
       )
     );
+    toast.success("Request sent successfully")
   };
 
   // Pagination logic

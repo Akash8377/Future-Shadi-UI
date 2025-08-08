@@ -5,7 +5,7 @@ import ProfileCard from './components/ProfileCard';
 import Pagination from './components/Pagination';
 import axios from 'axios';
 import config from '../../../config';
-
+import { toast } from "../../Common/Toast";
 
 
 const NearMeMatches = () => {
@@ -48,6 +48,7 @@ const NearMeMatches = () => {
         profile.id === id ? { ...profile, showContactOptions: true } : profile
       )
     );
+    toast.success("Request sent successfully")
   };
 
   const indexOfLastProfile = currentPage * PROFILES_PER_PAGE;
