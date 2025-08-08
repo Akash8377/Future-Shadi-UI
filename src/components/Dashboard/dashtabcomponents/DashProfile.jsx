@@ -167,7 +167,7 @@ const DashProfile = ({onEditClick, notifications}) => {
                       <span className="fw-normal text-muted small">Accepted Invitations</span>
                     </td>
                     <td style={{ width: '33.33%' }}>
-                      6 <span className="badge align-top small" style={{ backgroundColor: '#cef8e5' }}>NEW</span><br />
+                      0 <span className="badge align-top small" style={{ backgroundColor: '#cef8e5' }}>NEW</span><br />
                       <span className="fw-normal text-muted small">Recent Visitors</span>
                     </td>
                   </tr>
@@ -185,7 +185,7 @@ const DashProfile = ({onEditClick, notifications}) => {
                       <span className="fw-normal text-muted small">Contacts Viewed</span>
                     </td>
                     <td style={{ width: '33.33%' }}>
-                      6<br />
+                      0<br />
                       <span className="fw-normal text-muted small">Chats initiated</span>
                     </td>
                   </tr>

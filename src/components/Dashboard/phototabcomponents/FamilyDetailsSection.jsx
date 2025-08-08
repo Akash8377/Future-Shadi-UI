@@ -98,7 +98,7 @@ const FamilyDetailsSection = ({ isEditing, getValue, getFamilyValue, onDataChang
               <td>Family Financial Status</td>
               <td>: {isEditing && editingFields === "family" ? (
                 <select 
-                  value={getValue('financial_status') || ''} 
+                  value={getValue('financial_status') || 'Elite'} 
                   onChange={(e) => onDataChange('financial_status', e.target.value)}
                   className="form-select form-select-sm d-inline-block w-75"
                 >
