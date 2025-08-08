@@ -9,6 +9,7 @@ import SettingsTab from "./SettingsTab";
 import MoreTab from "./MoreTab";
 import Footer from "../Footer/Footer";
 import { useLocation } from 'react-router-dom';
+import ChatBox from "./inbox/components/ChatBox";
 
 // Component mapping
 const tabComponents = {
@@ -74,6 +75,7 @@ const DashboardPage = () => {
             ActiveComponent && <ActiveComponent />
           )}
         </div>
+        <ChatBox/>
         <Footer/>
       </div>
     </div>

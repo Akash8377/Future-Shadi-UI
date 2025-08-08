@@ -59,7 +59,7 @@ import { Link } from "react-router-dom";
 function DetailedFilteredOut({ filteredOut , fetchPreferenceData }) {
   const [currentPage, setCurrentPage] = useState(0);
 
-  console.log("Receiver Data:", filteredOut);
+  // console.log("Receiver Data:", filteredOut);
   const totalPages = filteredOut.length;
 
   const handlePrev = () => {
@@ -262,8 +262,7 @@ const handleReject = async (notificationId) => {
         <img src="images/greencheck.png" alt="Green Check" />
         <p>View All Received Invitations</p>
       </div>
-
-      <div className="pagination-wrapper">
+{totalPages>1 && (<div className="pagination-wrapper">
         <button
           className="pagination-button"
           onClick={handlePrev}
@@ -281,7 +280,7 @@ const handleReject = async (notificationId) => {
         >
           Next &rarr;
         </button>
-      </div>
+      </div>)}
     </div>
   );
 }

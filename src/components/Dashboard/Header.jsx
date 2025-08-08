@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../../features/user/userSlice";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getSocket, disconnectSocket } from "../../utils/socket";
+import axios from "axios";
+import config from "../../config";
 
 const Header = ({ unreadNotificationCount }) => {
   const [showHelp, setShowHelp] = useState(false);
@@ -14,6 +16,9 @@ const Header = ({ unreadNotificationCount }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.userInfo);
+  const lookingFor = user?.looking_for;
+  const searchFor = lookingFor === "Bride" ? "Groom" : "Bride";
+  const [profiles, setProfiles] = useState([]);
  
 
   const handleLogout = () => {
@@ -31,6 +36,27 @@ const Header = ({ unreadNotificationCount }) => {
       dispatch(clearUser());
     }, 1000);
   };
+  const fetchFilteredProfiles = async () => {
+    try {
+      const response = await axios.get(
+        `${config.baseURL}/api/matches/my-matches`,
+        {
+          params: {
+            user_id: user.id,
+            looking_for: searchFor,
+            partner_preference: JSON.stringify(user?.partner_preference),
+          },
+        }
+      );
+      setProfiles(response.data.users || []);
+    } catch (error) {
+      console.error("Error fetching profiles", error);
+    }
+  };
+
+  useEffect(() => {
+    if (searchFor) fetchFilteredProfiles();
+  }, [searchFor]);
 
   // Close dropdown when clicked outside
   useEffect(() => {
@@ -83,7 +109,7 @@ const Header = ({ unreadNotificationCount }) => {
               >
                 Matches
                 <span className="badge bg-white text-dark rounded-pill position-absolute top-0 start-100 translate-middle">
-                  968
+                  {profiles.length}
                 </span>
               </NavLink>
             </li>

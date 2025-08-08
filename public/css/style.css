@@ -2470,6 +2470,8 @@ ul#search-tabs {
   height: 36px;
   border-radius: 50%;
   margin-right: 10px;
+  object-fit: cover;       /* fills the box and crops overflow */
+  object-position: center; /* shows center part of image */
 }
 
 .online-dot {
@@ -2503,6 +2505,7 @@ ul#search-tabs {
 
 .chat-body {
   padding: 10px;
+  min-height: 350px;
 }
 
 .chat-msg {
@@ -2510,7 +2513,16 @@ ul#search-tabs {
   padding: 10px;
   border-radius: 10px;
   margin-top: 10px;
-  display: inline-block;
+  display: block;
+}
+
+.sent{
+  display: flex;
+  justify-content: flex-end;
+}
+.received{
+  display: flex;
+  justify-content: flex-start;
 }
 
 .chat-footer {
@@ -2522,6 +2534,8 @@ ul#search-tabs {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  object-fit: cover;       /* fills the box and crops overflow */
+  object-position: center; /* shows center part of image */
 }
 
 .chat-actions {
@@ -2650,5 +2664,11 @@ ul#search-tabs {
   display: block;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   z-index: 1000;
+}
+
+.offline {
+  filter: grayscale(25%);
+  /* Optional: Reduce opacity for a more faded look */
+  opacity: 0.7;
 }
 /*chat css end*/

@@ -82,12 +82,12 @@ const handleReject = async (notificationId) => {
 };
 
   if (!currentReceiver) return (<div class="mt-2 filtred-out">
-								<div class="profile-request">
-									<div class="card-profile">
-										<div class="Filtered-out">
+								<div className="profile-request">
+									<div className="card-profile">
+										<div className="Filtered-out">
 											<img src="images/filtredout.jpg"/>
 											<h4>There is no invitations</h4>
-											<Link to="/matches" class=" text-decoration-none" style={{color:"#d61962"}}>View All
+											<Link to="/matches" className=" text-decoration-none" style={{color:"#d61962"}}>View All
 												Matches <i class="fa fa-angle-right" aria-hidden="true"></i></Link>
 										</div>
 									</div>
@@ -209,8 +209,7 @@ const handleReject = async (notificationId) => {
         <img src="images/greencheck.png" alt="Green Check" />
         <p>View All Received Invitations</p>
       </div>
-
-      <div className="pagination-wrapper">
+{totalPages>1 && (<div className="pagination-wrapper">
         <button
           className="pagination-button"
           onClick={handlePrev}
@@ -228,7 +227,7 @@ const handleReject = async (notificationId) => {
         >
           Next &rarr;
         </button>
-      </div>
+      </div>)}
     </div>
   );
 }

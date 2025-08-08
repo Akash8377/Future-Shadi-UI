@@ -8,6 +8,7 @@ import MyMatches from './MyMatches';
 import NearMeMatches from './NearMeMatches';
 import MoreMatches from './MoreMatches';
 import Shortlisted from "./Shortlisted";
+import ChatBox from "../inbox/components/ChatBox";
 
 // Tab component mapping
 const tabComponents = {
@@ -60,6 +61,7 @@ const Matches = () => {
           {ActiveComponent && <ActiveComponent />}
         </div>
       </div>
+      <ChatBox/>
       <Footer />
     </div>
   );

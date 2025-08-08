@@ -4,6 +4,7 @@ import BasicSearchTab from './BasicSearchTab';
 import AdvancedSearchTab from './AdvancedSearchTab';
 import Header from "../Header";
 import Footer from "../../Footer/Footer";
+import ChatBox from '../inbox/components/ChatBox';
 
 const Search = () => {
   const [key, setKey] = useState('basic');
@@ -26,6 +27,7 @@ const Search = () => {
           </Tab>
         </Tabs>
       </div>
+      <ChatBox/>
       <Footer />
     </>
   );

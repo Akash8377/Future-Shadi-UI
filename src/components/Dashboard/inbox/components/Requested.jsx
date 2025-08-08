@@ -152,7 +152,7 @@ const Requested = () => {
                 <img src="images/greencheck.png" alt="Green Check" />
                 <p>View All Pending Invitations</p>
               </div>
-              <div className="pagination-wrapper">
+              {totalPages>1 && (<div className="pagination-wrapper">
                 <button
                   className="pagination-button"
                   onClick={handlePrev}
@@ -170,7 +170,7 @@ const Requested = () => {
                 >
                   Next &rarr;
                 </button>
-              </div>
+              </div>)}
                 </>
               ) : (<div class=" filtred-out">
 								<div class="profile-request">

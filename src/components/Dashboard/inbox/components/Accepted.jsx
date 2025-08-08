@@ -152,8 +152,7 @@ function Accepted() {
                 <img src="images/greencheck.png" alt="Green Check" />
                 <p>View All Accepted Invitations</p>
               </div>
-
-              <div className="pagination-wrapper">
+{totalPages>1 && (<div className="pagination-wrapper">
                 <button className="pagination-button" onClick={handlePrev} disabled={currentPage === 0}>
                   &larr; Prev
                 </button>
@@ -167,7 +166,8 @@ function Accepted() {
                 >
                   Next &rarr;
                 </button>
-              </div>
+              </div>)}
+              
                 </>
               ) : (<div class="filtred-out">
 								<div class="profile-request">

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import Received from './Recieved';
 import Accepted from './Accepted';
-import Sent from './Sent';
+// import Sent from './Sent';
 import Requested from './Requested';
 import Deleted from './Deleted';
 import ChatBox from './ChatBox';
