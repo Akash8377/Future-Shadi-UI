@@ -10,7 +10,6 @@ const SliderModal = ({
   onChange, 
   formatValue 
 }) => {
-  console.log("Slider Value", value, formatValue)
   return (
     <div className="slider-container">
       <label>

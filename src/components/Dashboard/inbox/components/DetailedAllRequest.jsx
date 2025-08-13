@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import config from "../../../../config";
-import { timeAgo } from "../../../../utils/timeAgo";
+import { timeAgo,formatLastSeen } from "../../../../utils/timeAgo";
 import { Link } from "react-router-dom";
 
 function DetailedAllRequest({ receiverData , fetchReceiverData }) {
   const [currentPage, setCurrentPage] = useState(0);
+  console.log("receiverData",receiverData)
 
   // console.log("Receiver Data:", receiverData);
   const totalPages = receiverData.length;
@@ -81,18 +82,18 @@ const handleReject = async (notificationId) => {
   }
 };
 
-  if (!currentReceiver) return (<div class="mt-2 filtred-out">
-								<div className="profile-request">
-									<div className="card-profile">
-										<div className="Filtered-out">
-											<img src="images/filtredout.jpg"/>
-											<h4>There is no invitations</h4>
-											<Link to="/matches" className=" text-decoration-none" style={{color:"#d61962"}}>View All
-												Matches <i class="fa fa-angle-right" aria-hidden="true"></i></Link>
-										</div>
-									</div>
-								</div>
-							</div>);
+  if (!currentReceiver) return (<div className="mt-2 filtred-out">
+    <div className="profile-request">
+      <div className="card-profile">
+        <div className="Filtered-out">
+          <img src="images/filtredout.jpg"/>
+          <h4>There is no invitations</h4>
+          <Link to="/matches" className=" text-decoration-none" style={{color:"#d61962"}}>View All
+            Matches <i className="fa fa-angle-right" aria-hidden="true"></i></Link>
+        </div>
+      </div>
+    </div>
+  </div>);
 
   return (
     <div className="profile-request">
@@ -117,13 +118,13 @@ const handleReject = async (notificationId) => {
                   {currentReceiver.sender_first_name}{" "}
                   {currentReceiver.sender_last_name}
                 </div>
-                {currentReceiver.sender_online ? (
+                {currentReceiver.sender_online_status === "online" ? (
                 <div className="text-success mb-2" style={{ fontSize: "14px" }}>
                     <i className="bi bi-circle-fill" style={{ color: "green", fontSize: "10px" }}></i> Online now
                 </div>
                 ) : (
                 <div className="text-muted mb-2" style={{ fontSize: "14px" }}>
-                    <i className="bi bi-clock"></i> Last seen {timeAgo(currentReceiver.sender_last_seen)}
+                    <i className="bi bi-clock"></i> Last seen {formatLastSeen(currentReceiver.sender_online_status)}
                 </div>
                 )}
               </div>

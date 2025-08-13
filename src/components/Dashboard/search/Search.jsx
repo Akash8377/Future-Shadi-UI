@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import BasicSearchTab from './BasicSearchTab';
 import AdvancedSearchTab from './AdvancedSearchTab';
-import Header from "../Header";
-import Footer from "../../Footer/Footer";
 import ChatBox from '../inbox/components/ChatBox';
 
 const Search = () => {
@@ -11,7 +9,6 @@ const Search = () => {
 
   return (
     <>
-      <Header />
       <div className="container mt-3">
         <Tabs
           id="search-tabs"
@@ -28,7 +25,6 @@ const Search = () => {
         </Tabs>
       </div>
       <ChatBox/>
-      <Footer />
     </>
   );
 };

@@ -6,8 +6,6 @@ import ProfileCard from '../Matches/components/ProfileCard';
 import Pagination from '../Matches/components/Pagination';
 import axios from 'axios';
 import config from '../../../config';
-import Header from '../Header';
-import Footer from '../../Footer/Footer';
 import { toast } from "../../Common/Toast";
 
 const SearchResultsPage = () => {
@@ -18,7 +16,7 @@ const SearchResultsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [isInitialMount, setIsInitialMount] = useState(true);
-  const profilesPerPage = 5;
+  const profilesPerPage = 7;
 
   const user = useSelector((state) => state.user.userInfo);
   const lookingFor = user?.looking_for;
@@ -83,7 +81,6 @@ const SearchResultsPage = () => {
   
   return (
     <>
-      <Header/>
       <div className="container mt-3 p-4">
         <div className="row">
           <div className="col-md-3">
@@ -125,7 +122,6 @@ const SearchResultsPage = () => {
           </div>
         </div>
       </div>
-      <Footer/>
     </>
   );
 };

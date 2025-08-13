@@ -12,7 +12,7 @@ const Advertise = ({notifications}) => {
     // Filter searches based on isAdvanced prop
     if (notifications.length) {
       const pending = notifications.filter(n =>
-        n.status === 'pending' || n.status === 'sent'
+        n.status === 'pending' || n.status === 'sent' || n.status ==='accepted'
       );
       setPending(pending);
     }
@@ -54,7 +54,7 @@ const Advertise = ({notifications}) => {
           <div className="col-lg-3">
             <div className="card-lite p-3">
               <h6 className="mb-3">
-                <i className="fa fa-bell" aria-hidden="true"></i> {displayedNotification.length} Notifications {displayedNotification.length>0 && (<span className="notif-dot"></span>)}
+                <i className="fa fa-bell" aria-hidden="true"></i> {pending.length} Notifications {displayedNotification.length>0 && (<span className="notif-dot"></span>)}
               </h6>
               <div className="notif-card" id="noteBox">
                 {displayedNotification.length > 0 && displayedNotification.map((notification, index)=>(
@@ -65,7 +65,7 @@ const Advertise = ({notifications}) => {
                   </div>
                 </div>
                 ))}
-                {displayedNotification.length > 0 && (<span className="view-toggle cursor-pointer text-blue-600" onClick={handleToggleNotifications}>
+                {pending.length > 1 && (<span className="view-toggle cursor-pointer text-blue-600" onClick={handleToggleNotifications}>
                     {showAllNotifications ? 'View Less' : 'View All'}
                 </span>)}
               </div>

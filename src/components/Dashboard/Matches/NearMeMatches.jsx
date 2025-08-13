@@ -29,26 +29,35 @@ const NearMeMatches = () => {
           ...filters,
         },
       });
-      console.log("Match Profiles",response.data.users)
       setProfiles(response.data.users || []);
     } catch (error) {
       console.error("Error fetching profiles", error);
     }
   };
 
-
-
   useEffect(() => {
     if (searchFor) fetchFilteredProfiles();
   }, [filters, searchFor]);
 
-  const handleConnectClick = (id) => {
-    setProfiles(prev =>
-      prev.map(profile =>
-        profile.id === id ? { ...profile, showContactOptions: true } : profile
+  const handleConnectClick = async (id, profileId) => {
+    setProfiles((prev) =>
+      prev.map((profile) =>
+        profile.id === id ? { ...profile, connectionRequest: true } : profile
       )
     );
-    toast.success("Request sent successfully")
+    try {
+      await axios.post(`${config.baseURL}/api/notifications/send`, {
+        receiver_user_id: id,
+        receiver_profile_id:profileId,
+        sender_user_id: user?.id,
+        sender_profile_id: user?.profileId,
+        type: "connect",
+        message: `${user?.first_name} wants to connect with you`,
+      });
+      toast.success("Request sent successfully")
+    } catch (error) {
+      console.error("Error sending notification", error);
+    }
   };
 
   const indexOfLastProfile = currentPage * PROFILES_PER_PAGE;

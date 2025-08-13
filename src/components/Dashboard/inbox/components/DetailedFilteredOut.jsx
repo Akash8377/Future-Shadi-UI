@@ -1,59 +1,6 @@
-// import React from "react";
-
-// function DetailedFilteredOut({ filteredOut = [], prefErrorMessage = null }) {
-//   const hasPreferenceIssue =
-//     prefErrorMessage && prefErrorMessage.toLowerCase().includes("preference");
-
-//   return (
-//     <div className="filtred-out">
-//       <div className="profile-request">
-//         <div className="card-profile">
-//           <div className="Filtered-out text-center p-5">
-//             <img
-//               src="images/filtredout.jpg"
-//               alt="Filtered Out"
-//               className="mb-4"
-//             />
-//             {hasPreferenceIssue ? (
-//               <>
-//                 <h4 className="mb-2">Preference not found</h4>
-//                 <p className="mb-4">{prefErrorMessage}</p>
-//                 <p className="text-muted">
-//                   Please set your partner preferences or verify the data.
-//                 </p>
-//               </>
-//             ) : filteredOut.length === 0 ? (
-//               <>
-//                 <h4 className="mb-4">There is no filtered out invitations</h4>
-//                 <a
-//                   href="#"
-//                   className="text-decoration-none"
-//                   style={{ color: "#d61962" }}
-//                 >
-//                   View All Matches{" "}
-//                   <i className="fa fa-angle-right" aria-hidden="true"></i>
-//                 </a>
-//               </>
-//             ) : (
-//               <>
-//                 <h4 className="mb-3">Filtered Out Invitations</h4>
-//                 <p>{`Found ${filteredOut.length} items filtered out by preference.`}</p>
-//                 {/* You can map over filteredOut to show a summary if desired */}
-//               </>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default DetailedFilteredOut;
-
-
 import React, { useState } from "react";
 import config from "../../../../config";
-import { timeAgo } from "../../../../utils/timeAgo";
+import { timeAgo,formatLastSeen } from "../../../../utils/timeAgo";
 import { Link } from "react-router-dom";
 
 function DetailedFilteredOut({ filteredOut , fetchPreferenceData }) {
@@ -134,14 +81,14 @@ const handleReject = async (notificationId) => {
   }
 };
 
-  if (!currentReceiver) return (<div class="mt-2 filtred-out">
-								<div class="profile-request">
-									<div class="card-profile">
-										<div class="Filtered-out">
+  if (!currentReceiver) return (<div className="mt-2 filtred-out">
+								<div className="profile-request">
+									<div className="card-profile">
+										<div className="Filtered-out">
 											<img src="images/filtredout.jpg"/>
 											<h4>There is no filtered out invitations</h4>
-											<Link to="/matches" class=" text-decoration-none" style={{color:"#d61962"}}>View All
-												Matches <i class="fa fa-angle-right" aria-hidden="true"></i></Link>
+											<Link to="/matches" className=" text-decoration-none" style={{color:"#d61962"}}>View All
+												Matches <i className="fa fa-angle-right" aria-hidden="true"></i></Link>
 										</div>
 									</div>
 								</div>
@@ -170,13 +117,13 @@ const handleReject = async (notificationId) => {
                   {currentReceiver.sender_first_name}{" "}
                   {currentReceiver.sender_last_name}
                 </div>
-                {currentReceiver.sender_online ? (
+                {currentReceiver.sender_online_status === "online" ? (
                 <div className="text-success mb-2" style={{ fontSize: "14px" }}>
                     <i className="bi bi-circle-fill" style={{ color: "green", fontSize: "10px" }}></i> Online now
                 </div>
                 ) : (
                 <div className="text-muted mb-2" style={{ fontSize: "14px" }}>
-                    <i className="bi bi-clock"></i> Last seen {timeAgo(currentReceiver.sender_last_seen)}
+                    <i className="bi bi-clock"></i> Last seen {formatLastSeen(currentReceiver.sender_online_status)}
                 </div>
                 )}
               </div>

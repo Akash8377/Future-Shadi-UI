@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import Header from '../../components/Header/Header'
-import Footer from '../../components/Footer/Footer'
 import config from '../../config';
 import { toast } from '../../components/Common/Toast';
 import { useNavigate } from "react-router-dom";
@@ -102,7 +100,6 @@ const ProfileUpload = () => {
 
   return (
     <>
-      <Header />
       <section className="profileupload">
         <div className="container mt-5 mb-5">
           {/* <div className="text-center mb-4">
@@ -235,7 +232,6 @@ const ProfileUpload = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };

@@ -88,7 +88,7 @@ const Profile = ({onChangeTab}) => {
       </div>
       <div className="border p-4 bg-white mt-3">
         <div className="row g-4">
-          <div className="col-md-3 col-lg-2">
+          <div className="col-md-4 col-lg-3">
             <div className="upload-box text-center d-flex flex-column justify-content-center align-items-center rounded">
               {userInfo?.profile_image ? (<label
                 htmlFor="fileUpload"
@@ -110,7 +110,7 @@ const Profile = ({onChangeTab}) => {
               <input type="file" id="fileUpload" className="d-none" onChange={handleImageChange} accept="image/*"/>
             </div>
           </div>
-          <div className="col-md-9 col-lg-10">
+          <div className="col-md-8 col-lg-9">
             <div className="row py-3">
               <div className="col-md-6 pe-md-4">
                 <table className="table table-borderless table-sm mini-data mb-0 ">

@@ -14,7 +14,6 @@ const Home = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log("location.state",location.state)
     if (location.state?.signUp && searchByCityRef.current) {
       scrollToComponent('searchByCity', 220);
     }

@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Header from '../Header';
-import Footer from '../../Footer/Footer';
 import { useLocation } from 'react-router-dom';
 import NewMatches from './NewMatches';
 import TodaysMatches from './TodaysMatches';
@@ -17,7 +15,7 @@ const tabComponents = {
   mymatches: MyMatches,
   nearme: NearMeMatches,
   shortlisted: Shortlisted,
-  morematches: MoreMatches,
+  // morematches: MoreMatches,
 };
 
 // Tab headings
@@ -26,7 +24,7 @@ const tabHeadings = {
   todays: "Today's Matches",
   mymatches: "My Matches",
   nearme: "Near Me",
-  morematches: "More Matches",
+  // morematches: "More Matches",
   shortlisted:"Shortlisted",
 };
 
@@ -42,7 +40,6 @@ const Matches = () => {
 
   return (
     <div>
-      <Header />
       <div className="container mt-3">
         <ul className="nav nav-tabs" id="mainTab" role="tablist">
           {Object.keys(tabComponents).map((tabKey) => (
@@ -62,7 +59,6 @@ const Matches = () => {
         </div>
       </div>
       <ChatBox/>
-      <Footer />
     </div>
   );
 };

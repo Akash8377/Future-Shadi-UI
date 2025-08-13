@@ -97,7 +97,7 @@ const RecentVisitors = () => {
   if (isError) return <p>Error loading visitors</p>;
 
     
-    // console.log(visitor, "vusutorsss")
+    console.log(visitor, "vusutorsss")
 
   return (
     <div className="recent-visitor mt-5 px-3 position-relative">

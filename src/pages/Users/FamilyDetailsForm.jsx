@@ -1,6 +1,4 @@
 import React, { useState,useEffect } from "react";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
 import { useNavigate } from "react-router-dom";
 import FamilyForm from "../../components/UserProfile/FamilyForm";
 import FinancialForm from "../../components/UserProfile/FinancialForm";
@@ -50,7 +48,6 @@ const FamilyDetailsForm = () => {
 
   return (
     <>
-      <Header />
       <section className="verfiy-profile">
         <div className="verfiy-profile-new">
           {!showFinancialForm ? (
@@ -68,7 +65,6 @@ const FamilyDetailsForm = () => {
           )}
         </div>
       </section>
-      <Footer />
     </>
   );
 };

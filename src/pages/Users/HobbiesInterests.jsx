@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/Header/Header'
-import Footer from '../../components/Footer/Footer'
 import { useNavigate } from 'react-router-dom';
 
 const HobbiesInterests = () => {
@@ -79,7 +77,6 @@ useEffect(() => {
 
   return (
     <>
-      <Header/>
       <div className="wrapper">
         <h1>Now let's add his hobbies & interests</h1>
         <p className="subtitle">This will help find better matches</p>
@@ -109,7 +106,6 @@ useEffect(() => {
           Continue {`(${selectedHobbies.length}/5)`}
         </button>
       </div>
-      <Footer/>
     </>
   );
 };

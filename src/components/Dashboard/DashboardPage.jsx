@@ -1,13 +1,11 @@
 
 import React, { useState, useEffect } from "react";
-import Header from "./Header";
 import DashboardTab from "./DashboardTab";
 import ProfileTab from "./ProfileTab";
 import PhotosTab from "./PhotosTab";
 import PartnerTab from "./PartnerTab";
 import SettingsTab from "./SettingsTab";
 import MoreTab from "./MoreTab";
-import Footer from "../Footer/Footer";
 import { useLocation } from 'react-router-dom';
 import ChatBox from "./inbox/components/ChatBox";
 
@@ -44,7 +42,6 @@ const DashboardPage = () => {
   return (
     <div>
       {/* Navbar/Header remains unchanged */}
-      <Header />
       <div className="container mt-3">
         <ul className="nav nav-tabs" id="mainTab" role="tablist">
           {Object.keys(tabComponents).map((tabKey) => (
@@ -76,7 +73,6 @@ const DashboardPage = () => {
           )}
         </div>
         <ChatBox/>
-        <Footer/>
       </div>
     </div>
   );

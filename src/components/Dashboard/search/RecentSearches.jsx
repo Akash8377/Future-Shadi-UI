@@ -159,7 +159,7 @@ const RecentSearches = ({ isAdvanced }) => {
                       {Object.entries(JSON.parse(search.search_params)).map(([key, value]) => (
                         value && (
                           <tr key={key}>
-                            <th className="pe-3">{key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</th>
+                            <th className="pe-3">{key.replace(/[\[\]_]/g, ' ').replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</th>
                             <td>: {Array.isArray(value) ? value.join(', ') : value}</td>
                           </tr>
                         )

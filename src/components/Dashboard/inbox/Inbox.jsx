@@ -7,11 +7,9 @@ const Inbox = () => {
   return (
     <div>
       <div id="top"></div>
-      <Header />
       <div className="container mt-3">
         <MainTabs />
       </div>
-      <Footer />
     </div>
   )
 }

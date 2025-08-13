@@ -7,7 +7,7 @@ import axios from "axios";
 import config from "../../../config";
 import { toast } from "../../Common/Toast";
 
-const PROFILES_PER_PAGE = 10;
+const PROFILES_PER_PAGE = 5;
 
 const MyMatches = () => {
   const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
@@ -44,20 +44,21 @@ const MyMatches = () => {
     if (searchFor) fetchFilteredProfiles();
   }, [filters, searchFor]);
 
-  const handleConnectClick = async (id) => {
+  const handleConnectClick = async (id, profileId) => {
     setProfiles((prev) =>
       prev.map((profile) =>
-        profile.id === id ? { ...profile, showContactOptions: true } : profile
+        profile.id === id ? { ...profile, connectionRequest: true } : profile
       )
     );
     try {
       await axios.post(`${config.baseURL}/api/notifications/send`, {
         receiver_user_id: id,
+        receiver_profile_id:profileId,
         sender_user_id: user?.id,
+        sender_profile_id: user?.profileId,
         type: "connect",
         message: `${user?.first_name} wants to connect with you`,
       });
-      console.log("Notification sent successfully");
       toast.success("Request sent successfully")
     } catch (error) {
       console.error("Error sending notification", error);

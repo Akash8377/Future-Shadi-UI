@@ -1,7 +1,5 @@
 import React, { useState, useCallback } from "react";
 import { Modal } from "react-bootstrap";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
 import { camelCaseToNormalText, convertAgeRange,convertHeightRange,convertIncomeRange } from "../../utils/helpers";
 import { MARITAL_STATUS, RELIGIONS, COMMUNITIES, LANGUAGES, COUNTRIES, STATE, PROFESSIONS, DIET, PROFILEMANAGEDBY, QUALIFICATIONS, OCCUPATIONS } from "../../constants/formData";
 import PreferenceCard from "../../components/PartnerPreferences/PreferenceCard";
@@ -72,7 +70,6 @@ const PartnerPreferences = ({onlyPartnerPrefrence = false}) => {
     // Handle checkbox fields
     if (FIELD_OPTIONS_MAP[field]) {
       const currentValue = preferences[section][field];
-      console.log("currentValue",currentValue)
       setSelectedOptions(prev => ({
         ...prev,
         [field]: currentValue === "Open to All" ? ["Open to All"] :
@@ -235,7 +232,6 @@ const handleFormSubmit = async (formData) => {
     // Check if it's a slider field
     if (field === "ageRange" || field === "heightRange" || field === "annualIncome") {
       const type = field === "annualIncome" ? "income" : field.replace("Range", "");
-      console.log("ranges[type]",type,ranges[type])
       return (
         <SliderModal
           title={camelCaseToNormalText(field)}
@@ -274,7 +270,6 @@ const handleFormSubmit = async (formData) => {
 
   return (
     <>
-      {!onlyPartnerPrefrence && <Header />}
       <div className={`verfiy-profile ${onlyPartnerPrefrence && "bg-transparent" }`}>
         <div className="partner-perfrence">
           <div className="container">
@@ -321,7 +316,6 @@ const handleFormSubmit = async (formData) => {
           </div>
         </div>
       </div>
-      {!onlyPartnerPrefrence && <Footer />}
     </>
   );
 };

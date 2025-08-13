@@ -30,3 +30,31 @@ function parseCustomDate(dateStr) {
     return null;
   }
 }
+
+export const formatLastSeen = (timestamp) => {
+  if (!timestamp) return "Never seen";
+  if (timestamp === "online") return "Online";
+
+  const now = new Date();
+  const lastSeen = new Date(timestamp);
+  const diffInSeconds = Math.floor((now - lastSeen) / 1000);
+  
+  // If same day
+  if (now.toDateString() === lastSeen.toDateString()) {
+    return `Today at ${lastSeen.toLocaleTimeString('en-IN', {
+      hour: '2-digit',
+      minute: '2-digit'
+    })}`;
+  }
+
+  const days = Math.floor(diffInSeconds / (3600 * 24));
+  
+  if (days === 1) return "Yesterday";
+  if (days <= 7) return `${days} days ago`;
+  
+  return lastSeen.toLocaleDateString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    year: days > 365 ? 'numeric' : undefined
+  });
+};

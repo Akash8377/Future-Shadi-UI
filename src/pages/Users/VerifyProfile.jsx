@@ -1,7 +1,5 @@
 import React, { useState,useEffect } from 'react';
 import axios from 'axios';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import IDVerificationForm from '../../components/UserProfile/IDVerificationForm';
 import VerificationSuccess from '../../components/UserProfile/VerificationSuccess';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -43,7 +41,6 @@ const VerifyProfile = () => {
 
   return (
     <>
-      <Header />
       <section className="verfiy-profile">
         <div className="verfiy-profile-new">
           {step === 'select' && (
@@ -82,7 +79,6 @@ const VerifyProfile = () => {
           {step === 'success' && <VerificationSuccess />}
         </div>
       </section>
-      <Footer />
     </>
   );
 };
