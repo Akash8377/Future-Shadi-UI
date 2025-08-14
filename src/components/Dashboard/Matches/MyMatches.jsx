@@ -9,7 +9,7 @@ import { toast } from "../../Common/Toast";
 
 const PROFILES_PER_PAGE = 5;
 
-const MyMatches = () => {
+const MyMatches = ({chatBoxOpen}) => {
   const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
   const [profiles, setProfiles] = useState([]);
   const [filters, setFilters] = useState({});
@@ -47,7 +47,7 @@ const MyMatches = () => {
   const handleConnectClick = async (id, profileId) => {
     setProfiles((prev) =>
       prev.map((profile) =>
-        profile.id === id ? { ...profile, connectionRequest: true } : profile
+        profile.user_id === id ? { ...profile, connectionRequest: true } : profile
       )
     );
     try {
@@ -90,6 +90,7 @@ const MyMatches = () => {
                   handleConnectClick={handleConnectClick}
                   activeIndex={activeCarouselIndex}
                   setActiveIndex={setActiveCarouselIndex}
+                  chatBoxOpen={chatBoxOpen}
                 />
               ))
             ) : (

@@ -1,4 +1,4 @@
-const ContactOptions = ({profile}) => {
+const ContactOptions = ({profile, chatBoxOpen}) => {
     
   const phone = profile.phone
 
@@ -26,7 +26,7 @@ const ContactOptions = ({profile}) => {
     <button className="btn btn-outline-success contact-btn mb-2 w-100" onClick={handleWhatsApp}>
       <i className="fa fa-whatsapp me-1" aria-hidden="true"  ></i> WhatsApp
     </button>
-    <button className="btn btn-outline-primary contact-btn w-100">
+    <button className="btn btn-outline-primary contact-btn w-100" onClick={()=>chatBoxOpen()}>
       <i className="fa fa-commenting-o me-1" aria-hidden="true"></i> Shaadi Chat
     </button>
   </div>

@@ -6,6 +6,7 @@ import MatchesSection from './dashtabcomponents/MatchesSection';
 import { useSelector } from "react-redux";
 import config from '../../config';
 import axios from 'axios';
+import { ConnectionProvider } from './dashtabcomponents/ConnectionContext';
 
 const DashboardTab = ({onChangeTab}) => {
 
@@ -35,9 +36,10 @@ const DashboardTab = ({onChangeTab}) => {
         {/* Row 1 */}
         <DashProfile onEditClick={() =>onChangeTab("profile")} notifications={notifications}/>
         <Advertise notifications={notifications}/>
-        <RecentVisitors/>
-        <MatchesSection/>
-            
+        <ConnectionProvider>
+          <RecentVisitors/>
+          <MatchesSection/>
+        </ConnectionProvider>
           </div>
       </div>
     </div>

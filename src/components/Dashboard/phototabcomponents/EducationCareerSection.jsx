@@ -10,8 +10,8 @@ const EducationCareerSection = ({ isEditing, getValue, onDataChange, editingFiel
         <table className="table table-borderless table-sm mini-data mb-0">
           <tbody>
             <tr>
-              <td>Highest Qualification</td>
-              <td>: {isEditing && editingFields === "career" ? (
+              <td>Highest Qualification:</td>
+              <td>{isEditing && editingFields === "career" ? (
                 <input 
                   type="text" 
                   value={getValue('education') || ''} 
@@ -23,8 +23,8 @@ const EducationCareerSection = ({ isEditing, getValue, onDataChange, editingFiel
               )}</td>
             </tr>
             <tr>
-              <td>College</td>
-              <td>: {isEditing && editingFields === "career" ? (
+              <td>College:</td>
+              <td>{isEditing && editingFields === "career" ? (
                 <input 
                   type="text" 
                   value={getValue('college') || ''} 
@@ -36,8 +36,8 @@ const EducationCareerSection = ({ isEditing, getValue, onDataChange, editingFiel
               )}</td>
             </tr>
             <tr>
-              <td>Annual Income</td>
-              <td>: {isEditing && editingFields === "career" ? (
+              <td>Annual Income:</td>
+              <td>{isEditing && editingFields === "career" ? (
                 <select 
                   value={getValue('income') || ''} 
                   onChange={(e) => onDataChange('income', e.target.value)}
@@ -61,8 +61,8 @@ const EducationCareerSection = ({ isEditing, getValue, onDataChange, editingFiel
         <table className="table table-borderless table-sm mini-data mb-0">
           <tbody>
             <tr>
-              <td>Working With</td>
-              <td>: {isEditing && editingFields === "career" ? (
+              <td>Working With:</td>
+              <td>{isEditing && editingFields === "career" ? (
                 <select 
                   value={getValue('work_type') || ''} 
                   onChange={(e) => onDataChange('work_type', e.target.value)}
@@ -78,8 +78,8 @@ const EducationCareerSection = ({ isEditing, getValue, onDataChange, editingFiel
               )}</td>
             </tr>
             <tr>
-              <td>Working as</td>
-              <td>: {isEditing && editingFields === "career" ? (
+              <td>Working as:</td>
+              <td>{isEditing && editingFields === "career" ? (
                 <select 
                   value={getValue('profession') || ''} 
                   onChange={(e) => onDataChange('profession', e.target.value)}
@@ -95,8 +95,8 @@ const EducationCareerSection = ({ isEditing, getValue, onDataChange, editingFiel
               )}</td>
             </tr>
             <tr>
-              <td>Employer Name</td>
-              <td>: {isEditing && editingFields === "career" ? (
+              <td>Employer Name:</td>
+              <td>{isEditing && editingFields === "career" ? (
                 <input 
                   type="text" 
                   value={getValue('employer') || ''} 

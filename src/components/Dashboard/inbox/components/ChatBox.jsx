@@ -5,7 +5,7 @@ import config from '../../../../config';
 import { connectSocket, getSocket } from '../../../../utils/socket';
 import { calculateAge } from '../../../../utils/helpers';
 
-const ChatBox = () => {
+const ChatBox = ({showChatBox = null, setShowChatBox }) => {
   const user = useSelector((state) => state.user.userInfo);
   const token = useSelector((state) => state.user.token);
   const currentUserId = user?.id ? String(user.id) : null;
@@ -16,7 +16,7 @@ const ChatBox = () => {
   const [alertItems, setAlertItems] = useState([]);
   const [activeUsers, setActiveUsers] = useState([]);
   const [chatUsers, setChatUsers] = useState([]);
-  const [activeTab, setActiveTab] = useState('tab-alerts');
+  const [activeTab, setActiveTab] = useState('tab-active');
   const [showChatbox, setShowChatbox] = useState(false);
   const [showHoverBox, setShowHoverBox] = useState(false);
   const [isMinimized, setIsMinimized] = useState(true);
@@ -28,6 +28,12 @@ const ChatBox = () => {
   const [conversations, setConversations] = useState({});
   const messagesEndRef = useRef(null);
   const socketRef = useRef(null);
+
+useEffect(() => {
+  if (showChatBox) {
+    setIsMinimized(false);
+  }
+}, [showChatBox]);
 
   const fetchFilteredProfiles = async () => {
     try {
@@ -41,7 +47,7 @@ const ChatBox = () => {
         }
       );
       const users = response.data.users || [];
-      console.log("Users: ",users)
+      // console.log("Users: ",users)
       setAllUsers(users);
       setAlertItems(users.filter(u => u.connectionRequest === true));
       setActiveUsers(users.filter(u => u.online === true));
@@ -78,6 +84,9 @@ const ChatBox = () => {
 
   const toggleMinimize = () => {
     setIsMinimized(!isMinimized);
+    if(showChatBox !== null){
+      setShowChatBox();
+    }
   };
 
  // Connect socket when component mounts
@@ -341,9 +350,9 @@ const ChatBox = () => {
         </div>
         {!isMinimized && (
 			<div className="tab-container">
-            <input type="radio" name="tab" id="tab-alerts" checked={activeTab === 'tab-alerts'} onChange={() => handleTabChange('tab-alerts')} />
-            <input type="radio" name="tab" id="tab-chats" checked={activeTab === 'tab-chats'} onChange={() => handleTabChange('tab-chats')} />
             <input type="radio" name="tab" id="tab-active" checked={activeTab === 'tab-active'} onChange={() => handleTabChange('tab-active')} />
+            <input type="radio" name="tab" id="tab-chats" checked={activeTab === 'tab-chats'} onChange={() => handleTabChange('tab-chats')} />
+            <input type="radio" name="tab" id="tab-alerts" checked={activeTab === 'tab-alerts'} onChange={() => handleTabChange('tab-alerts')} />
 
             <div className="tab-content content">
               {alertItems.map((item, index) => (
@@ -498,14 +507,14 @@ const ChatBox = () => {
             </div>
 
             <div className="tabs">
-              <label htmlFor="tab-alerts" onClick={() => handleTabChange('tab-alerts')}>
-                <i className="fa fa-bell-o" aria-hidden="true"></i> Alerts
+              <label htmlFor="tab-active" onClick={() => handleTabChange('tab-active')}>
+                <i className="fa fa-bell-o" aria-hidden="true"></i> Active
               </label>
               <label htmlFor="tab-chats" onClick={() => handleTabChange('tab-chats')}>
                 <i className="fa fa-comments" aria-hidden="true"></i> Chats
               </label>
-              <label htmlFor="tab-active" onClick={() => handleTabChange('tab-active')}>
-                <i className="fa fa-bell-o" aria-hidden="true"></i> Active
+              <label htmlFor="tab-alerts" onClick={() => handleTabChange('tab-alerts')}>
+                <i className="fa fa-bell-o" aria-hidden="true"></i> Alerts
               </label>
             </div>
           </div>

@@ -3,9 +3,13 @@ import { useSelector } from "react-redux";
 import { useGetUsersByLookingForQuery } from "./slice/matchSlice";
 import calculateAge from "../../Common/commonfunctions";
 import config from "../../../config";
+import axios from "axios";
+import { toast } from "../../Common/Toast";
+import { useConnection } from "./ConnectionContext";
 
 
-const MatchCard = ({ data, showAll }) => {
+const MatchCard = ({ data, showAll, handleConnect }) => {
+  const { connections } = useConnection();
   return (
     <>
       {data.slice(0, showAll ? data.length : 2).map((match, i) => (
@@ -29,11 +33,12 @@ const MatchCard = ({ data, showAll }) => {
             <br />
             {match.profession}
           </div>
-          <a href="#" className="btn-connect text-decoration-none text-center">
+          {connections[match.user_id] === 1 || match.connectionRequest === 1 ? (<a className="btn-connect text-decoration-none text-center"><span className="small pe-2">Connected</span></a>):(<a href="#" className="btn-connect text-decoration-none text-center" 
+           onClick={() => handleConnect(match.user_id, match.profileId)}>
             <i className="fa fa-check-circle-o" aria-hidden="true"></i>
             <br />
             <span className="small">Connect Now</span>
-          </a>
+          </a>)}
         </div>
       ))}
     </>
@@ -44,11 +49,15 @@ const MatchesSection = () => {
    const user = useSelector((state) => state.user.userInfo)
 
     const searchFor = user?.looking_for === "Bride" ? "Groom" : "Bride";
-    const { data, isLoading, isError } = useGetUsersByLookingForQuery(searchFor);
+    const { data, isLoading, isError } = useGetUsersByLookingForQuery({
+  id: user.id,
+  looking_for: searchFor
+});
     const [premiumMatches, setPremiumMatches] = useState([]);
     const [newMatches, setNewMatches] = useState([]);
     const [showPremiumAll, setShowPremiumAll] = useState(false);
     const [showNewAll, setShowNewAll] = useState(false);
+    const {updateConnection } = useConnection();
 
 
     useEffect(() => {
@@ -66,11 +75,35 @@ const MatchesSection = () => {
       }
     }, [data]);
 
+        const handleConnect = async (id, profileId) => {
+          setPremiumMatches(prev => prev.map(p => 
+            p.id === id ? { ...p, connectionRequest: 1 } : p
+          ));
+          setNewMatches(prev => prev.map(p => 
+            p.id === id ? { ...p, connectionRequest: 1 } : p
+          ));
+          updateConnection(id, 1);
+          try {
+            await axios.post(`${config.baseURL}/api/notifications/send`, {
+              receiver_user_id: id,
+              receiver_profile_id: profileId,
+              sender_user_id: user?.id,
+              sender_profile_id: user?.profileId,
+              type: "connect",
+              message: `${user?.first_name} wants to connect with you`,
+            });
+            toast.success("Request sent successfully");
+          } catch (error) {
+            updateConnection(id, 0);
+            console.error("Error sending notification", error);
+          }
+        };
+
 
   if (isLoading) return <p>Loading matches...</p>;
   if (isError) return <p>Error loading matches.</p>;
 
-  // console.log(premiumMatches, "premiumMatches");
+  console.log(premiumMatches, "premiumMatches");
 
   return (
     <div className="row g-4 mt-4">
@@ -81,7 +114,7 @@ const MatchesSection = () => {
             Premium Matches <span className="badge bg-danger ms-1">{premiumMatches?.length}</span>
           </h6>
           <div className="match-card" id="premiumMatches">
-            <MatchCard data={premiumMatches} showAll={showPremiumAll} />
+            <MatchCard data={premiumMatches} showAll={showPremiumAll} handleConnect={handleConnect}/>
             <span
               className="view-all-link text-primary cursor-pointer"
               onClick={() => setShowPremiumAll(!showPremiumAll)}
@@ -99,7 +132,7 @@ const MatchesSection = () => {
             New Matches <span className="badge bg-danger ms-1">{newMatches?.length}</span>
           </h6>
           <div className="match-card" id="newMatches">
-            <MatchCard data={newMatches} showAll={showNewAll} />
+            <MatchCard data={newMatches} showAll={showNewAll} handleConnect={handleConnect} />
             <span
               className="view-all-link text-primary cursor-pointer"
               onClick={() => setShowNewAll(!showNewAll)}

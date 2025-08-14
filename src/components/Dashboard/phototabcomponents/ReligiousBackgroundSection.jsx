@@ -26,8 +26,8 @@ const ReligiousBackgroundSection = ({ setEditingFields, isEditing, getValue, onD
         <table className="table table-borderless table-sm mini-data mb-0">
           <tbody>
             <tr>
-              <td>Religion</td>
-              <td>: {isEditing && editingFields === "religious" ? (
+              <td>Religion:</td>
+              <td>{isEditing && editingFields === "religious" ? (
                 <select 
                   value={getValue('religion') || ''} 
                   onChange={(e) => onDataChange('religion', e.target.value)}
@@ -43,8 +43,8 @@ const ReligiousBackgroundSection = ({ setEditingFields, isEditing, getValue, onD
               )}</td>
             </tr>
             <tr>
-              <td>Community</td>
-              <td>: {isEditing && editingFields === "religious" ? (
+              <td>Community:</td>
+              <td>{isEditing && editingFields === "religious" ? (
                 <select 
                   value={getValue('community') || ''} 
                   onChange={(e) => onDataChange('community', e.target.value)}
@@ -60,8 +60,8 @@ const ReligiousBackgroundSection = ({ setEditingFields, isEditing, getValue, onD
               )}</td>
             </tr>
             <tr>
-              <td>Sub community</td>
-              <td>: {isEditing && editingFields === "religious" ? (
+              <td>Sub community:</td>
+              <td>{isEditing && editingFields === "religious" ? (
                 <select 
                   value={getValue('sub_community') || ''} 
                   onChange={(e) => onDataChange('sub_community', e.target.value)}
@@ -88,8 +88,8 @@ const ReligiousBackgroundSection = ({ setEditingFields, isEditing, getValue, onD
               )}</td>
             </tr>
             <tr>
-              <td>Gothra / Gothram</td>
-              <td>: {isEditing && editingFields === "religious" ? (
+              <td>Gothra / Gothram:</td>
+              <td>{isEditing && editingFields === "religious" ? (
                 <input 
                   type="text" 
                   value={getValue('gothra') || ''} 
@@ -101,8 +101,8 @@ const ReligiousBackgroundSection = ({ setEditingFields, isEditing, getValue, onD
               )}</td>
             </tr>
             <tr>
-              <td>Mother Tongue</td>
-              <td>: {isEditing && editingFields === "religious" ? (
+              <td>Mother Tongue:</td>
+              <td>{isEditing && editingFields === "religious" ? (
                 <select 
                   value={getValue('mother_tongue') || ''} 
                   onChange={(e) => onDataChange('mother_tongue', e.target.value)}
@@ -143,8 +143,8 @@ const ReligiousBackgroundSection = ({ setEditingFields, isEditing, getValue, onD
         <table className="table table-borderless table-sm mini-data mb-0">
           <tbody>
             <tr>
-              <td>Manglik/Chevvai dosham</td>
-              <td>: {isEditing && editingFields === "astro" ? (
+              <td>Manglik/Chevvai dosham:</td>
+              <td>{isEditing && editingFields === "astro" ? (
                 <select 
                   value={getValue('manglik') || ''} 
                   onChange={(e) => onDataChange('manglik', e.target.value)}
@@ -161,12 +161,12 @@ const ReligiousBackgroundSection = ({ setEditingFields, isEditing, getValue, onD
               )}</td>
             </tr>
             <tr>
-              <td>Date of Birth</td>
-              <td>: {getValue('birth_day')}-{getValue('birth_month')}-{getValue('birth_year')}</td>
+              <td>Date of Birth:</td>
+              <td>{getValue('birth_day')}-{getValue('birth_month')}-{getValue('birth_year')}</td>
             </tr>
             <tr>
-              <td>Time of Birth</td>
-              <td>: {isEditing && editingFields === "astro" ? (
+              <td>Time of Birth:</td>
+              <td>{isEditing && editingFields === "astro" ? (
                 <input 
                   type="time" step="1"
                   value={getValue('birth_time') || ''} 
@@ -178,8 +178,8 @@ const ReligiousBackgroundSection = ({ setEditingFields, isEditing, getValue, onD
               )}</td>
             </tr>
             <tr>
-              <td>City of Birth</td>
-              <td>: {isEditing && editingFields === "astro" ? (
+              <td>City of Birth:</td>
+              <td>{isEditing && editingFields === "astro" ? (
                 <input 
                   type="text" 
                   value={getValue('birth_city') || ''} 

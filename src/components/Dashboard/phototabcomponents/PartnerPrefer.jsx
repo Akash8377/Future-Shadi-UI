@@ -37,16 +37,16 @@ const PartnerPrefer = ({ isEditing, onEditClick, onSaveClick, onDataChange, upda
                         <table className="table table-borderless table-sm mini-data mb-0">
                             <tbody>
                                 <tr>
-                                    <td>Age</td>
-                                    <td>: {partnerPrefrence?.basic?.ageRange}</td>
+                                    <td>Age:</td>
+                                    <td>{partnerPrefrence?.basic?.ageRange}</td>
                                 </tr>
                                 <tr>
-                                    <td>Height</td>
-                                    <td>: {partnerPrefrence?.basic?.heightRange}</td>
+                                    <td>Height:</td>
+                                    <td>{partnerPrefrence?.basic?.heightRange}</td>
                                 </tr>
                                 <tr>
-                                    <td>Religion Community</td>
-                                    <td>: {partnerPrefrence?.community?.community}</td>
+                                    <td>Religion Community:</td>
+                                    <td>{partnerPrefrence?.community?.community}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -56,12 +56,12 @@ const PartnerPrefer = ({ isEditing, onEditClick, onSaveClick, onDataChange, upda
                         <table className="table table-borderless table-sm mini-data mb-0">
                             <tbody>
                                 <tr>
-                                    <td>Mother Tongue</td>
-                                    <td>: {partnerPrefrence?.community?.motherTongue}</td>
+                                    <td>Mother Tongue:</td>
+                                    <td>{partnerPrefrence?.community?.motherTongue}</td>
                                 </tr>
                                 <tr>
-                                    <td>Marital Status</td>
-                                    <td>: {partnerPrefrence?.basic?.maritalStatus}</td>
+                                    <td>Marital Status:</td>
+                                    <td>{partnerPrefrence?.basic?.maritalStatus}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -77,21 +77,21 @@ const PartnerPrefer = ({ isEditing, onEditClick, onSaveClick, onDataChange, upda
                         <table className="table table-borderless table-sm mini-data mb-0">
                             <tbody>
                                 <tr>
-                                    <td>Country Living In</td>
-                                    <td>: {partnerPrefrence?.location?.country}</td>
+                                    <td>Country Living In:</td>
+                                    <td>{partnerPrefrence?.location?.country}</td>
                                 </tr>
                                 <tr>
-                                    <td>State Living In</td>
-                                    <td>: {partnerPrefrence?.location?.state}</td>
+                                    <td>State Living In:</td>
+                                    <td>{partnerPrefrence?.location?.state}</td>
                                 </tr>
-                                <tr>
-                                    <td>City</td>
-                                    <td>: {partnerPrefrence?.location?.city || '-----'}</td>
-                                </tr>
+                                {/* <tr>
+                                    <td>City:</td>
+                                    <td>{partnerPrefrence?.location?.city || 'Open to All'}</td>
+                                </tr> */}
                             </tbody>
                         </table>
                     </div>
-                    <div className="col-md-6 border-start ps-md-4 mt-4 mt-md-0"></div>
+                    {/* <div className="col-md-6 border-start ps-md-4 mt-4 mt-md-0"></div> */}
                 </div>
 
                 {/* Education Career Section */}
@@ -103,17 +103,17 @@ const PartnerPrefer = ({ isEditing, onEditClick, onSaveClick, onDataChange, upda
                         <table className="table table-borderless table-sm mini-data mb-0">
                             <tbody>
                                 <tr>
-                                    <td>Education</td>
-                                    <td>: {partnerPrefrence?.education?.qualification}</td>
+                                    <td>Education:</td>
+                                    <td>{partnerPrefrence?.education?.qualification}</td>
                                 </tr>
                                 <tr>
-                                    <td>Working With</td>
-                                    <td>: {partnerPrefrence?.education?.workingWith}</td>
+                                    <td>Working With;</td>
+                                    <td>{partnerPrefrence?.education?.workingWith}</td>
                                 </tr>
-                                <tr>
-                                    <td>Working Area</td>
-                                    <td>: {partnerPrefrence?.education?.workingArea || '-----'}</td>
-                                </tr>
+                                {/* <tr>
+                                    <td>Working Area:</td>
+                                    <td>{partnerPrefrence?.education?.workingArea || 'Open to All'}</td>
+                                </tr> */}
                             </tbody>
                         </table>
                     </div>
@@ -122,12 +122,12 @@ const PartnerPrefer = ({ isEditing, onEditClick, onSaveClick, onDataChange, upda
                         <table className="table table-borderless table-sm mini-data mb-0">
                             <tbody>
                                 <tr>
-                                    <td>Working As</td>
-                                    <td>: {partnerPrefrence?.education?.profession}</td>
+                                    <td>Working As:</td>
+                                    <td>{partnerPrefrence?.education?.profession}</td>
                                 </tr>
                                 <tr>
-                                    <td>Annual Income</td>
-                                    <td>: {partnerPrefrence?.education?.annualIncome}</td>
+                                    <td>Annual Income:</td>
+                                    <td>{partnerPrefrence?.education?.annualIncome}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -144,8 +144,8 @@ const PartnerPrefer = ({ isEditing, onEditClick, onSaveClick, onDataChange, upda
                         <table className="table table-borderless table-sm mini-data mb-0">
                             <tbody>
                                 <tr>
-                                    <td>Profile Managed By</td>
-                                    <td>: {partnerPrefrence?.otherDetails?.profileManagedBy}</td>
+                                    <td>Profile Managed By:</td>
+                                    <td>{partnerPrefrence?.otherDetails?.profileManagedBy}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -154,8 +154,8 @@ const PartnerPrefer = ({ isEditing, onEditClick, onSaveClick, onDataChange, upda
                         <table className="table table-borderless table-sm mini-data mb-0">
                             <tbody>
                                 <tr>
-                                    <td>Diet</td>
-                                    <td>: {partnerPrefrence?.otherDetails?.diet}</td>
+                                    <td>Diet:</td>
+                                    <td>{partnerPrefrence?.otherDetails?.diet}</td>
                                 </tr>
                             </tbody>
                         </table>

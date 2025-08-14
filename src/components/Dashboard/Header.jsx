@@ -39,12 +39,11 @@ const Header = ({ unreadNotificationCount }) => {
   const fetchFilteredProfiles = async () => {
     try {
       const response = await axios.get(
-        `${config.baseURL}/api/matches/my-matches`,
+        `${config.baseURL}/api/matches/new-matches`,
         {
           params: {
             user_id: user.id,
             looking_for: searchFor,
-            partner_preference: JSON.stringify(user?.partner_preference),
           },
         }
       );
@@ -98,6 +97,16 @@ const Header = ({ unreadNotificationCount }) => {
                 onClick={() => setActiveTab("")}
               >
                 My Shaadi
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                className="nav-link text-white"
+                to="/dna"
+                title="DNA"
+                onClick={() => setActiveTab("")}
+              >
+                DNA
               </NavLink>
             </li>
             <li className="nav-item position-relative">

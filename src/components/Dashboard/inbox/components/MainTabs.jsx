@@ -7,34 +7,7 @@ import Requested from './Requested';
 import Deleted from './Deleted';
 import ChatBox from './ChatBox';
 
-const tabComponents = [
-  {
-    key: 'received',
-    title: 'Received',
-    component: <Received />,
-  },
-  {
-    key: 'accepted',
-    title: 'Accepted',
-    component: <Accepted />,
-  },
-  {
-    key: 'request',
-    title: 'Request',
-    component: <Requested />,
-  },
-  // Uncomment to include "Sent"
-  // {
-  //   key: 'sent',
-  //   title: 'Sent',
-  //   component: <Sent />,
-  // },
-  {
-    key: 'deleted',
-    title: 'Deleted',
-    component: <Deleted />,
-  },
-];
+
 
 function MainTabs() {
   const [activeKey, setActiveKey] = useState('received');
@@ -42,6 +15,33 @@ function MainTabs() {
   const handleSelect = (key) => {
     setActiveKey(key);
   };
+   const [showChatBox, setShowChatBox] = useState(false)
+   const chatBoxOpen = () =>{
+    setShowChatBox(true)
+ }
+
+ const tabComponents = [
+  {
+    key: 'received',
+    title: 'Received',
+    component: <Received/>,
+  },
+  {
+    key: 'accepted',
+    title: 'Accepted',
+    component: <Accepted chatBoxOpen={chatBoxOpen}/>,
+  },
+  {
+    key: 'request',
+    title: 'Request',
+    component: <Requested chatBoxOpen={chatBoxOpen}/>,
+  },
+  {
+    key: 'deleted',
+    title: 'Deleted',
+    component: <Deleted chatBoxOpen={chatBoxOpen}/>,
+  },
+];
 
   return (
     <div>
@@ -64,7 +64,7 @@ function MainTabs() {
           </div>
         ))}
       </div>
-      <ChatBox/>
+      <ChatBox showChatBox={showChatBox} setShowChatBox={()=>setShowChatBox(false)}/>
     </div>
   );
 }

@@ -8,7 +8,7 @@ import axios from 'axios';
 import config from '../../../config';
 import { toast } from "../../Common/Toast";
 
-const SearchResultsPage = () => {
+const SearchResultsPage = ({chatBoxOpen}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [profiles, setProfiles] = useState([]);
@@ -17,8 +17,10 @@ const SearchResultsPage = () => {
   const [loading, setLoading] = useState(false);
   const [isInitialMount, setIsInitialMount] = useState(true);
   const profilesPerPage = 7;
+  const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
 
   const user = useSelector((state) => state.user.userInfo);
+  const token = useSelector((state) => state.user.token);
   const lookingFor = user?.looking_for;
   const searchFor = lookingFor === 'Bride' ? 'Groom' : 'Bride';
 
@@ -38,12 +40,18 @@ const SearchResultsPage = () => {
     try {
       const response = await axios.post(
         `${config.baseURL}/api/search/search-profiles-filter`,
-        searchParams
+        { ...searchParams },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
+
       setProfiles(response.data.data || []);
       setCurrentPage(1);
     } catch (error) {
-      console.error('Error fetching search results:', error);
+      console.error("Error fetching search results:", error);
     } finally {
       setLoading(false);
     }
@@ -65,13 +73,25 @@ const SearchResultsPage = () => {
     }
   };
 
-  const handleConnectClick = (id) => {
-    setProfiles(prev =>
-      prev.map(profile =>
-        profile.id === id ? { ...profile, showContactOptions: true } : profile
+  const handleConnectClick = async (id, profileId) => {
+    setProfiles((prev) =>
+      prev.map((profile) =>
+        profile.user_id === id ? { ...profile, connectionRequest: true } : profile
       )
     );
-    toast.success("Request sent successfully")
+    try {
+      await axios.post(`${config.baseURL}/api/notifications/send`, {
+        receiver_user_id: id,
+        receiver_profile_id:profileId,
+        sender_user_id: user?.id,
+        sender_profile_id: user?.profileId,
+        type: "connect",
+        message: `${user?.first_name} wants to connect with you`,
+      });
+      toast.success("Request sent successfully")
+    } catch (error) {
+      console.error("Error sending notification", error);
+    }
   };
 
   // Pagination logic
@@ -103,6 +123,9 @@ const SearchResultsPage = () => {
                         key={profile.id}
                         profile={profile}
                         handleConnectClick={handleConnectClick}
+                        activeIndex={activeCarouselIndex}
+                        setActiveIndex={setActiveCarouselIndex}
+                        chatBoxOpen={chatBoxOpen}
                       />
                     ))
                   ) : (

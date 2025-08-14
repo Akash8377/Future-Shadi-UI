@@ -37,6 +37,10 @@ const Matches = () => {
     setActiveTab(location.state?.activtab || "matches")
    }
  },[location.state?.activtab])
+ const [showChatBox, setShowChatBox] = useState(false)
+ const chatBoxOpen = () =>{
+    setShowChatBox(true)
+ }
 
   return (
     <div>
@@ -55,10 +59,10 @@ const Matches = () => {
         </ul>
 
         <div className="tab-content">
-          {ActiveComponent && <ActiveComponent />}
+          {ActiveComponent && <ActiveComponent chatBoxOpen={chatBoxOpen}/>}
         </div>
       </div>
-      <ChatBox/>
+      <ChatBox showChatBox={showChatBox} setShowChatBox={()=>setShowChatBox(false)}/>
     </div>
   );
 };

@@ -92,9 +92,9 @@ const Profile = ({onChangeTab}) => {
             <div className="upload-box text-center d-flex flex-column justify-content-center align-items-center rounded">
               {userInfo?.profile_image ? (<label
                 htmlFor="fileUpload"
-                className="w-100 h-100 d-flex flex-column justify-content-center align-items-center"
+                className="d-flex flex-column justify-content-center align-items-center overflow-hidden"
               >
-                <img className="w-100 h-100 object-fit-cover" src={userInfo?.profile_image ?`${config.baseURL}/uploads/profiles/${userInfo?.profile_image}`:"images/camera.png"}  />
+                <img className="object-fit-cover" src={userInfo?.profile_image ?`${config.baseURL}/uploads/profiles/${userInfo?.profile_image}`:"images/camera.png"}  />
               </label>):(<label
                 htmlFor="fileUpload"
                 className="d-flex flex-column justify-content-center align-items-center overflow-hidden"
@@ -116,16 +116,16 @@ const Profile = ({onChangeTab}) => {
                 <table className="table table-borderless table-sm mini-data mb-0 ">
                   <tbody>
                     <tr>
-                      <td>Age/Height</td>
-                      <td>: {calculateAge(userInfo?.birth_year, userInfo?.birth_month, userInfo?.birth_day)}/{userInfo?.height}</td>
+                      <td>Age/Height:</td>
+                      <td>{calculateAge(userInfo?.birth_year, userInfo?.birth_month, userInfo?.birth_day)}/{userInfo?.height}</td>
                     </tr>
                     <tr>
-                      <td>Marital Status</td>
-                      <td>: {userInfo?.marital_status}</td>
+                      <td>Marital Status:</td>
+                      <td>{userInfo?.marital_status}</td>
                     </tr>
                     <tr>
-                      <td>Posted By</td>
-                      <td>: {userInfo?.person}</td>
+                      <td>Posted By:</td>
+                      <td>{userInfo?.person}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -135,16 +135,16 @@ const Profile = ({onChangeTab}) => {
                 <table className="table table-borderless table-sm mini-data mb-0">
                   <tbody>
                     <tr>
-                      <td>Religion Community</td>
-                      <td>: {userInfo?.religion}</td>
+                      <td>Religion Community:</td>
+                      <td>{userInfo?.religion}</td>
                     </tr>
                     <tr>
-                      <td>Location</td>
-                      <td>: {userInfo?.city}</td>
+                      <td>Location:</td>
+                      <td>{userInfo?.city}</td>
                     </tr>
                     <tr>
-                      <td>Mother Tongue</td>
-                      <td>: {userInfo?.mother_tongue} </td>
+                      <td>Mother Tongue:</td>
+                      <td>{userInfo?.mother_tongue} </td>
                     </tr>
                   </tbody>
                 </table>

@@ -1,34 +1,38 @@
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import RefineSearchSidebar from "../../Matches/components/RefineSearchSidebar";
+import ProfileCard from "../../Matches/components/ProfileCard";
+import Pagination from "../../Matches/components/Pagination";
+import axios from "axios";
+import config from "../../../../config";
+import { toast } from "../../../Common/Toast";
 
-
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import RefineSearchSidebar from './components/RefineSearchSidebar';
-import ProfileCard from './components/ProfileCard';
-import Pagination from './components/Pagination';
-import axios from 'axios';
-import config from '../../../config';
-import { toast } from "../../Common/Toast";
- 
-const Shortlisted = ({chatBoxOpen}) => {
+const DNAMatches = ({chatBoxOpen}) => {
   const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
   const [profiles, setProfiles] = useState([]);
   const [filters, setFilters] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [dnaMatches, setDnaMatches] = useState(true);
   const profilesPerPage = 5;
- 
+
   const user = useSelector((state) => state.user.userInfo);
+//   console.log("user info:", user)
   const lookingFor = user?.looking_for;
-  const searchFor = lookingFor === 'Bride' ? 'Groom' : 'Bride';
- 
+  const searchFor = lookingFor === "Bride" ? "Groom" : "Bride";
+
   const fetchFilteredProfiles = async () => {
     try {
-      const response = await axios.get(`${config.baseURL}/api/matches/shortlisted`, {
-        params: {
-          user_id:user.id,
-          looking_for: searchFor,
-          ...filters,
-        },
-      });
+      const response = await axios.get(
+        `${config.baseURL}/api/dna/get-matches-by-genetic-markers`,
+        {
+          params: {
+            user_id: user.id,
+            looking_for: searchFor,
+            ...filters,
+          },
+        }
+      );
+      console.log("Users using DNA data: ",response.data.users)
       setProfiles(response.data.users || []);
       setCurrentPage(1); // Reset to page 1 on new filter
     } catch (error) {
@@ -39,7 +43,7 @@ const Shortlisted = ({chatBoxOpen}) => {
   useEffect(() => {
     if (searchFor) fetchFilteredProfiles();
   }, [filters, searchFor]);
- 
+
   const handleConnectClick = async (id, profileId) => {
     setProfiles((prev) =>
       prev.map((profile) =>
@@ -61,12 +65,14 @@ const Shortlisted = ({chatBoxOpen}) => {
     }
   };
 
- 
   // Pagination logic
   const indexOfLastProfile = currentPage * profilesPerPage;
   const indexOfFirstProfile = indexOfLastProfile - profilesPerPage;
-  const currentProfiles = profiles.slice(indexOfFirstProfile, indexOfLastProfile);
- 
+  const currentProfiles = profiles.slice(
+    indexOfFirstProfile,
+    indexOfLastProfile
+  );
+
   return (
     <div className="p-4">
       <div className="row">
@@ -74,10 +80,10 @@ const Shortlisted = ({chatBoxOpen}) => {
           <RefineSearchSidebar setFilters={setFilters} />
         </div>
         <div className="col-md-9">
-          <h4>Shortlisted Profiles</h4>
-          <div className="card border-0 shadow-sm mb-3">
+          <h4>New Members Who Match Your Preferences</h4>
+          <div className="dan-card card border-0 shadow-sm mb-3">
             {currentProfiles.length > 0 ? (
-              currentProfiles.map(profile => (
+              currentProfiles.map((profile) => (
                 <ProfileCard
                   key={profile.id}
                   profile={profile}
@@ -85,6 +91,8 @@ const Shortlisted = ({chatBoxOpen}) => {
                   activeIndex={activeCarouselIndex}
                   setActiveIndex={setActiveCarouselIndex}
                   chatBoxOpen={chatBoxOpen}
+                  dnaMatches={dnaMatches}
+                  user={user}
                 />
               ))
             ) : (
@@ -104,5 +112,5 @@ const Shortlisted = ({chatBoxOpen}) => {
     </div>
   );
 };
- 
-export default Shortlisted;
+
+export default DNAMatches;

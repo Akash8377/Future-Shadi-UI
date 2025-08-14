@@ -43,7 +43,7 @@ const Myphoto = ({onChangeTab}) => {
 
   useEffect(() => {
     fetchGalleryImages();
-  }, []);
+  }, [uploadSuccess]);
 
   return (
     <div className="photos-tab-container">

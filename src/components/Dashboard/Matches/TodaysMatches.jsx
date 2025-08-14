@@ -10,7 +10,7 @@ import ConnectBox from "./components/ConnectBox";
 import ContactOptions from "./components/ContactOptions";
 import { toast } from "../../Common/Toast";
 
-const TodaysMatches = () => {
+const TodaysMatches = ({chatBoxOpen}) => {
   const [profiles, setProfiles] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("detailed");
@@ -82,7 +82,7 @@ const TodaysMatches = () => {
 
   const handleConnect = async (id, profileId) => {
     setProfiles(prev => prev.map(p => 
-      p.id === id ? { ...p, connectionRequest: true } : p
+      p.user_id === id ? { ...p, connectionRequest: true } : p
     ));
     try {
       await axios.post(`${config.baseURL}/api/notifications/send`, {
@@ -129,9 +129,9 @@ const TodaysMatches = () => {
                   <Carousel.Item key={img.id || idx}>
                     <img
                       src={`${config.baseURL}/uploads/profiles/${img.filename}`}
-                      className="d-block w-100"
+                      className="d-block "
                       alt="Profile"
-                      style={{ height: "300px", objectFit: "cover" }}
+                      style={{width:"100%", objectFit: "cover" }}
                     />
                     <div className="position-absolute bottom-0 start-0 px-2 py-1 text-white small bg-dark bg-opacity-75">
                       {`${idx + 1} of ${allImages.length}`}
@@ -223,7 +223,7 @@ const TodaysMatches = () => {
 
                 <div className="col-md-3 d-flex align-items-center justify-content-center connect-now p-2">
                   {currentProfile.connectionRequest ? (
-                    <ContactOptions profile={currentProfile} />
+                    <ContactOptions profile={currentProfile} chatBoxOpen={chatBoxOpen}/>
                   ) : (
                     <ConnectBox handleConnectClick={() => handleConnect(currentProfile.user_id, currentProfile.profileId)} />
                   )}

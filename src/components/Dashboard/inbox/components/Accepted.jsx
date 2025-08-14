@@ -4,8 +4,8 @@ import SidebarFilterSort from "./SidebarFilterSort";
 import { useSelector } from "react-redux";
 import { timeAgo,formatLastSeen } from "../../../../utils/timeAgo";
 import { Link } from "react-router-dom";
-
-function Accepted() {
+import ContactOptions from "../../Matches/components/ContactOptions"
+function Accepted({chatBoxOpen}) {
   const [receivers, setReceivers] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedFilter, setSelectedFilter] = useState("allRequest");
@@ -111,7 +111,7 @@ function Accepted() {
                           )}
                         </div>
 
-                        <div className="col-md-7">
+                        <div className="col-md-6">
                           <div className="d-flex justify-content-between">
                             <div className="profile-part-inbox">
                               <div className="profile-nameinbox">
@@ -150,14 +150,17 @@ function Accepted() {
                             {currentReceiver.sender_profession}
                           </div>
                         </div>
+                          <div className="col-md-3">
+                            <ContactOptions profile={currentReceiver} chatBoxOpen={chatBoxOpen}/>
+                          </div>
                       </div>
                     </div>
                   ))}
                   
-                  <div className="viwed-application">
+                  {/* <div className="viwed-application">
                     <img src="images/greencheck.png" alt="Green Check" />
                     <p>View All Accepted Invitations</p>
-                  </div>
+                  </div> */}
                   
                   {totalPages > 1 && (
                     <div className="pagination-wrapper">

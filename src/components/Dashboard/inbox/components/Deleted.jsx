@@ -4,8 +4,8 @@ import SidebarFilterSort from "./SidebarFilterSort";
 import { useSelector } from "react-redux";
 import { timeAgo,formatLastSeen } from "../../../../utils/timeAgo";
 import { Link } from "react-router-dom";
-
-function Deleted() {
+import ContactOptions from "../../Matches/components/ContactOptions"
+function Deleted({chatBoxOpen}) {
   const [receivers, setReceivers] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 2; // Changed from 1 to 2
@@ -110,7 +110,7 @@ function Deleted() {
                           )}
                         </div>
 
-                        <div className="col-md-7">
+                        <div className="col-md-6">
                           <div className="d-flex justify-content-between">
                             <div className="profile-part-inbox">
                               <div className="profile-nameinbox">
@@ -149,14 +149,17 @@ function Deleted() {
                             {currentReceiver.sender_profession}
                           </div>
                         </div>
+                          <div className="col-md-3">
+                            <ContactOptions profile={currentReceiver} chatBoxOpen={chatBoxOpen}/>
+                          </div>
                       </div>
                     </div>
                   ))}
                 
-                  <div className="viwed-application">
+                  {/* <div className="viwed-application">
                     <img src="images/greencheck.png" alt="Green Check" />
                     <p>View All Deleted Invitations</p>
-                  </div>
+                  </div> */}
                   {totalPages>1 && (
                     <div className="pagination-wrapper">
                       <button

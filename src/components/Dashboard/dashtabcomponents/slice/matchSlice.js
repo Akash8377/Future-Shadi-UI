@@ -7,7 +7,7 @@ export const matchesApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${config.baseURL}/api/profile` }),
   endpoints: (builder) => ({
     getUsersByLookingFor: builder.query({
-      query: (looking_for) => `users-by-looking-for?looking_for=${looking_for}`,
+      query: ({ id, looking_for }) => `users-by-looking-for?id=${id}&looking_for=${looking_for}`,
     }),
   }),
 });

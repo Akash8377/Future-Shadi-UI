@@ -174,6 +174,7 @@ const RefineSearchSidebar = ({ initialFilters = {}, onFilterChange, searchType }
       filterKey: "recentlyJoined",
       title: "Recently Joined", 
       type: "radio",
+      showMore: true,
       options: [
         { label: 'Open for All', value: 'Open for All' },
         { label: "Within a day", value: "1" },
@@ -184,7 +185,8 @@ const RefineSearchSidebar = ({ initialFilters = {}, onFilterChange, searchType }
     // Multi-select checkboxes for all other filters
     { 
       filterKey: "maritalStatus",
-      title: "Marital Status", 
+      title: "Marital Status",
+      showMore: true, 
       options: MARITAL_STATUS?.map(status => ({
         label: status.label,
         value: status.value

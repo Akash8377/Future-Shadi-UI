@@ -205,11 +205,11 @@ const handleReject = async (notificationId) => {
           </div>
         </div>
       </div>
-
+{/* 
       <div className="viwed-application">
         <img src="images/greencheck.png" alt="Green Check" />
         <p>View All Received Invitations</p>
-      </div>
+      </div> */}
 {totalPages>1 && (<div className="pagination-wrapper">
         <button
           className="pagination-button"

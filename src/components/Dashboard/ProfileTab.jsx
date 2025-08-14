@@ -32,33 +32,33 @@ const handleSaveClick = async () => {
         safeJsonParse(userInfo.verificationData) : userInfo.verificationData
     };
 
-    // 2. Handle updates differently for family details
-    const isFamilyUpdate = isFamilyData(updatedData);
-    
-    if (isFamilyUpdate) {
-      updatedUserInfo.family_details = {
-        ...updatedUserInfo.family_details,
-        ...updatedData
-      };
-    } else {
-      Object.keys(updatedData).forEach(key => {
+    // 2. Apply all non-family updates first
+    Object.keys(updatedData).forEach(key => {
+      if (key !== 'family_details') {
         updatedUserInfo[key] = updatedData[key];
-      });
+      }
+    });
+
+    // 3. Apply family details updates if they exist
+    if (updatedData.family_details) {
+      updatedUserInfo.family_details = {
+        ...(updatedUserInfo.family_details || {}), // Preserve existing family details
+        ...updatedData.family_details             // Apply new updates
+      };
     }
 
-    // 3. Prepare data for API (ensure no stringified objects)
+    // 4. Prepare data for API (ensure no stringified objects)
     const dataToSend = {
       ...updatedUserInfo,
       family_details: updatedUserInfo.family_details || {} // Ensure never null
     };
-    console.log("Data to send", dataToSend)
 
-    // 4. API call
+    // 5. API call
     const response = await axios.put(`${config.baseURL}/api/profile/update`, dataToSend, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
 
-    // 5. Update state
+    // 6. Update state
     dispatch(setUser({
       userInfo: updatedUserInfo,
       token: token,
@@ -74,7 +74,7 @@ const handleSaveClick = async () => {
   }
 };
 
-// Helper functions
+// Helper functions remain the same
 const safeJsonParse = (str) => {
   try {
     return JSON.parse(str);
@@ -95,18 +95,25 @@ const parseFamilyDetails = (familyData) => {
   }
 };
 
-const isFamilyData = (data) => {
-  const familyKeys = ['mother', 'father', 'sisters', 'brothers'];
-  return Object.keys(data).some(key => familyKeys.includes(key));
-};
-
-  const handleDataChange = (section, field, value) => {
-    // console.log(value)
+const handleDataChange = (section, field, value) => {
+  // Special handling for family fields
+  const familyFields = ['mother', 'father', 'sisters', 'brothers'];
+  
+  if (familyFields.includes(field)) {
+    setUpdatedData(prev => ({
+      ...prev,
+      family_details: {
+        ...(prev.family_details || {}),
+        [field]: value
+      }
+    }));
+  } else {
     setUpdatedData(prev => ({
       ...prev,
       [field]: value
     }));
-  };
+  }
+};
 
   const handleCancel = ()=>{
     setEditingSection(null);

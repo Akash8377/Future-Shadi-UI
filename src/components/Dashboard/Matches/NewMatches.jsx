@@ -7,7 +7,7 @@ import axios from "axios";
 import config from "../../../config";
 import { toast } from "../../Common/Toast";
 
-const NewMatches = () => {
+const NewMatches = ({chatBoxOpen}) => {
   const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
   const [profiles, setProfiles] = useState([]);
   const [filters, setFilters] = useState({});
@@ -38,13 +38,14 @@ const NewMatches = () => {
   };
 
   useEffect(() => {
+    // console.log("filters: ",filters)
     if (searchFor) fetchFilteredProfiles();
   }, [filters, searchFor]);
 
   const handleConnectClick = async (id, profileId) => {
     setProfiles((prev) =>
       prev.map((profile) =>
-        profile.id === id ? { ...profile, connectionRequest: true } : profile
+        profile.user_id === id ? { ...profile, connectionRequest: true } : profile
       )
     );
     try {
@@ -87,6 +88,7 @@ const NewMatches = () => {
                   handleConnectClick={handleConnectClick}
                   activeIndex={activeCarouselIndex}
                   setActiveIndex={setActiveCarouselIndex}
+                  chatBoxOpen={chatBoxOpen}
                 />
               ))
             ) : (

@@ -137,12 +137,12 @@ const DashProfile = ({onEditClick, notifications}) => {
                   <div className="small text-muted mb-1">Account Type</div>
                   <div className="fw-semibold" style={{ fontSize: '14px' }}>Free Membership</div>
                 </div>
-                <Link href="#" className="small fw-semibold text-decoration-none" style={{ color: '#d61962' }}>Upgrade</Link>
+                {/* <Link href="#" className="small fw-semibold text-decoration-none" style={{ color: '#d61962' }}>Upgrade</Link> */}
               </div>
               <div className="section d-flex justify-content-between">
                 <div>
                   <div className="title" style={{ fontSize: '14px' }}>Blue Tick Verified</div>
-                  <div className="small text-muted">Valid till 4‑July‑26</div>
+                  <div className="small text-muted">Valid till 4 July 2026</div>
                 </div>
                 <div className="check-badge">
                   <i className="fa fa-check-square-o" aria-hidden="true"></i>

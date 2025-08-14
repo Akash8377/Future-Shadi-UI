@@ -285,9 +285,9 @@ ul#mainTab.nav-tabs {
   border-bottom: 1px solid #ddd;
 }
 
-.upload-box img {
+/* .upload-box img {
   width: 50px;
-}
+} */
 
 span.click-here {
   font-size: 17px;
@@ -2727,3 +2727,248 @@ ul#search-tabs {
 }
 
 /* Toast css end */
+
+/* DNA CSS */
+
+.panel-body.personalityformpage {
+    max-width: 900px !important;
+}
+.form_part {
+    padding-bottom: 70px;
+    padding-top: 30px;
+    min-height: 100vh;
+    height: auto;
+}
+
+.form_part .panel-body {
+    background-color: #ffffff;
+    max-width: 500px;
+    padding: 30px;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #00000014;
+}
+
+.dna-card {
+    z-index: 0;
+    border: none;
+    border-radius: 0.5rem;
+    position: relative;
+    background: transparent !important;
+    border-radius: 0px !important;
+    padding: 0px !important;
+    text-align: center !important;
+    margin-bottom: 0px !important;
+    box-shadow: none !important;
+}
+
+.tooltip.reporttooltip {
+    opacity: 1;
+    margin-left: 97%;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #222;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 16px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 1070;
+    display: block;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
+    text-align: start;
+    text-decoration: none;
+    text-shadow: none;
+    text-transform: none;
+    letter-spacing: normal;
+    word-break: normal;
+    word-spacing: normal;
+    white-space: normal;
+    line-break: auto;
+    font-size: .875rem;
+    word-wrap: break-word;
+    opacity: 0;
+}
+
+#msform {
+    text-align: center;
+    position: relative;
+}
+#msform fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.popup ul li{
+  text-align: start;
+  margin-bottom: 8px;
+  line-height: 20px;
+}
+.popup ul li strong{
+  color: var(--color-primary);
+}
+
+fieldset {
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+table.dnatable {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table.dnatable caption {
+    font-size: 1.5em;
+    margin: .5em 0 0;
+    color: #d61962;
+    caption-side: top;
+    text-align: center;
+}
+
+.stapcount {
+    text-align: center;
+    color: #222;
+    font-size: 15px;
+}
+
+#msform .action-button {
+    width: 100px;
+    background: #d61962;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+}
+#msform .action-button-previous {
+    width: 100px;
+    background: #616161;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+}
+
+table.dnatable th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+table.dnatable th, table.dnatable td {
+    padding: .625em;
+    text-align: left;
+}
+
+table.dnatable tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
+}
+table.dnatable tr:nth-child(odd), .table-striped tbody tr:nth-of-type(odd) {
+    background: #f3f3f3;
+}
+table.dnatable tr:nth-child(odd), .table-striped tbody tr:nth-of-type(odd) {
+    background: #f3f3f3;
+}
+
+.personality-data {
+  display: flex;
+  margin-bottom: 5px;
+  position: relative;
+  vertical-align: top;
+  flex-direction: column;
+  align-items: baseline;
+}
+.pill.personality-pill {
+    margin-top: 1em;
+}
+
+.pill {
+    background-color: #fff;
+    border-radius: 2em;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+    display: inline-block;
+    padding: .3em .5em;
+    font-size: 13px;
+    font-weight: 600;
+}
+.color-primary {
+    color: var(--color-primary);
+}
+
+.dna-wrapper {
+    margin: 0 auto;
+    padding: 48px 0px;
+}
+.dna-wrapper h3{
+  font-size: 20px;
+  color: var(--color-primary)
+}
+
+.result_table table {
+    margin-bottom: 30px;
+}
+.result_table table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+/* .result_table tr:nth-child(odd), .table-striped tbody tr:nth-of-type(odd) {
+    background: #f3f3f3;
+}
+
+.result_table tr:nth-child(odd), .table-striped tbody tr:nth-of-type(odd) {
+    background: #f3f3f3;
+} */
+
+.result_table td {
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    text-align: left;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.result_table h3 {
+    color: var(--color-primary);
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+button#search-tabs-tab-dna-matches {
+    color: black;
+  }
+  
+.nav-tabs .nav-link {
+    color: black;
+}

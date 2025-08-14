@@ -35,9 +35,13 @@ const AboutMyself = ({ isEditing, onEditClick, onSaveClick, onCancelClick, onDat
     return updatedData[field] !== undefined ? updatedData[field] : userInfo[field] || "";
   };
 
-  const getFamilyValue = (field) => {  
-    return updatedData[field] !== undefined ? updatedData[field] : familyDetails[field] || "";
-  };
+const getFamilyValue = (field) => {  
+  // Check updatedData.family_details first, then fall back to original familyDetails
+  if (updatedData.family_details && updatedData.family_details[field] !== undefined) {
+    return updatedData.family_details[field];
+  }
+  return familyDetails[field] || "";
+};
 
   return (
     <div>

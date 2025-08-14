@@ -219,7 +219,9 @@ const useSearchFormHandlers = (isAdvanced = false) => {
   const searchByProfileId = async (profileId, isAdvanced = false) => {
   try {
     const searchData = formatSearchData(isAdvanced);
-    const response = await axios.get(`${config.baseURL}/api/search/search-by-profileId/${profileId}`);
+    const response = await axios.get(`${config.baseURL}/api/search/search-by-profileId/${profileId}`,{headers: {
+          Authorization: `Bearer ${token}`
+        }});
     if(response.data.success) {
       navigate('/search-results', {
         state: {

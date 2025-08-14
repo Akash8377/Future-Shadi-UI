@@ -9,16 +9,16 @@ const BasicInfoSection = ({ isEditing, getValue, onDataChange, editingFields }) 
         <table className="table table-borderless table-sm mini-data mb-0">
           <tbody>
             <tr>
-              <td>Age</td>
-              <td>: {calculateAge(
+              <td>Age:</td>
+              <td>{calculateAge(
                 getValue('birth_year'), 
                 getValue('birth_month'), 
                 getValue('birth_day')
               )}</td>
             </tr>
             <tr>
-              <td>DOB</td>
-              <td className=''>: {isEditing && editingFields === "basic" ? (
+              <td>DOB:</td>
+              <td className=''>{isEditing && editingFields === "basic" ? (
                   <div className='d-inline-flex gap-1 w-75'>
                   <input 
                     type="text" 
@@ -47,8 +47,8 @@ const BasicInfoSection = ({ isEditing, getValue, onDataChange, editingFields }) 
               )}</td>
             </tr>
             <tr>
-              <td>Marital Status</td>
-              <td>: {isEditing && editingFields === "basic" ? (
+              <td>Marital Status:</td>
+              <td>{isEditing && editingFields === "basic" ? (
                 <select 
                   value={getValue('marital_status') || ''} 
                   onChange={(e) => onDataChange('marital_status', e.target.value)}
@@ -64,8 +64,8 @@ const BasicInfoSection = ({ isEditing, getValue, onDataChange, editingFields }) 
               )}</td>
             </tr>
             <tr>
-              <td>Height</td>
-              <td>: {isEditing && editingFields === "basic" ? (
+              <td>Height:</td>
+              <td>{isEditing && editingFields === "basic" ? (
                 <select 
                   value={getValue('height') || ''} 
                   onChange={(e) => onDataChange('height', e.target.value)}
@@ -81,8 +81,8 @@ const BasicInfoSection = ({ isEditing, getValue, onDataChange, editingFields }) 
               )}</td>
             </tr>
             <tr>
-              <td>Grow Up</td>
-              <td>: {isEditing && editingFields === "basic" ? (
+              <td>Grow Up:</td>
+              <td>{isEditing && editingFields === "basic" ? (
                 <select 
                   value={getValue('country') || ''} 
                   onChange={(e) => onDataChange('country', e.target.value)}
@@ -105,8 +105,8 @@ const BasicInfoSection = ({ isEditing, getValue, onDataChange, editingFields }) 
         <table className="table table-borderless table-sm mini-data mb-0">
           <tbody>
             <tr>
-              <td>Diet</td>
-              <td>: {isEditing && editingFields === "basic" ? (
+              <td>Diet:</td>
+              <td>{isEditing && editingFields === "basic" ? (
                 <select 
                   value={getValue('diet') || ''} 
                   onChange={(e) => onDataChange('diet', e.target.value)}
@@ -122,8 +122,8 @@ const BasicInfoSection = ({ isEditing, getValue, onDataChange, editingFields }) 
               )}</td>
             </tr>
             <tr>
-              <td>Blood Group</td>
-              <td>: {isEditing && editingFields === "basic" ? (
+              <td>Blood Group:</td>
+              <td>{isEditing && editingFields === "basic" ? (
                 <select 
                   value={getValue('blood_group') || ''} 
                   onChange={(e) => onDataChange('blood_group', e.target.value)}
@@ -139,8 +139,8 @@ const BasicInfoSection = ({ isEditing, getValue, onDataChange, editingFields }) 
               )}</td>
             </tr>
             <tr>
-              <td>Health Information</td>
-              <td>: {isEditing && editingFields === "basic" ? (
+              <td>Health Information:</td>
+              <td>{isEditing && editingFields === "basic" ? (
                 <input 
                   type="text" 
                   value={getValue('health_info') || ''} 
@@ -152,8 +152,8 @@ const BasicInfoSection = ({ isEditing, getValue, onDataChange, editingFields }) 
               )}</td>
             </tr>
             <tr>
-              <td>Disability</td>
-              <td>: {isEditing && editingFields === "basic" ? (
+              <td>Disability:</td>
+              <td>{isEditing && editingFields === "basic" ? (
                 <input 
                   type="text" 
                   value={getValue('disability') || ''} 

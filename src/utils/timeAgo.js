@@ -31,6 +31,33 @@ function parseCustomDate(dateStr) {
   }
 }
 
+// export const formatLastSeen = (timestamp) => {
+//   if (!timestamp) return "Never seen";
+//   if (timestamp === "online") return "Online";
+
+//   const now = new Date();
+//   const lastSeen = new Date(timestamp);
+//   const diffInSeconds = Math.floor((now - lastSeen) / 1000);
+  
+//   // If same day
+//   if (now.toDateString() === lastSeen.toDateString()) {
+//     return `Today at ${lastSeen.toLocaleTimeString('en-IN', {
+//       hour: '2-digit',
+//       minute: '2-digit'
+//     })}`;
+//   }
+
+//   const days = Math.floor(diffInSeconds / (3600 * 24));
+//   if (days === 1 || days === 0) return "Yesterday";
+//   if (days <= 7) return `${days} days ago`;
+  
+//   return lastSeen.toLocaleDateString('en-IN', {
+//     day: 'numeric',
+//     month: 'short',
+//     year: days > 365 ? 'numeric' : undefined
+//   });
+// };
+
 export const formatLastSeen = (timestamp) => {
   if (!timestamp) return "Never seen";
   if (timestamp === "online") return "Online";
@@ -38,20 +65,31 @@ export const formatLastSeen = (timestamp) => {
   const now = new Date();
   const lastSeen = new Date(timestamp);
   const diffInSeconds = Math.floor((now - lastSeen) / 1000);
-  
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+
   // If same day
   if (now.toDateString() === lastSeen.toDateString()) {
-    return `Today at ${lastSeen.toLocaleTimeString('en-IN', {
-      hour: '2-digit',
-      minute: '2-digit'
-    })}`;
+    if (diffInMinutes < 1) {
+      return "Just now";
+    }
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes} min ago`;
+    }
+    const hours = Math.floor(diffInMinutes / 60);
+    const minutes = diffInMinutes % 60;
+    return minutes > 0
+      ? `${hours} hr ${minutes} min ago`
+      : `${hours} hr ago`;
   }
 
+  // Yesterday
   const days = Math.floor(diffInSeconds / (3600 * 24));
-  
-  if (days === 1) return "Yesterday";
+  if (days === 1 || days === 0) return "Yesterday";
+
+  // Within last week
   if (days <= 7) return `${days} days ago`;
-  
+
+  // Older dates
   return lastSeen.toLocaleDateString('en-IN', {
     day: 'numeric',
     month: 'short',
