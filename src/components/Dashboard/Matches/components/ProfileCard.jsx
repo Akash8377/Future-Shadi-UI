@@ -131,7 +131,8 @@ dnaMatches=false,user={}
         </div>
         <div className="col-md-6">
           <div className="p-3">
-            <h5 className="mb-1">
+            <h5 className="mb-1 d-flex justify-content-between align-items-center">
+              <span>
               {profile.first_name} {profile.last_name}
               {profile.isVerified && (
                 <img
@@ -140,6 +141,14 @@ dnaMatches=false,user={}
                   className="ms-2"
                   style={{ width: "20px", height: "20px" }}
                 />
+              )}</span>
+              {dnaMatches && (
+                <span className={`hla-score ${
+                  profile.hla_compatibility === "Excellent" ? "text-success" :
+                  profile.hla_compatibility === "Good" ? "text-warning" :
+                  "text-danger"
+                }`} title={`${profile.hla_compatibility}`}>{`HLA ${profile.hla_percentage}%`}
+                </span>
               )}
             </h5>
             <div className="d-flex gap-3 mb-2 small">

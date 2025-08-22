@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-const ProfileDetails = ({ currentProfile, matchingRatio, renderPreferenceRow }) => {
+const ProfileDetails = ({ currentProfile, matchingRatio }) => {
   const userInfo = useSelector(state=>state.user.userInfo)
   const family_details = typeof currentProfile?.family_details ==='object'?currentProfile?.family_details:JSON.parse(currentProfile?.family_details)
   // console.log("Profiledetail User Info",userInfo)

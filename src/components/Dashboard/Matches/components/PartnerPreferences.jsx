@@ -1,7 +1,7 @@
 import React from 'react';
 import config from '../../../../config';
 
-const PartnerPreferences = ({ currentProfile, matchingRatio, renderPreferenceRow }) => {
+const PartnerPreferences = ({ currentProfile, matchingRatio }) => {
   const partnerPreference = currentProfile.partner_preference ? JSON.parse(currentProfile.partner_preference) : null;
 
   if (!partnerPreference) {
@@ -15,6 +15,19 @@ const PartnerPreferences = ({ currentProfile, matchingRatio, renderPreferenceRow
       </div>
     );
   }
+
+    // Render helpers
+  const renderPreferenceRow = (title, value) => (
+    <div className="row mb-2">
+      <div className="col-md-6">
+        <div className="label-title">{title}</div>
+        <div className="label-value">{value || "Not specified"}</div>
+      </div>
+      <div className="col-md-6 text-end">
+        <i className="fa fa-check-circle-o" aria-hidden="true"></i>
+      </div>
+    </div>
+  );
 
   return (
     <div className="timeline">

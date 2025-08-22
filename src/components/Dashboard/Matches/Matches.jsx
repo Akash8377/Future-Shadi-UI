@@ -32,10 +32,20 @@ const Matches = () => {
   const [activeTab, setActiveTab] = useState("matches");
   const ActiveComponent = tabComponents[activeTab];
  const location = useLocation();
+
+    const setTab = (key)=>{
+    sessionStorage.setItem("MatchesTab", key)
+    setActiveTab(key);
+  }
  useEffect(()=>{
    if(location.state?.activtab){
-    setActiveTab(location.state?.activtab || "matches")
-   }
+    setTab(location.state?.activtab || "matches")
+    sessionStorage.setItem("MatchesTab",location.state?.activtab)
+    }else if(sessionStorage.getItem("MatchesTab")){
+      setTab(sessionStorage.getItem("MatchesTab"))
+    }else{
+      setTab("matches")
+    }
  },[location.state?.activtab])
  const [showChatBox, setShowChatBox] = useState(false)
  const chatBoxOpen = () =>{
@@ -50,7 +60,7 @@ const Matches = () => {
             <li className="nav-item" key={tabKey}>
               <button
                 className={`nav-link ${activeTab === tabKey ? "active" : ""}`}
-                onClick={() => setActiveTab(tabKey)}
+                onClick={() => setTab(tabKey)}
               >
                 {tabHeadings[tabKey]}
               </button>

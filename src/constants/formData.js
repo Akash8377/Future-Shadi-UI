@@ -1246,3 +1246,206 @@ export const CITY_OPTIONS = [
   "Mumbai, India",
   "Bangalore, India"
 ];
+
+// HLA Allele Options and Descriptions
+// export const hlaData = {
+//   options: {
+//     "HLA-A": ["HLA-A*01", "HLA-A*02", "HLA-A*03", "HLA-A*11", "HLA-A*23", "HLA-A*24", "HLA-A*25", "HLA-A*26", "HLA-A*29", "HLA-A*30", "HLA-A*31", "HLA-A*32", "HLA-A*33", "HLA-A*34", "HLA-A*68", "HLA-A*69", "Other"],
+//     "HLA-B": ["HLA-B*07", "HLA-B*08", "HLA-B*13", "HLA-B*15", "HLA-B*18", "HLA-B*27", "HLA-B*35", "HLA-B*37", "HLA-B*38", "HLA-B*39", "HLA-B*40", "HLA-B*44", "HLA-B*45", "HLA-B*49", "HLA-B*50", "HLA-B*51", "HLA-B*52", "HLA-B*53", "HLA-B*57", "HLA-B*58", "Other"],
+//     "HLA-C": ["HLA-C*01", "HLA-C*02", "HLA-C*03", "HLA-C*04", "HLA-C*05", "HLA-C*06", "HLA-C*07", "HLA-C*08", "HLA-C*12", "HLA-C*14", "HLA-C*15", "HLA-C*16", "Other"],
+//     "HLA-DPA1": ["HLA-DPA1*01", "HLA-DPA1*02", "HLA-DPA1*03", "HLA-DPA1*04", "Other"],
+//     "HLA-DPB1": ["HLA-DPB1*01", "HLA-DPB1*02", "HLA-DPB1*03", "HLA-DPB1*04", "HLA-DPB1*05", "Other"],
+//     "HLA-DQA1": ["HLA-DQA1*01", "HLA-DQA1*02", "HLA-DQA1*03", "HLA-DQA1*04", "HLA-DQA1*05", "Other"],
+//     "HLA-DQB1": ["HLA-DQB1*02", "HLA-DQB1*03", "HLA-DQB1*04", "HLA-DQB1*05", "HLA-DQB1*06", "Other"],
+//     "HLA-DRB1": ["HLA-DRB1*01", "HLA-DRB1*03", "HLA-DRB1*04", "HLA-DRB1*07", "HLA-DRB1*08", "HLA-DRB1*09", "HLA-DRB1*10", "HLA-DRB1*11", "HLA-DRB1*12", "HLA-DRB1*13", "HLA-DRB1*14", "HLA-DRB1*15", "HLA-DRB1*16", "Other"],
+//     "HLA-DRB3": ["DRB3*01", "DRB3*02", "DRB3*03", "Other"],
+//     "HLA-DRB4": ["DRB4*01", "Other"],
+//     "HLA-DRB5": ["DRB5*01", "Other"]
+//   },
+//   descriptions: {
+//     "HLA-A": "Human Leukocyte Antigen A - involved in immune system regulation and presentation of peptides from inside the cell",
+//     "HLA-B": "Human Leukocyte Antigen B - plays a critical role in the immune system by presenting peptide antigens to T-cells",
+//     "HLA-C": "Human Leukocyte Antigen C - involved in immune system regulation, particularly in natural killer cell function",
+//     "HLA-DPA1": "Human Leukocyte Antigen DP alpha chain - involved in antigen presentation to immune cells",
+//     "HLA-DPB1": "Human Leukocyte Antigen DP beta chain - works with DPA1 to present antigens to T-cells",
+//     "HLA-DQA1": "Human Leukocyte Antigen DQ alpha chain - involved in immune response and associated with autoimmune diseases",
+//     "HLA-DQB1": "Human Leukocyte Antigen DQ beta chain - forms heterodimers with DQA1 to present antigens",
+//     "HLA-DRB1": "Human Leukocyte Antigen DR beta chain - critical for immune response and associated with many autoimmune conditions",
+//     "HLA-DRB3": "Human Leukocyte Antigen DR beta chain 3 - variant of DRB involved in immune response",
+//     "HLA-DRB4": "Human Leukocyte Antigen DR beta chain 4 - variant of DRB involved in immune response",
+//     "HLA-DRB5": "Human Leukocyte Antigen DR beta chain 5 - variant of DRB involved in immune response",
+//     // Specific allele descriptions
+//     "HLA-A*01": "Associated with slower HIV progression and certain autoimmune diseases",
+//     "HLA-A*02": "Most common HLA-A allele in many populations, associated with some cancer immunotherapies",
+//     "HLA-A*03": "Associated with hemochromatosis and some autoimmune conditions",
+//     "HLA-B*27": "Strongly associated with ankylosing spondylitis and other seronegative spondyloarthropathies",
+//     "HLA-B*57": "Associated with slow HIV progression and hypersensitivity to abacavir",
+//     "HLA-DRB1*15": "Strongly associated with multiple sclerosis",
+//     "HLA-DQB1*06": "Associated with narcolepsy and multiple sclerosis",
+//     "HLA-DRB1*04": "Associated with rheumatoid arthritis and type 1 diabetes",
+//   }
+// };
+export const hlaData = {
+  options: {
+    "HLA-A": ["HLA-A*01", "HLA-A*02", "HLA-A*03", "HLA-A*11", "HLA-A*23", "HLA-A*24", "HLA-A*25", "HLA-A*26", "HLA-A*29", "HLA-A*30", "HLA-A*31", "HLA-A*32", "HLA-A*33", "HLA-A*34", "HLA-A*68", "HLA-A*69", "Other"],
+    "HLA-B": ["HLA-B*07", "HLA-B*08", "HLA-B*13", "HLA-B*15", "HLA-B*18", "HLA-B*27", "HLA-B*35", "HLA-B*37", "HLA-B*38", "HLA-B*39", "HLA-B*40", "HLA-B*44", "HLA-B*45", "HLA-B*49", "HLA-B*50", "HLA-B*51", "HLA-B*52", "HLA-B*53", "HLA-B*57", "HLA-B*58", "Other"],
+    "HLA-C": ["HLA-C*01", "HLA-C*02", "HLA-C*03", "HLA-C*04", "HLA-C*05", "HLA-C*06", "HLA-C*07", "HLA-C*08", "HLA-C*12", "HLA-C*14", "HLA-C*15", "HLA-C*16", "Other"],
+    "HLA-DPA1": ["HLA-DPA1*01", "HLA-DPA1*02", "HLA-DPA1*03", "HLA-DPA1*04", "Other"],
+    "HLA-DPB1": ["HLA-DPB1*01", "HLA-DPB1*02", "HLA-DPB1*03", "HLA-DPB1*04", "HLA-DPB1*05", "Other"],
+    "HLA-DQA1": ["HLA-DQA1*01", "HLA-DQA1*02", "HLA-DQA1*03", "HLA-DQA1*04", "HLA-DQA1*05", "Other"],
+    "HLA-DQB1": ["HLA-DQB1*02", "HLA-DQB1*03", "HLA-DQB1*04", "HLA-DQB1*05", "HLA-DQB1*06", "Other"],
+    "HLA-DRB1": ["HLA-DRB1*01", "HLA-DRB1*03", "HLA-DRB1*04", "HLA-DRB1*07", "HLA-DRB1*08", "HLA-DRB1*09", "HLA-DRB1*10", "HLA-DRB1*11", "HLA-DRB1*12", "HLA-DRB1*13", "HLA-DRB1*14", "HLA-DRB1*15", "HLA-DRB1*16", "Other"],
+    "HLA-DRB3": ["DRB3*01", "DRB3*02", "DRB3*03", "Other"],
+    "HLA-DRB4": ["DRB4*01", "Other"],
+    "HLA-DRB5": ["DRB5*01", "Other"]
+  },
+  descriptions: {
+    // Locus Descriptions
+    "HLA-A": "Human Leukocyte Antigen A - involved in immune system regulation and presentation of peptides from inside the cell",
+    "HLA-B": "Human Leukocyte Antigen B - plays a critical role in the immune system by presenting peptide antigens to T-cells",
+    "HLA-C": "Human Leukocyte Antigen C - involved in immune system regulation, particularly in natural killer cell function",
+    "HLA-DPA1": "Human Leukocyte Antigen DP alpha chain - involved in antigen presentation to immune cells",
+    "HLA-DPB1": "Human Leukocyte Antigen DP beta chain - works with DPA1 to present antigens to T-cells",
+    "HLA-DQA1": "Human Leukocyte Antigen DQ alpha chain - involved in immune response and associated with autoimmune diseases",
+    "HLA-DQB1": "Human Leukocyte Antigen DQ beta chain - forms heterodimers with DQA1 to present antigens",
+    "HLA-DRB1": "Human Leukocyte Antigen DR beta chain - critical for immune response and associated with many autoimmune conditions",
+    "HLA-DRB3": "Human Leukocyte Antigen DR beta chain 3 - variant of DRB involved in immune response",
+    "HLA-DRB4": "Human Leukocyte Antigen DR beta chain 4 - variant of DRB involved in immune response",
+    "HLA-DRB5": "Human Leukocyte Antigen DR beta chain 5 - variant of DRB involved in immune response",
+
+    // HLA-A Alleles
+    "HLA-A*01": "Associated with slower HIV progression and certain autoimmune diseases",
+    "HLA-A*02": "Most common HLA-A allele in many populations, associated with some cancer immunotherapies",
+    "HLA-A*03": "Associated with hemochromatosis and some autoimmune conditions",
+    "HLA-A*11": "Common in Asian populations; associated with control of Epstein-Barr virus",
+    "HLA-A*23": "Studied in contexts of infectious disease and transplantation",
+    "HLA-A*24": "Common in Asian populations; associated with Behçet's disease and drug hypersensitivity",
+    "HLA-A*25": "A less common variant with various studied associations",
+    "HLA-A*26": "Found with varying frequencies across populations",
+    "HLA-A*29": "Associated with the eye disease Birdshot chorioretinopathy",
+    "HLA-A*30": "Studied in the context of HIV and other infectious diseases",
+    "HLA-A*31": "Strongly associated with carbamazepine-induced hypersensitivity reactions",
+    "HLA-A*32": "A less common allele with various population-specific studies",
+    "HLA-A*33": "Common in Asian and Middle Eastern populations",
+    "HLA-A*34": "A relatively rare allele",
+    "HLA-A*68": "A broad serotype split into many common alleles",
+    "HLA-A*69": "A relatively rare allele",
+
+    // HLA-B Alleles
+    "HLA-B*07": "Associated with psoriasis, uveitis, and altered HIV progression",
+    "HLA-B*08": "Part of a haplotype strongly linked to numerous autoimmune diseases",
+    "HLA-B*13": "Associated with protection against severe malaria in some studies",
+    "HLA-B*15": "A broad group; includes alleles linked to carbamazepine hypersensitivity",
+    "HLA-B*18": "Associated with faster HIV disease progression",
+    "HLA-B*27": "Strongly associated with ankylosing spondylitis and other seronegative spondyloarthropathies",
+    "HLA-B*35": "Associated with faster HIV disease progression",
+    "HLA-B*37": "A less common allele with various associations",
+    "HLA-B*38": "Linked to psoriasis and other autoimmune conditions",
+    "HLA-B*39": "Associated with Takayasu's arteritis",
+    "HLA-B*40": "A broad group studied in various disease contexts",
+    "HLA-B*44": "One of the most common alleles in European populations",
+    "HLA-B*45": "Associated with protection against severe malaria",
+    "HLA-B*49": "Studied in the context of type 1 diabetes and other autoimmune diseases",
+    "HLA-B*50": "A less common allele",
+    "HLA-B*51": "Strongly associated with Behçet's disease",
+    "HLA-B*52": "Associated with Takayasu's arteritis",
+    "HLA-B*53": "Associated with protection against severe malaria",
+    "HLA-B*57": "Associated with slow HIV progression and hypersensitivity to abacavir",
+    "HLA-B*58": "Strongly associated with allopurinol-induced severe hypersensitivity",
+
+    // HLA-C Alleles
+    "HLA-C*01": "Involved in HIV control and natural killer (NK) cell education",
+    "HLA-C*02": "Studied in HIV and transplantation outcomes",
+    "HLA-C*03": "A common allele with various general associations",
+    "HLA-C*04": "Associated with a higher risk of ulcerative colitis",
+    "HLA-C*05": "A less common allele",
+    "HLA-C*06": "Strongly associated with psoriasis vulgaris",
+    "HLA-C*07": "A very common allele; high expression is linked to better HIV control",
+    "HLA-C*08": "A less common allele",
+    "HLA-C*12": "Studied in various immunological contexts",
+    "HLA-C*14": "A less common allele",
+    "HLA-C*15": "Found in various populations",
+    "HLA-C*16": "A less common allele",
+
+    // HLA-DPA1 Alleles
+    "HLA-DPA1*01": "A common allele group for the alpha chain of the DP molecule",
+    "HLA-DPA1*02": "Another common allele group",
+    "HLA-DPA1*03": "A less frequent allele group",
+    "HLA-DPA1*04": "A less frequent allele group",
+
+    // HLA-DPB1 Alleles
+    "HLA-DPB1*01": "A common allele group for the beta chain of the DP molecule",
+    "HLA-DPB1*02": "A common allele group",
+    "HLA-DPB1*03": "A common allele group",
+    "HLA-DPB1*04": "A common allele group; key in transplant matching",
+    "HLA-DPB1*05": "A common allele group",
+
+    // HLA-DQA1 Alleles
+    "HLA-DQA1*01": "Often part of haplotypes linked to celiac disease and type 1 diabetes",
+    "HLA-DQA1*02": "Part of haplotypes associated with autoimmune risk",
+    "HLA-DQA1*03": "A broad group with various associations",
+    "HLA-DQA1*04": "A less common group",
+    "HLA-DQA1*05": "A key component of the risk haplotype for narcolepsy and celiac disease",
+
+    // HLA-DQB1 Alleles
+    "HLA-DQB1*02": "Strongest genetic risk factor for celiac disease; also linked to type 1 diabetes",
+    "HLA-DQB1*03": "A broad group; includes alleles associated with autoimmune thyroid disease",
+    "HLA-DQB1*04": "A less common group",
+    "HLA-DQB1*05": "Part of the risk haplotype for narcolepsy",
+    "HLA-DQB1*06": "Associated with narcolepsy and multiple sclerosis",
+
+    // HLA-DRB1 Alleles
+    "HLA-DRB1*01": "Associated with rheumatoid arthritis and pemphigus vulgaris",
+    "HLA-DRB1*03": "Part of a haplotype linked to many autoimmune diseases (e.g., SLE)",
+    "HLA-DRB1*04": "Associated with rheumatoid arthritis and type 1 diabetes",
+    "HLA-DRB1*07": "Associated with multiple sclerosis (protective) and narcolepsy",
+    "HLA-DRB1*08": "Associated with type 1 diabetes and primary sclerosing cholangitis",
+    "HLA-DRB1*09": "Associated with type 1 diabetes in East Asian populations",
+    "HLA-DRB1*10": "A less common allele group",
+    "HLA-DRB1*11": "A common allele group with various associations",
+    "HLA-DRB1*12": "A less common allele group",
+    "HLA-DRB1*13": "Often associated with protective effects in type 1 diabetes and malaria",
+    "HLA-DRB1*14": "Studied in various autoimmune and infectious contexts",
+    "HLA-DRB1*15": "Strongly associated with multiple sclerosis",
+    "HLA-DRB1*16": "A less common allele group",
+
+    // HLA-DRB3, DRB4, DRB5 Alleles
+    "DRB3*01": "Encodes the HLA-DR52 specificity, involved in immune response",
+    "DRB3*02": "Another common variant of DRB3",
+    "DRB3*03": "A variant of DRB3",
+    "DRB4*01": "Encodes the HLA-DR53 specificity",
+    "DRB5*01": "Encodes the HLA-DR51 specificity; often co-expressed with DRB1*15",
+
+    // "Other" category for all groups
+    "Other": "A catch-all for any other allele not specifically listed"
+  }
+};
+
+// HLA Test Questions Structure
+export const hlaQuestions = {
+  step1: [
+    { id: "HLA-A1", name: "First HLA-A allele", type: "HLA-A" },
+    { id: "HLA-A2", name: "Second HLA-A allele", type: "HLA-A" },
+    { id: "HLA-B1", name: "First HLA-B allele", type: "HLA-B" },
+    { id: "HLA-B2", name: "Second HLA-B allele", type: "HLA-B" },
+    { id: "HLA-C1", name: "First HLA-C allele", type: "HLA-C" },
+    { id: "HLA-C2", name: "Second HLA-C allele", type: "HLA-C" }
+  ],
+  step2: [
+    { id: "HLA-DPA11", name: "First HLA-DPA1 allele", type: "HLA-DPA1" },
+    { id: "HLA-DPA12", name: "Second HLA-DPA1 allele", type: "HLA-DPA1" },
+    { id: "HLA-DPB11", name: "First HLA-DPB1 allele", type: "HLA-DPB1" },
+    { id: "HLA-DPB12", name: "Second HLA-DPB1 allele", type: "HLA-DPB1" },
+    { id: "HLA-DQA11", name: "First HLA-DQA1 allele", type: "HLA-DQA1" },
+    { id: "HLA-DQA12", name: "Second HLA-DQA1 allele", type: "HLA-DQA1" },
+    { id: "HLA-DQB11", name: "First HLA-DQB1 allele", type: "HLA-DQB1" },
+    { id: "HLA-DQB12", name: "Second HLA-DQB1 allele", type: "HLA-DQB1" }
+  ],
+  step3: [
+    { id: "HLA-DRB11", name: "First HLA-DRB1 allele", type: "HLA-DRB1" },
+    { id: "HLA-DRB12", name: "Second HLA-DRB1 allele", type: "HLA-DRB1" },
+    { id: "HLA-DRB3", name: "HLA-DRB3 allele", type: "HLA-DRB3" },
+    { id: "HLA-DRB4", name: "HLA-DRB4 allele", type: "HLA-DRB4" },
+    { id: "HLA-DRB5", name: "HLA-DRB5 allele", type: "HLA-DRB5" }
+  ]
+};

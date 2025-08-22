@@ -7,7 +7,7 @@ import axios from "axios";
 import config from "../../../../config";
 import { toast } from "../../../Common/Toast";
 
-const DNAMatches = ({chatBoxOpen}) => {
+const DNAMatches = ({chatBoxOpen, key}) => {
   const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
   const [profiles, setProfiles] = useState([]);
   const [filters, setFilters] = useState({});
@@ -26,7 +26,7 @@ const DNAMatches = ({chatBoxOpen}) => {
         `${config.baseURL}/api/dna/get-matches-by-genetic-markers`,
         {
           params: {
-            user_id: user.id,
+            user_id: user.user_id,
             looking_for: searchFor,
             ...filters,
           },
@@ -42,7 +42,7 @@ const DNAMatches = ({chatBoxOpen}) => {
 
   useEffect(() => {
     if (searchFor) fetchFilteredProfiles();
-  }, [filters, searchFor]);
+  }, [filters, searchFor, key]);
 
   const handleConnectClick = async (id, profileId) => {
     setProfiles((prev) =>

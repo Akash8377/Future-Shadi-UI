@@ -30,13 +30,24 @@ const tabHeadings = {
 };
 
 const DashboardPage = () => {
-  const [activeTab, setActiveTab] = useState("dash");
+  const [activeTab, setActiveTab] = useState("");
   const ActiveComponent = tabComponents[activeTab];
  const location = useLocation();
+
+   const setTab = (key)=>{
+    sessionStorage.setItem("DashboardTab", key)
+    setActiveTab(key);
+  }
+
  useEffect(()=>{
    if(location.state?.activtab){
-    setActiveTab(location.state?.activtab || "matches")
-   }
+    setTab(location.state?.activtab || "dash")
+    sessionStorage.setItem("DashboardTab",location.state?.activtab)
+    }else if(sessionStorage.getItem("DashboardTab")){
+      setTab(sessionStorage.getItem("DashboardTab"))
+    }else{
+      setTab("dash")
+    }
  },[location.state?.activtab])
 
   return (
@@ -48,7 +59,7 @@ const DashboardPage = () => {
             <li className="nav-item" key={tabKey}>
               <button
                 className={`nav-link ${activeTab === tabKey ? "active" : ""}`}
-                onClick={() => setActiveTab(tabKey)}
+                onClick={() => setTab(tabKey)}
               >
                 {tabHeadings[tabKey]}
               </button>
@@ -61,13 +72,13 @@ const DashboardPage = () => {
           {/* <h3 className="mb-3">{tabHeadings[activeTab]}</h3> */}
           {/* {ActiveComponent && <ActiveComponent />} */}
             {activeTab === "dash" ? (
-            <DashboardTab onChangeTab={setActiveTab} />
+            <DashboardTab onChangeTab={setTab} />
           ) : activeTab === "profile" ? (
-            <ProfileTab onChangeTab={setActiveTab} />
+            <ProfileTab onChangeTab={setTab} />
           ) : activeTab === "more" ? (
-            <MoreTab onChangeTab={setActiveTab} />
+            <MoreTab onChangeTab={setTab} />
           ): activeTab === "photos" ? (
-            <PhotosTab onChangeTab={setActiveTab} />
+            <PhotosTab onChangeTab={setTab} />
           ):(
             ActiveComponent && <ActiveComponent />
           )}

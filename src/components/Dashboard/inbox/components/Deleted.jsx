@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { timeAgo,formatLastSeen } from "../../../../utils/timeAgo";
 import { Link } from "react-router-dom";
 import ContactOptions from "../../Matches/components/ContactOptions"
-function Deleted({chatBoxOpen}) {
+function Deleted({chatBoxOpen, activeKey}) {
   const [receivers, setReceivers] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 2; // Changed from 1 to 2
@@ -29,7 +29,7 @@ function Deleted({chatBoxOpen}) {
     };
 
     fetchDeletedReceivers();
-  }, [user.id]);
+  }, [user.id, activeKey]);
 
   const calculateAge = (day, month, year) => {
     const birthDate = new Date(year, month - 1, day);

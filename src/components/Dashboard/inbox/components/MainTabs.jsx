@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import Received from './Recieved';
 import Accepted from './Accepted';
@@ -10,36 +10,45 @@ import ChatBox from './ChatBox';
 
 
 function MainTabs() {
-  const [activeKey, setActiveKey] = useState('received');
-
-  const handleSelect = (key) => {
-    setActiveKey(key);
-  };
+  const [activeKey, setActiveKey] = useState('');
    const [showChatBox, setShowChatBox] = useState(false)
    const chatBoxOpen = () =>{
     setShowChatBox(true)
  }
 
+  const handleSelect = (key)=>{
+    sessionStorage.setItem("InboxTab", key)
+    setActiveKey(key);
+  }
+   
+  useEffect(()=>{
+      if(sessionStorage.getItem("InboxTab")){
+        handleSelect(sessionStorage.getItem("InboxTab"))
+      }else{
+        handleSelect("received")
+      }
+  },[])
+
  const tabComponents = [
   {
     key: 'received',
     title: 'Received',
-    component: <Received/>,
+    component: <Received activeKey={activeKey}/>,
   },
   {
     key: 'accepted',
     title: 'Accepted',
-    component: <Accepted chatBoxOpen={chatBoxOpen}/>,
+    component: <Accepted chatBoxOpen={chatBoxOpen} activeKey={activeKey}/>,
   },
   {
     key: 'request',
     title: 'Request',
-    component: <Requested chatBoxOpen={chatBoxOpen}/>,
+    component: <Requested chatBoxOpen={chatBoxOpen} activeKey={activeKey}/>,
   },
   {
     key: 'deleted',
     title: 'Deleted',
-    component: <Deleted chatBoxOpen={chatBoxOpen}/>,
+    component: <Deleted chatBoxOpen={chatBoxOpen} activeKey={activeKey}/>,
   },
 ];
 

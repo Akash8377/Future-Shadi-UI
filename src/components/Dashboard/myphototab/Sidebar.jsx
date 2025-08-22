@@ -39,12 +39,12 @@ const Sidebar = ({ onChangeTab,isAdvanced=false }) => {
           <div className="profile-edit-list">
             <div className="row mt-2">
               <div className="col-12 col-md-12">
-                <Link to="/matches" state={{ activtab: "morematches" }}>
-                  Shortlists & more
+                <Link to="/matches" state={{ activtab: "shortlisted" }}>
+                  Shortlists
                 </Link>
               </div>
               <div className="col-12 col-md-12">
-                <Link to="/matches" state={{ activtab: "newmatches" }}>
+                <Link to="/matches" state={{ activtab: "matches" }}>
                   New Matches
                 </Link>
               </div>

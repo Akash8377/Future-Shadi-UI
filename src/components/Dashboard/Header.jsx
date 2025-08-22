@@ -102,11 +102,11 @@ const Header = ({ unreadNotificationCount }) => {
             <li className="nav-item">
               <NavLink
                 className="nav-link text-white"
-                to="/dna"
+                to="/hla-dna"
                 title="DNA"
                 onClick={() => setActiveTab("")}
               >
-                DNA
+                HLA + DNA
               </NavLink>
             </li>
             <li className="nav-item position-relative">
@@ -147,7 +147,21 @@ const Header = ({ unreadNotificationCount }) => {
                 )}
               </NavLink>
             </li>
-            
+            <li className="nav-item position-relative">
+              <NavLink
+                className="nav-link text-white"
+                to="/identity-enrichment"
+                title="Inbox Messages"
+                onClick={() => setActiveTab("")}
+              >
+                Identity Enrichment
+                {unreadNotificationCount > 0 && (
+                  <span className="badge bg-white text-dark rounded-pill position-absolute top-0 start-100 translate-middle">
+                    {unreadNotificationCount}
+                  </span>
+                )}
+              </NavLink>
+            </li>
           </ul>
 
           <div className="d-flex align-items-center gap-1 ms-lg-3">

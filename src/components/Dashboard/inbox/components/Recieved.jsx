@@ -7,7 +7,7 @@ import SidebarFilterSort from "./SidebarFilterSort";
 import { useSelector } from "react-redux";
 import config from "../../../../config";
 
-function Received() {
+function Received({activeKey}) {
   const user = useSelector((state) => state.user.userInfo);
   const [receiverData, setReceiverData] = useState([]);
   const [receiverPreferences, setReceiverPreferences] = useState([]);
@@ -55,7 +55,7 @@ function Received() {
       fetchReceiverData();
       fetchPreferenceData();
     }
-  }, [user]);
+  }, [user, activeKey]);
 
   const applyFilterAndSort = (data) => {
     let filtered = [...data];

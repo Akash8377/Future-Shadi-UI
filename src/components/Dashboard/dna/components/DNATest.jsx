@@ -86,7 +86,7 @@ const geneData = {
   ],
 };
 
-const DNA = () => {
+const DNATest = () => {
   const [step, setStep] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState({});
@@ -115,10 +115,10 @@ const fetchGeneticMarkers = async () => {
     );
 
     const data = response.data;
-    console.log("Fetched Data:", data);
+    // console.log("Fetched Data:", data);
 
     if (data.grouped_genetic_markers) {
-      console.log("flattenedData ",data.grouped_genetic_markers)
+      // console.log("flattenedData ",data.grouped_genetic_markers)
       const updatedUserInfo = {...userInfo, grouped_genetic_markers:{...data.grouped_genetic_markers}}
       dispatch(setUser({
         userInfo: updatedUserInfo,
@@ -221,7 +221,7 @@ const saveStepData = async (currentStep) => {
       window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
     } else {
       console.log("navigating to dna matches")
-      navigate("/dna", { state: { activeKey: "dna-matches" } });
+      navigate("/hla-dna", { state: { activeKey: "hla-dna-matches" } });
     }
   };
   
@@ -397,4 +397,4 @@ const saveStepData = async (currentStep) => {
   );
 };
 
-export default DNA;
+export default DNATest;

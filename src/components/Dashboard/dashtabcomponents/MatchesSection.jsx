@@ -103,7 +103,7 @@ const MatchesSection = () => {
   if (isLoading) return <p>Loading matches...</p>;
   if (isError) return <p>Error loading matches.</p>;
 
-  console.log(premiumMatches, "premiumMatches");
+  // console.log(premiumMatches, "premiumMatches");
 
   return (
     <div className="row g-4 mt-4">
