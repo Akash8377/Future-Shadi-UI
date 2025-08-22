@@ -96,8 +96,8 @@ const SearchByCity = () => {
                         value={searchData.lookingFor}
                         onChange={handleInputChange}
                       >
-                        <option value="Woman">Woman</option>
-                        <option value="Man">Man</option>
+                        <option value="Bride">Woman</option>
+                        <option value="Groom">Man</option>
                       </select>
                     </div>
                   </div>
